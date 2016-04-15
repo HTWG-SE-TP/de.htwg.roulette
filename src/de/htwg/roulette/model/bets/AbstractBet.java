@@ -4,6 +4,8 @@ public abstract class AbstractBet {
 	protected int stake;
 	protected int possibleFields; 
 	
+	abstract int getPossibleFields();
+	
 	public AbstractBet(int money) {
 		setStake(money);
 	}
@@ -29,6 +31,12 @@ public abstract class AbstractBet {
 	abstract boolean checkBet(int number);
 	
 	public int getQuote(){
-		return (36/possibleFields - 1);
+		return (36/getPossibleFields() - 1);
+	}
+	@Override
+	public String toString(){
+		StringBuilder sb = new StringBuilder();
+		
+		return sb.toString();
 	}
 }
