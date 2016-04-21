@@ -15,7 +15,7 @@ public class SingleNumber extends AbstractBet {
 
 	@Override
 	int getPossibleFields() {
-		return 18; //number of even fields
+		return 1;
 	}
 
 }

@@ -35,8 +35,6 @@ public abstract class AbstractBet {
 	}
 	@Override
 	public String toString(){
-		StringBuilder sb = new StringBuilder();
-		
-		return sb.toString();
+		return String.format("AbstractBet -- Stake: %d, Quote: %d", getStake(), getQuote());
 	}
 }
