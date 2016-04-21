@@ -18,7 +18,7 @@ hs_err_pid*
 # Eclipse
 bin/
 .settings/
-.classpath
+#.classpath
 
 # Intellij
 /.idea/
