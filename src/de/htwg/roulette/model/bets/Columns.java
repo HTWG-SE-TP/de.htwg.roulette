@@ -1,9 +1,9 @@
 package de.htwg.roulette.model.bets;
 
-public class Colonne extends AbstractBet {
+public class Columns extends AbstractBet {
 	private int row;
 
-	public Colonne(int money, int r) {
+	public Columns(int money, int r) {
 		super(money);
 		assert(r > 33 && r < 37);
 		row = r;

@@ -1,8 +1,8 @@
 package de.htwg.roulette.model.bets;
 
-public class Pair extends AbstractBet {
+public class Even extends AbstractBet {
 
-	public Pair(int money) {
+	public Even(int money) {
 		super(money);
 	}
 

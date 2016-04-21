@@ -3,11 +3,11 @@ package de.htwg.roulette.model.bets;
 import java.util.List;
 import java.util.Arrays;
 
-public class Rouge extends AbstractBet{
+public class Red extends AbstractBet{
 private static List<Integer> colonne = Arrays.asList
 		(1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34);
 
-	public Rouge(int money) {
+	public Red(int money) {
 		super(money);
 		
 	}

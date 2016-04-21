@@ -1,9 +1,9 @@
 package de.htwg.roulette.model.bets;
 
-public class Plein extends AbstractBet {
+public class SingleNumber extends AbstractBet {
 	int number = 0;
 	
-	public Plein(int money, int num) {
+	public SingleNumber(int money, int num) {
 		super(money);
 		number = num;
 	}

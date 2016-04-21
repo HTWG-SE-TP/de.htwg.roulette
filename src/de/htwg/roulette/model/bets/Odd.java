@@ -1,14 +1,14 @@
 package de.htwg.roulette.model.bets;
 
-public class Impair extends AbstractBet {
+public class Odd extends AbstractBet {
 
-	public Impair(int money) {
+	public Odd(int money) {
 		super(money);
 	}
 
 	@Override
 	boolean checkBet(int number) {
-		return (number%2 != 0);
+		return (number%2 == 1);
 	}
 
 	@Override

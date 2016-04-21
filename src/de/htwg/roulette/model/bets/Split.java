@@ -1,9 +1,9 @@
 package de.htwg.roulette.model.bets;
 
-public class Cheval extends AbstractBet {
+public class Split extends AbstractBet {
 	int num[] = new int[2];
 	
-	public Cheval(int money, int num1, int num2) {
+	public Split(int money, int num1, int num2) {
 		super(money);
 		num[0] = num1;
 		num[1] = num2;

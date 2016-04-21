@@ -1,13 +1,13 @@
 package de.htwg.roulette.model.bets;
 
-public class Douzaines extends AbstractBet {
+public class Dozens extends AbstractBet {
 	public enum Flag {
 		Premier, Milieu, Dernier
 	}
 
 	private Flag dozenFlag;
 
-	public Douzaines(int money, Flag f) {
+	public Dozens(int money, Flag f) {
 		super(money);
 		dozenFlag = f;
 	}

@@ -1,8 +1,8 @@
 package de.htwg.roulette.model.bets;
 
-public class Passe extends AbstractBet {
+public class UpperHalf extends AbstractBet {
 
-	public Passe(int money) {
+	public UpperHalf(int money) {
 		super(money);
 	}
 
