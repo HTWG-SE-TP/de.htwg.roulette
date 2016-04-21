@@ -1,0 +1,25 @@
+package de.htwg.roulette.model.bets;
+
+import java.util.List;
+import java.util.Arrays;
+
+public class Noir extends AbstractBet{
+private static List<Integer> blacknumbers = Arrays.asList
+		(2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 35);
+
+	public Noir(int money) {
+		super(money);
+		
+	}
+
+	@Override
+	boolean checkBet(int number) {
+		return (blacknumbers.contains(number));
+	}
+
+	@Override
+	int getPossibleFields() {
+		return blacknumbers.size();
+	}
+
+}
