@@ -10,8 +10,11 @@ public class FirstFourTest {
 	
 	@Test
 	public void test() {
-		FirstFour bet = new FirstFour();
-		assertEquals(4, );
+		FirstFour bet = new FirstFour(50);
+		assertEquals(4, bet.getPossibleFields());
+		assertEquals(true, bet.checkBet(3));
+		assertEquals(false, bet.checkBet(36));
+		assertEquals(false, bet.checkBet(50));
 	}
 
 }
