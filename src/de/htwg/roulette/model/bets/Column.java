@@ -31,6 +31,9 @@ public class Column extends AbstractBet {
 
 	@Override
 	boolean checkBet(int number) {
+		if (!numInRange(number)) 
+			return false;
+		
 		if (row == Rows.One) {
 			return (number % 3 == 1); 
 			

@@ -25,6 +25,11 @@ public class AbstractBetTest {
 		
 		assertEquals(bet.betResult(5), -1000);
 		
+		assertEquals(bet.numInRange(-5), false);
+		assertEquals(bet.numInRange(0), true);
+		assertEquals(bet.numInRange(5), true);
+		assertEquals(bet.numInRange(36), true);
+		assertEquals(bet.numInRange(37), false);
 		bet.toString();
 	}
 

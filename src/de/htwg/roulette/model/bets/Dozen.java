@@ -1,28 +1,26 @@
 package de.htwg.roulette.model.bets;
 
-public class Dozens extends AbstractBet {
+public class Dozen extends AbstractBet {
 	public enum Flag {
 		Premier, Milieu, Dernier
 	}
 
 	private Flag dozenFlag;
 
-	public Dozens(int money, Flag f) {
+	public Dozen(int money, Flag f) {
 		super(money);
 		dozenFlag = f;
 	}
 
 	@Override
 	boolean checkBet(int number) {
-		switch (dozenFlag) {
-		case Premier:
+		if (dozenFlag == Flag.Premier){
 			return number < 13;
-		case Milieu:
+		} else if (dozenFlag == Flag.Milieu) {
 			return number > 12 && number < 25;
-		case Dernier:
+		} else {
 			return number > 24 && number < 37;
 		}
-		return false;
 	}
 
 	@Override

@@ -33,6 +33,11 @@ public abstract class AbstractBet {
 	public int getQuote(){
 		return (36/getPossibleFields() - 1);
 	}
+	
+	protected boolean numInRange(int num){
+		return (num >= 0) && (num <= 36);
+	}
+	
 	@Override
 	public String toString(){
 		return String.format("AbstractBet -- Stake: %d, Quote: %d", getStake(), getQuote());

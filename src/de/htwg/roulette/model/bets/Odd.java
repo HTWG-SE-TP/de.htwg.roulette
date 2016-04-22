@@ -8,6 +8,8 @@ public class Odd extends AbstractBet {
 
 	@Override
 	boolean checkBet(int number) {
+		if (!numInRange(number)) 
+			return false;
 		return (number%2 == 1);
 	}
 
