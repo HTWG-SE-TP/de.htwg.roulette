@@ -15,4 +15,8 @@ public class User extends Account {
 		return new LinkedList<>(currentBets);
 	}
 	
+	public void addBet(AbstractBet bet) {
+		currentBets.add(bet);
+	}
+	
 }
