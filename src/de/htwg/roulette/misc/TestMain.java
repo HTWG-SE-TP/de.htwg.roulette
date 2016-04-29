@@ -1,5 +1,8 @@
 package de.htwg.roulette.misc;
 
+import de.htwg.roulette.controller.Controller;
+import de.htwg.roulette.tui.TextUI;
+
 public class TestMain {
 
 	public TestMain() {
@@ -7,8 +10,12 @@ public class TestMain {
 	}
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		System.out.println("lel");
+		TextUI tui = new TextUI(new Controller());
+		tui.printUI();
+		boolean quit = false;
+		while (!quit) {
+		    quit = tui.process();	
+		}
 	}
 
 }

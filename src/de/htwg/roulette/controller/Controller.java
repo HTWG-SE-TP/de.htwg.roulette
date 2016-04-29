@@ -16,9 +16,24 @@ public class Controller {
 		players = new LinkedList<User>();
 	}
 	
-	public void addPlayer(String name, int balance) {
+	public boolean addPlayer(String name, int balance) {
+		for(User p : players){
+			if (p.getName().equals(name))
+				return false;
+		}
+		
 		User newUser = new User(name, balance);
 		players.add(newUser);
+		return true;
+	}
+	
+	public void removePlayer(String name) {
+		for(User p : players){
+			if (p.getName().equals(name)){
+				players.remove(p);
+				return;
+			}
+		}
 	}
 	
 	public List<User> getBets() {
