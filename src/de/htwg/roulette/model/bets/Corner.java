@@ -3,7 +3,7 @@ package de.htwg.roulette.model.bets;
 import java.util.*;
 
 public class Corner extends AbstractBet{
-	private static List<Integer> cornerNums;
+	private List<Integer> cornerNums;
 
 	public Corner(int money, List<Integer> nums) {
 		super(money);

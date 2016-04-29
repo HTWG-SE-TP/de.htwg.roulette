@@ -1,6 +1,5 @@
 package de.htwg.roulette.controller;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 import de.htwg.roulette.model.*;
 import de.htwg.roulette.model.bets.*;
@@ -21,10 +20,16 @@ public class Controller {
 		User newUser = new User(name, balance);
 		players.add(newUser);
 	}
+	
+	public List<User> getBets() {
+		//Deep copy
+		return new LinkedList<>(players);
+	}
+	
 	public void nextRound(){
 		//Rand
 		//Gehen durch alle Spieler
-		//Wetten prüfen, Konto korrigieren 
+		//Wetten prÃ¼fen, Konto korrigieren 
 		int number = (int)Math.round(Math.random() * Table.FIELD_SIZE);
 		
 		System.out.printf("Picked Number %d \n", number);

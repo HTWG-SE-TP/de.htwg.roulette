@@ -1,4 +1,4 @@
-package de.htwg.roulette.model;
+package de.htwg.roulette.misc;
 
 public class TestMain {
 
@@ -8,7 +8,7 @@ public class TestMain {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
+		System.out.println("lel");
 	}
 
 }
