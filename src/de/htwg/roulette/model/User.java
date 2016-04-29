@@ -20,4 +20,8 @@ public class User extends Account {
 		currentBets.add(bet);
 	}
 	
+	public void clearBets(){
+		currentBets.clear();
+	}
+	
 }
