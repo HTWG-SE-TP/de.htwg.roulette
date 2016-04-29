@@ -30,7 +30,7 @@ target/
 # Gradle
 /.gradle/
 /build/
-pom.xml
+#pom.xml
 
 # sbt
 .cache
