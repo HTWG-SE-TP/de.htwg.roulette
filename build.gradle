@@ -36,14 +36,14 @@ sourceSets {
 }
 
 jar {
-    manifest.attributes "Main-Class":"de.htwg.se.sudoku.Sudoku"
+    manifest.attributes "Main-Class":"de.htwg.se.roulette.misc.TestMain"
 }
   
 sonarqube {
     properties {
-    property "sonar.projectName", "SE2015WS-00-Sudoku2"
-    property "sonar.projectKey", "de.htwg.se.sudoku2"
-    property "sonar.projectVersion", "2.0"
+    property "sonar.projectName", "SE2016SS-02-Roulette"
+    property "sonar.projectKey", "de.htwg.se.roulette"
+    property "sonar.projectVersion", "1.0"
     property "sonar.binaries", "build/classes"
     property "sonar.java.coveragePlugin", "jacoco"
   }
