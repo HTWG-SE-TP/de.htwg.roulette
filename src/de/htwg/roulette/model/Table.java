@@ -13,4 +13,8 @@ public class Table {
 		minimum = min;
 		maximum = max;
 	}
+	
+	public boolean checkBet(AbstractBet bet){
+		return bet.getStake() >= minimum || bet.getStake() <= maximum;
+	}
 }

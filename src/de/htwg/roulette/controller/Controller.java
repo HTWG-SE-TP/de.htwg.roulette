@@ -41,7 +41,7 @@ public class Controller {
 		
 		return number;
 	}
-
+	
 	public boolean addPlayer(String name, int balance) {
 		for (User p : players) {
 			if (p.getName().equals(name))
@@ -53,15 +53,33 @@ public class Controller {
 		return true;
 	}
 
-	public void removePlayer(String name) {
+	public boolean removePlayer(String name) {
 		for (User p : players) {
 			if (p.getName().equals(name)) {
 				players.remove(p);
-				return;
+				return true;
 			}
 		}
+		return false;
+	}
+	
+	public boolean placeBet(String name, AbstractBet bet) {
+		for (User p : players) {
+			if (p.getName().equals(name)){
+				if (bet == null || bet.getStake() < 1)
+					return false;
+				if (p.getBalance() - bet.getStake() < 0)
+					return false;
+				if (!table.checkBet(bet))
+					return false;
+				p.addBet(bet);
+				return true;
+			}		
+		}
+		return false;
 	}
 
+	
 	public List<User> getPlayers() {
 		// Deep copy
 		return new LinkedList<>(players);
