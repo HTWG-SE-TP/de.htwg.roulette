@@ -2,6 +2,8 @@ package de.htwg.roulette.tui;
 
 import java.util.*;
 
+import com.sun.istack.internal.logging.Logger;
+
 import de.htwg.roulette.controller.Controller;
 import de.htwg.roulette.model.*;
 import de.htwg.roulette.model.bets.*;
@@ -9,6 +11,7 @@ import de.htwg.roulette.model.bets.*;
 public class TextUI {
 	private Controller rController;
 	private Scanner scanner;
+	private static final Logger log = Logger.getLogger( TextUI.class.getName(), null );
 
 	public TextUI(Controller cont) {
 		rController = cont;
@@ -16,7 +19,7 @@ public class TextUI {
 	}
 
 	public void printUI() {
-		System.out.println("Welcome to Htwg Roulette, the best roulette game ever made");
+		log.info("Welcome to Htwg Roulette, the best roulette game ever made");
 		printHelp();
 	}
 
@@ -37,7 +40,7 @@ public class TextUI {
 		}
 	}
 
-	private int validateDollars(String input) {
+	private int parseInt(String input) {
 		try {
 			return Integer.parseInt(input);
 		} catch (Exception ex) {
@@ -73,7 +76,7 @@ public class TextUI {
 			case "add":
 				if (splitCmd.length == 3) {
 					String name = splitCmd[1];
-					int dollar = validateDollars(splitCmd[2]);
+					int dollar = parseInt(splitCmd[2]);
 					if (dollar > 0) {
 						if (rController.addPlayer(name, dollar)) {
 							System.out.printf("Player %s added!\n", name);
@@ -99,7 +102,7 @@ public class TextUI {
 			case "bet":
 				if (splitCmd.length == 3) {
 					String name = splitCmd[1];
-					int dollar = validateDollars(splitCmd[2]);
+					int dollar = parseInt(splitCmd[2]);
 					if (dollar > 0) {
 						AbstractBet bet = new Black(dollar);
 						
