@@ -24,19 +24,19 @@ public class TextUI {
 	}
 
 	private void printHelp() {
-		System.out.println("Options during the game:");
-		System.out.printf("%-20s - this menu\n", "help");
-		System.out.printf("%-20s - add a player\n", "add [name] [$]");
-		System.out.printf("%-20s - remove a player\n", "remove [name]");
-		System.out.printf("%-20s - place a bet menu\n", "bet [name] [$]");
-		System.out.printf("%-20s - next round\n", "nr");
-		System.out.printf("%-20s - ....\n", "quit");
+		log.info("Options during the game:");
+		log.info(String.format("%-20s - this menu\n", "help"));
+		log.info(String.format("%-20s - add a player\n", "add [name] [$]"));
+		log.info(String.format("%-20s - remove a player\n", "remove [name]"));
+		log.info(String.format("%-20s - place a bet menu\n", "bet [name] [$]"));
+		log.info(String.format("%-20s - next round\n", "nr"));
+		log.info(String.format("%-20s - ....\n", "quit"));
 	}
 
 	private void printRound() {
-		System.out.printf("======= Round %d =======\n", rController.getRound());
+		log.info(String.format("======= Round %d =======\n", rController.getRound()));
 		for (User p : rController.getPlayers()) {
-			System.out.printf("Player %s: %d$\n", p.getName(), p.getBalance());
+			log.info(String.format("Player %s: %d$\n", p.getName(), p.getBalance()));
 		}
 	}
 
@@ -66,7 +66,7 @@ public class TextUI {
 			case "nr":
 				break inputLoop;
 			case "quit":
-				System.out.println("Thanks for playing");
+				log.info("Thanks for playing");
 				return true;
 
 			// ============================
@@ -79,24 +79,24 @@ public class TextUI {
 					int dollar = parseInt(splitCmd[2]);
 					if (dollar > 0) {
 						if (rController.addPlayer(name, dollar)) {
-							System.out.printf("Player %s added!\n", name);
+							log.info(String.format("Player %s added!\n", name));
 							break;
 						}
 					}
 				}
-				System.out.println("Add syntax invalid");
+				log.info("Add syntax invalid");
 				break;
 
 			case "remove":
 				if (splitCmd.length == 2) {
 					String name = splitCmd[1];
 					if (rController.removePlayer(name)) {
-						System.out.printf("Player %s removed!\n", name);
+						log.info(String.format("Player %s removed!\n", name));
 						break;
 					}
 
 				}
-				System.out.println("Remove syntax invalid");
+				log.info("Remove syntax invalid");
 				break;
 				
 			case "bet":
@@ -108,17 +108,17 @@ public class TextUI {
 						
 					}
 				}
-				System.out.println("Add syntax invalid");
+				log.info("Add syntax invalid");
 				break;
 			default:
-				System.out.println("Option not recognized. Use help to see all commands..");
+				log.info("Option not recognized. Use help to see all commands..");
 			}
 		}
 
-		System.out.println("Round ended. Rollllllllling the thinggggggggggggggggg");
+		log.info("Round ended. Rollllllllling the thinggggggggggggggggg");
 		int num = rController.nextRound();
-		System.out.printf("Picked number %d\n", num);
-
+		log.info(String.format("Picked number %d\n", num));
+		
 		return false;
 	}
 }
