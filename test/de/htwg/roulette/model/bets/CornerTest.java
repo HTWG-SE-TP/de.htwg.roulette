@@ -33,30 +33,24 @@ public class CornerTest {
 	
 	@Test
 	public void Row1() {
-		 Column bet = new Column(50, 34);
+		Corner bet = new Corner(50, Arrays.asList(1, 2, 4, 5));
 		 
 		 assertEquals(bet.checkBet(1), true);
-		 assertEquals(bet.checkBet(17), false);
-		 assertEquals(bet.checkBet(30), false);
+		 assertEquals(bet.checkBet(2), true);
+		 assertEquals(bet.checkBet(-5), false);
 		 assertEquals(bet.checkBet(99), false);
 	}
 	
 	@Test
 	public void Row2() {
-		 Column bet = new Column(50, 35);
-		 
-		 assertEquals(bet.checkBet(1), false);
-		 assertEquals(bet.checkBet(17), true);
-		 assertEquals(bet.checkBet(30), false);
+		Corner bet = new Corner(50, Arrays.asList(13, 14, 16, 17));
+		
+		 assertEquals(bet.checkBet(-5), false);
+		 assertEquals(bet.checkBet(13), true);
+		 assertEquals(bet.checkBet(16), true);
+		 assertEquals(bet.checkBet(99), false);
 	}
 
-	@Test
-	public void Row3() {
-		 Column bet = new Column(50, 36);
-		 
-		 assertEquals(bet.checkBet(1), false);
-		 assertEquals(bet.checkBet(17), false);
-		 assertEquals(bet.checkBet(30), true);
-	}
+
 
 }
