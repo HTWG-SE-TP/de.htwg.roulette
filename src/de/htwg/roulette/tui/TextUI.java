@@ -2,16 +2,17 @@ package de.htwg.roulette.tui;
 
 import java.util.*;
 
-import com.sun.istack.internal.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import de.htwg.roulette.controller.Controller;
 import de.htwg.roulette.model.*;
 import de.htwg.roulette.model.bets.*;
 
-public class TextUI {
+public class TextUI  {
 	private Controller rController;
 	private Scanner scanner;
-	private static final Logger log = Logger.getLogger( TextUI.class );
+	private static final Logger log = LogManager.getLogger(TextUI.class.getName());
 
 	public TextUI(Controller cont) {
 		rController = cont;
@@ -25,12 +26,12 @@ public class TextUI {
 
 	private void printHelp() {
 		log.info("Options during the game:");
-		log.info(String.format("%-20s - this menu\n", "help"));
-		log.info(String.format("%-20s - add a player\n", "add [name] [$]"));
-		log.info(String.format("%-20s - remove a player\n", "remove [name]"));
-		log.info(String.format("%-20s - place a bet menu\n", "bet [name] [$]"));
-		log.info(String.format("%-20s - next round\n", "nr"));
-		log.info(String.format("%-20s - ....\n", "quit"));
+		log.info(String.format("%-20s - this menu", "help"));
+		log.info(String.format("%-20s - add a player", "add [name] [$]"));
+		log.info(String.format("%-20s - remove a player", "remove [name]"));
+		log.info(String.format("%-20s - place a bet menu", "bet [name] [$]"));
+		log.info(String.format("%-20s - next round", "nr"));
+		log.info(String.format("%-20s - ....", "quit"));
 	}
 
 	private void printRound() {
@@ -66,7 +67,7 @@ public class TextUI {
 			case "nr":
 				break inputLoop;
 			case "quit":
-				log.info("Thanks for playing");
+				log.info("Thanks for playing\n");
 				return true;
 
 			// ============================

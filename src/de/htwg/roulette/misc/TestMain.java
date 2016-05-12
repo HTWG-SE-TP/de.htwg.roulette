@@ -10,10 +10,6 @@ public class TestMain {
 	}
 
 	public static void main(String[] args) {
-		//Single line formatting on console output
-		//System.setProperty("java.util.logging.SimpleFormatter.format", "%1$tF %1$tT %4$s %2$s %5$s%6$s%n");
-		System.setProperty("java.util.logging.SimpleFormatter.format", "%5$s%n");
-		
 		//Init
 		TextUI tui = new TextUI(new Controller());
 		tui.printUI();
