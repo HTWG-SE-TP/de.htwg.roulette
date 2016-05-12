@@ -11,7 +11,7 @@ import de.htwg.roulette.model.bets.*;
 public class TextUI {
 	private Controller rController;
 	private Scanner scanner;
-	private static final Logger log = Logger.getLogger( TextUI.class.getName(), null );
+	private static final Logger log = Logger.getLogger( TextUI.class );
 
 	public TextUI(Controller cont) {
 		rController = cont;
