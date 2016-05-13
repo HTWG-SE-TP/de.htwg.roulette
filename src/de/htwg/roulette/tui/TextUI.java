@@ -64,7 +64,7 @@ public class TextUI implements IObserver {
 		String[] splitCmd = command.split(" ");
 
 		// Validation
-		if (command.isEmpty() || splitCmd.length == 0)
+		if (isLineInvalid(command, splitCmd))
 			return false;
 
 		// React
@@ -100,11 +100,15 @@ public class TextUI implements IObserver {
 		
 		return false;
 	}
+	
+	private boolean isLineInvalid(String command, String[] splitCmd){
+		return command.isEmpty() || splitCmd.length == 0;
+	}
 
 	private void parseNextRount(){
 		LOGGER.info("Round ended. Rollllllllling the thinggggggggggggggggg");
 		rController.nextRound();
-		//Print new Round num + player balances
+		//Print new Round
 		printRound();
 	}
 
