@@ -1,10 +1,9 @@
 package de.htwg.roulette.model.bets;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
 
-import org.junit.Before;
 import org.junit.Test;
 
 public class CornerTest {
@@ -13,6 +12,7 @@ public class CornerTest {
 	public void General(){
 		 Corner bet = new Corner(50, Arrays.asList(1, 2, 3, 4));
 		 assertEquals(bet.getPossibleFields(), 4);
+		 assertEquals(bet.getName().isEmpty(), false);
 		 
 		 boolean catched = false;
 		 try {

@@ -1,6 +1,6 @@
 package de.htwg.roulette.model.bets;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,6 +17,8 @@ public class OddTest {
 	@Test
 	public void test() {
 		assertEquals(bet.getPossibleFields(), 18);
+		assertEquals(bet.getName().isEmpty(), false);
+		
 		assertEquals(bet.checkBet(6), false);
 		assertEquals(bet.checkBet(7), true);
 		assertEquals(bet.checkBet(99), false);

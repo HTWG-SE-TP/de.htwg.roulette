@@ -15,6 +15,6 @@ public class Table {
 	}
 	
 	public boolean checkBet(AbstractBet bet){
-		return bet.getStake() >= minimum || bet.getStake() <= maximum;
+		return bet.getStake() >= minimum && bet.getStake() <= maximum;
 	}
 }

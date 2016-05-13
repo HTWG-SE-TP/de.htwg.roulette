@@ -1,6 +1,6 @@
 package de.htwg.roulette.model.bets;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -30,6 +30,7 @@ public class AbstractBetTest {
 		assertEquals(bet.numInRange(5), true);
 		assertEquals(bet.numInRange(36), true);
 		assertEquals(bet.numInRange(37), false);
+
 		bet.toString();
 	}
 

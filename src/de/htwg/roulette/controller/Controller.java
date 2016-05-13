@@ -87,7 +87,7 @@ public class Controller  {
 	}
 
 	private boolean checkBetConditions(AbstractBet bet, User p) {
-		if (bet == null || bet.getStake() < 1)
+		if (bet.getStake() < 1)
 			return false;
 		if (p.getBalance() - bet.getStake() < 0)
 			return false;
