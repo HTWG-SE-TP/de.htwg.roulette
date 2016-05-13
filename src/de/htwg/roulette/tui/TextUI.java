@@ -45,6 +45,7 @@ public class TextUI  {
 		try {
 			return Integer.parseInt(input);
 		} catch (Exception ex) {
+			log.debug(ex);
 			return -1;
 		}
 	}
@@ -118,7 +119,7 @@ public class TextUI  {
 
 		log.info("Round ended. Rollllllllling the thinggggggggggggggggg");
 		int num = rController.nextRound();
-		log.info(String.format("Picked number %d\n", num));
+		log.info("Picked number %d", num);
 		
 		return false;
 	}

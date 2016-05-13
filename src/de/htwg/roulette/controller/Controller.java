@@ -38,10 +38,10 @@ public class Controller {
 		}
 
 		roundCount++;
-		
+
 		return number;
 	}
-	
+
 	public boolean addPlayer(String name, int balance) {
 		for (User p : players) {
 			if (p.getName().equals(name))
@@ -62,15 +62,11 @@ public class Controller {
 		}
 		return false;
 	}
-	
+
 	public boolean placeBet(String name, AbstractBet bet) {
 		for (User p : players) {
 			if (p.getName().equals(name)){
-				if (bet == null || bet.getStake() < 1)
-					return false;
-				if (p.getBalance() - bet.getStake() < 0)
-					return false;
-				if (!table.checkBet(bet))
+				if (checkBetConditions(bet, p))
 					return false;
 				p.addBet(bet);
 				return true;
@@ -79,13 +75,22 @@ public class Controller {
 		return false;
 	}
 
-	
+	private boolean checkBetConditions(AbstractBet bet, User p) {
+		if (bet == null || bet.getStake() < 1)
+			return false;
+		if (p.getBalance() - bet.getStake() < 0)
+			return false;
+		if (!table.checkBet(bet))
+			return false;
+		return true;
+	}
+
 	public List<User> getPlayers() {
 		// Deep copy
 		return new LinkedList<>(players);
 	}
 
-	public int getRound(){
+	public int getRound() {
 		return roundCount;
 	}
 }

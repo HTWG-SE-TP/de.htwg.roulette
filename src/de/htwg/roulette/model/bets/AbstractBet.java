@@ -1,15 +1,14 @@
 package de.htwg.roulette.model.bets;
 
-public abstract class AbstractBet {
-	protected int stake;
-	protected int possibleFields; 
-	
-	abstract int getPossibleFields();
-	
+public abstract class AbstractBet {	
 	public AbstractBet(int money) {
 		setStake(money);
 	}
-
+	
+	abstract int getPossibleFields();
+	protected int stake;
+	protected int possibleFields; 
+	
 	public int getStake() {
 		return stake;
 	}
@@ -31,7 +30,7 @@ public abstract class AbstractBet {
 	abstract boolean checkBet(int number);
 	
 	public int getQuote(){
-		return (36/getPossibleFields() - 1);
+		return 36/getPossibleFields() - 1;
 	}
 	
 	protected boolean numInRange(int num){
