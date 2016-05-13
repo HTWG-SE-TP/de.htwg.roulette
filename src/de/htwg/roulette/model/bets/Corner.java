@@ -24,4 +24,9 @@ public class Corner extends AbstractBet{
 		return 4;
 	}
 
+	@Override
+	public
+	String getName() {
+		return "a Corner";
+	}
 }

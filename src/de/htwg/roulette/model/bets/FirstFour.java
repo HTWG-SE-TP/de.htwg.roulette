@@ -15,5 +15,11 @@ public class FirstFour extends AbstractBet {
 	boolean checkBet(int number) {
 		return number>0 && number < 5;
 	}
+	
+	@Override
+	public
+	String getName() {
+		return "First Four";
+	}
 
 }

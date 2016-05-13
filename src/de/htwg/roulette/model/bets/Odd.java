@@ -18,4 +18,9 @@ public class Odd extends AbstractBet {
 		return 18; //number of odd fields
 	}
 
+	@Override
+	public
+	String getName() {
+		return "Odd Numbers";
+	}
 }

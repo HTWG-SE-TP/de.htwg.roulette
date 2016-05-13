@@ -22,4 +22,12 @@ private static List<Integer> blacknumbers = Arrays.asList
 		return blacknumbers.size();
 	}
 
+	@Override
+	public
+	String getName() {
+		return "black Numbers";
+	}
+	
+	
+
 }

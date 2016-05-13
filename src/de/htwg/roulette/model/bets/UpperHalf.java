@@ -16,4 +16,9 @@ public class UpperHalf extends AbstractBet {
 		return number >= 19 && number <= 36;
 	}
 
+	@Override
+	public
+	String getName() {
+		return "Upper Numbers";
+	}
 }

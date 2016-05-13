@@ -18,4 +18,9 @@ public class Even extends AbstractBet {
 		return 18; //number of even fields
 	}
 
+	@Override
+	public
+	String getName() {
+		return "even Numbers";
+	}
 }

@@ -140,6 +140,7 @@ public class TextUI implements IObserver {
 				AbstractBet bet = parseBetOptions(dollar);
 
 				if (rController.placeBet(name, bet)) {
+					LOGGER.info("Bet added!");
 					return;
 				}
 

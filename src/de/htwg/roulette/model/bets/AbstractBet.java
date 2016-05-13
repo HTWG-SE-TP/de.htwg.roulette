@@ -5,10 +5,12 @@ public abstract class AbstractBet {
 		setStake(money);
 	}
 	
+	abstract boolean checkBet(int number);
 	abstract int getPossibleFields();
-	protected int stake;
-	protected int possibleFields; 
+	public abstract String getName();
 	
+	private int stake;
+ 	
 	public int getStake() {
 		return stake;
 	}
@@ -27,7 +29,7 @@ public abstract class AbstractBet {
 		}
 	}
 	
-	abstract boolean checkBet(int number);
+	
 	
 	public int getQuote(){
 		return 36/getPossibleFields() - 1;
@@ -39,6 +41,6 @@ public abstract class AbstractBet {
 	
 	@Override
 	public String toString(){
-		return String.format("AbstractBet -- Stake: %d, Quote: %d", getStake(), getQuote());
+		return String.format("%s -- Stake: %d, Quote: %d", getName(), getStake(), getQuote());
 	}
 }

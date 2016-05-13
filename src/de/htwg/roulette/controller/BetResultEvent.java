@@ -15,7 +15,7 @@ public class BetResultEvent implements Event {
 			tmp = "lost";
 		}
 
-		resultInfo = String.format("%s %s %d$ with his bet on %s", p.getName(), tmp, result, bet.toString());
+		resultInfo = String.format("%s %s %d$ with his bet on %s.", p.getName(), tmp, result, bet.getName());
 	}
 	
 	public String toString(){

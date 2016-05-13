@@ -26,5 +26,11 @@ public class Street extends AbstractBet {
 	int getPossibleFields() {
 		return 3;
 	}
+	
+	@Override
+	public
+	String getName() {
+		return "a Street";
+	}
 
 }

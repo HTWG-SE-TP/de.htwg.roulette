@@ -50,5 +50,11 @@ public class Column extends AbstractBet {
 		return 12;
 
 	}
+	
+	@Override
+	public
+	String getName() {
+		return "a Column";
+	}
 
 }

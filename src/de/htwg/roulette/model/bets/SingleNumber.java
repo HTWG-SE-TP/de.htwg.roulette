@@ -18,4 +18,9 @@ public class SingleNumber extends AbstractBet {
 		return 1;
 	}
 
+	@Override
+	public
+	String getName() {
+		return String.format("a single Number (%d)", this.number);
+	}
 }

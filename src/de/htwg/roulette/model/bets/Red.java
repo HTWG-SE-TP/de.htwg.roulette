@@ -22,5 +22,11 @@ public class Red extends AbstractBet {
 		return redNumbers.size();
 
 	}
+	
+	@Override
+	public
+	String getName() {
+		return "red Numbers";
+	}
 
 }
