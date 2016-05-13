@@ -9,10 +9,10 @@ import de.htwg.roulette.controller.Controller;
 import de.htwg.roulette.model.*;
 import de.htwg.roulette.model.bets.*;
 
-public class TextUI  {
+public class TextUI {
 	private Controller rController;
 	private Scanner scanner;
-	private static final Logger LOGGER = LogManager.getLogger(TextUI.class.getName());
+	private static final Logger log = LogManager.getLogger(TextUI.class.getName());
 
 	public TextUI(Controller cont) {
 		rController = cont;
@@ -20,24 +20,24 @@ public class TextUI  {
 	}
 
 	public void printUI() {
-		LOGGER.info("Welcome to Htwg Roulette, the best roulette game ever made");
+		log.info("Welcome to Htwg Roulette, the best roulette game ever made");
 		printHelp();
 	}
 
 	private void printHelp() {
-		LOGGER.info("Options during the game:");
-		LOGGER.info("%-20s - this menu", "help");
-		LOGGER.info("%-20s - add a player", "add [name] [$]");
-		LOGGER.info("%-20s - remove a player", "remove [name]");
-		LOGGER.info("%-20s - place a bet menu", "bet [name] [$]");
-		LOGGER.info("%-20s - next round", "nr");
-		LOGGER.info("%-20s - ....", "quit");
+		log.info("Options during the game:");
+		log.info(String.format("%-20s - this menu", "help"));
+		log.info(String.format("%-20s - add a player", "add [name] [$]"));
+		log.info(String.format("%-20s - remove a player", "remove [name]"));
+		log.info(String.format("%-20s - place a bet menu", "bet [name] [$]"));
+		log.info(String.format("%-20s - next round", "nr"));
+		log.info(String.format("%-20s - ....", "quit"));
 	}
 
 	private void printRound() {
-		LOGGER.info("======= Round %d =======\n", rController.getRound());
+		log.info(String.format("======= Round %d =======\n", rController.getRound()));
 		for (User p : rController.getPlayers()) {
-			LOGGER.info("Player %s: %d$\n", p.getName(), p.getBalance());
+			log.info(String.format("Player %s: %d$\n", p.getName(), p.getBalance()));
 		}
 	}
 
@@ -45,7 +45,6 @@ public class TextUI  {
 		try {
 			return Integer.parseInt(input);
 		} catch (Exception ex) {
-			LOGGER.debug(ex);
 			return -1;
 		}
 	}
@@ -53,13 +52,21 @@ public class TextUI  {
 	public boolean process() {
 		printRound();
 
-		String command = "";
-		String[] splitCmd;
-		
-		inputLoop: 
-		while (true) {
-			command = scanner.nextLine();
-			splitCmd = command.split(" ");
+		boolean exit = inputMenu();
+		if (exit)
+			return true;
+
+		log.info("Round ended. Rollllllllling the thinggggggggggggggggg");
+		int num = rController.nextRound();
+		log.info(String.format("Picked number %d", num));
+
+		return false;
+	}
+
+	private boolean inputMenu() {
+		inputLoop: while (true) {
+			String command = scanner.nextLine();
+			String[] splitCmd = command.split(" ");
 
 			// Validation
 			if (splitCmd.length == 0)
@@ -67,10 +74,11 @@ public class TextUI  {
 
 			// React
 			switch (splitCmd[0]) {
+
 			case "nr":
 				break inputLoop;
 			case "quit":
-				LOGGER.info("Thanks for playing\n");
+				log.info("Thanks for playing\n");
 				return true;
 
 			// ============================
@@ -78,51 +86,59 @@ public class TextUI  {
 				printHelp();
 				break;
 			case "add":
-				if (splitCmd.length == 3) {
-					String name = splitCmd[1];
-					int dollar = parseInt(splitCmd[2]);
-					if (dollar > 0) {
-						if (rController.addPlayer(name, dollar)) {
-							LOGGER.info("Player %s added!\n", name);
-							break;
-						}
-					}
-				}
-				LOGGER.info("Add syntax invalid");
+				parseAddPlayer(splitCmd);
 				break;
 
 			case "remove":
-				if (splitCmd.length == 2) {
-					String name = splitCmd[1];
-					if (rController.removePlayer(name)) {
-						LOGGER.info("Player %s removed!\n", name);
-						break;
-					}
-
-				}
-				LOGGER.info("Remove syntax invalid");
+				parseRemovePlayer(splitCmd);
 				break;
-				
+
 			case "bet":
-				if (splitCmd.length == 3) {
-					String name = splitCmd[1];
-					int dollar = parseInt(splitCmd[2]);
-					if (dollar > 0) {
-						AbstractBet bet = new Black(dollar);
-						
-					}
-				}
-				LOGGER.info("Add syntax invalid");
+				parseBet(splitCmd);
 				break;
 			default:
-				LOGGER.info("Option not recognized. Use help to see all commands..");
+				log.info("Option not recognized. Use help to see all commands..");
 			}
 		}
 
-		LOGGER.info("Round ended. Rollllllllling the thinggggggggggggggggg");
-		int num = rController.nextRound();
-		LOGGER.info("Picked number %d", num);
-		
 		return false;
+	}
+
+	private void parseAddPlayer(String[] splitCmd) {
+		if (splitCmd.length == 3) {
+			String name = splitCmd[1];
+			int dollar = parseInt(splitCmd[2]);
+			if (dollar > 0) {
+				if (rController.addPlayer(name, dollar)) {
+					log.info(String.format("Player %s added!%n", name));
+					return;
+				}
+			}
+		}
+		log.info("Add syntax invalid");
+	}
+
+	private void parseRemovePlayer(String[] splitCmd) {
+		if (splitCmd.length == 2) {
+			String name = splitCmd[1];
+			if (rController.removePlayer(name)) {
+				log.info(String.format("Player %s removed!\n", name));
+				return;
+			}
+
+		}
+		log.info("Remove syntax invalid");
+	}
+
+	private void parseBet(String[] splitCmd) {
+		if (splitCmd.length == 3) {
+			String name = splitCmd[1];
+			int dollar = parseInt(splitCmd[2]);
+			if (dollar > 0) {
+				AbstractBet bet = new Black(dollar);
+
+			}
+		}
+		log.info("Bet syntax invalid");
 	}
 }
