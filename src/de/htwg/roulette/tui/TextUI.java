@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 
 import de.htwg.roulette.controller.BetResultEvent;
 import de.htwg.roulette.controller.Controller;
+import de.htwg.roulette.controller.NextRoundEvent;
 import de.htwg.roulette.model.*;
 import de.htwg.roulette.model.bets.*;
 import de.htwg.util.observer.Event;
@@ -22,9 +23,10 @@ public class TextUI implements IObserver {
 		scanner = new Scanner(System.in);
 	}
 
-	public void printUI() {
+	public void printInitalUI() {
 		LOGGER.info("Welcome to Htwg Roulette, the best roulette game ever made");
 		printHelp();
+		printRound();
 	}
 
 	private void printHelp() {
@@ -54,15 +56,8 @@ public class TextUI implements IObserver {
 	}
 
 	public boolean process() {
-		printRound();
-
-		while (true) {
-			String command = scanner.nextLine();
-			boolean exit = inputMenu(command);
-			if (exit) {
-				return true;
-			}
-		}
+		String command = scanner.nextLine();
+		return inputMenu(command);
 	}
 
 	private boolean inputMenu(String command) {
@@ -75,16 +70,13 @@ public class TextUI implements IObserver {
 		// React
 		switch (splitCmd[0]) {
 		case "nr":
-			LOGGER.info("Round ended. Rollllllllling the thinggggggggggggggggg");
-			int num = rController.nextRound();
-			LOGGER.info(String.format("Picked number %d", num));
+			parseNextRount();
 			break;
 			
 		case "quit":
 			LOGGER.info("Thanks for playing");
 			return true;
 
-		// ============================
 		case "help":
 			printHelp();
 			break;
@@ -100,6 +92,7 @@ public class TextUI implements IObserver {
 		case "bet":
 			parseBet(splitCmd);
 			break;
+			
 		default:
 			LOGGER.debug(command);
 			LOGGER.info("Option not recognized. Use help to see all commands..");
@@ -108,6 +101,12 @@ public class TextUI implements IObserver {
 		return false;
 	}
 
+	private void parseNextRount(){
+		LOGGER.info("Round ended. Rollllllllling the thinggggggggggggggggg");
+		rController.nextRound();
+		//Print new Round num + player balances
+		printRound();
+	}
 
 	private void parseAddPlayer(String[] splitCmd) {
 		if (splitCmd.length == 3) {
@@ -184,6 +183,8 @@ public class TextUI implements IObserver {
 	public void update(Event e) {
 		if (e instanceof BetResultEvent) {
 			LOGGER.info(e);
+		} else if (e instanceof NextRoundEvent){
+			LOGGER.info(String.format("Picked number %d", ((NextRoundEvent) e).getResult()));
 		}
 	}
 }

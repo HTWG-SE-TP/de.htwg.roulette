@@ -16,7 +16,7 @@ public class Roulette {
 		Observable mainObserver = new Observable();
 		TextUI tui = new TextUI(new Controller(mainObserver));
 		mainObserver.addObserver(tui);
-		tui.printUI();
+		tui.printInitalUI();
 		boolean quit = false;
 		while (!quit) {
 		    quit = tui.process();	

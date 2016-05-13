@@ -24,12 +24,13 @@ public class Controller  {
 		observer = observ;
 	}
 
-	public int nextRound() {
+	public void nextRound() {
 		// Rand
 		// Gehen durch alle Spieler
 		// Wetten prüfen, Konto korrigieren
 		int number = (int) Math.round(Math.random() * Table.FIELD_SIZE);
-
+		observer.notifyObservers(new NextRoundEvent(number));
+		
 		for (User u : players) {
 			int ball = u.getBalance();
 			for (AbstractBet bet : u.getBets()) {
@@ -46,8 +47,6 @@ public class Controller  {
 		}
 
 		roundCount++;
-
-		return number;
 	}
 
 	public boolean addPlayer(String name, int balance) {
