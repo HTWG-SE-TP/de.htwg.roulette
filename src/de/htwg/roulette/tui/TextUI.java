@@ -26,18 +26,18 @@ public class TextUI  {
 
 	private void printHelp() {
 		log.info("Options during the game:");
-		log.info(String.format("%-20s - this menu", "help"));
-		log.info(String.format("%-20s - add a player", "add [name] [$]"));
-		log.info(String.format("%-20s - remove a player", "remove [name]"));
-		log.info(String.format("%-20s - place a bet menu", "bet [name] [$]"));
-		log.info(String.format("%-20s - next round", "nr"));
-		log.info(String.format("%-20s - ....", "quit"));
+		log.info("%-20s - this menu", "help");
+		log.info("%-20s - add a player", "add [name] [$]");
+		log.info("%-20s - remove a player", "remove [name]");
+		log.info("%-20s - place a bet menu", "bet [name] [$]");
+		log.info("%-20s - next round", "nr");
+		log.info("%-20s - ....", "quit");
 	}
 
 	private void printRound() {
-		log.info(String.format("======= Round %d =======\n", rController.getRound()));
+		log.info("======= Round %d =======\n", rController.getRound());
 		for (User p : rController.getPlayers()) {
-			log.info(String.format("Player %s: %d$\n", p.getName(), p.getBalance()));
+			log.info("Player %s: %d$\n", p.getName(), p.getBalance());
 		}
 	}
 
@@ -80,7 +80,7 @@ public class TextUI  {
 					int dollar = parseInt(splitCmd[2]);
 					if (dollar > 0) {
 						if (rController.addPlayer(name, dollar)) {
-							log.info(String.format("Player %s added!\n", name));
+							log.info("Player %s added!\n", name);
 							break;
 						}
 					}
@@ -92,7 +92,7 @@ public class TextUI  {
 				if (splitCmd.length == 2) {
 					String name = splitCmd[1];
 					if (rController.removePlayer(name)) {
-						log.info(String.format("Player %s removed!\n", name));
+						log.info("Player %s removed!\n", name);
 						break;
 					}
 
