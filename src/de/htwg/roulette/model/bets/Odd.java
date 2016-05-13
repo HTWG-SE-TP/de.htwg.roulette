@@ -10,7 +10,7 @@ public class Odd extends AbstractBet {
 	boolean checkBet(int number) {
 		if (!numInRange(number)) 
 			return false;
-		return (number%2 == 1);
+		return number%2 == 1;
 	}
 
 	@Override

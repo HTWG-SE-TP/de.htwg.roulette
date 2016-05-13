@@ -13,7 +13,7 @@ public class UpperHalf extends AbstractBet {
 
 	@Override
 	boolean checkBet(int number) {
-		return (number >= 19 && number <= 36);
+		return number >= 19 && number <= 36;
 	}
 
 }

@@ -16,10 +16,10 @@ public class Street extends AbstractBet {
 			return false;
 		
 		//Trick: 1-3 is now 0-2. Then we can make a division to compare it.
-		int inputFactor = Math.floorDiv((number - 1), 3);
-		int shouldFactor = Math.floorDiv((rowNum - 1), 3);
+		int inputFactor = Math.floorDiv(number - 1, 3);
+		int shouldFactor = Math.floorDiv(rowNum - 1, 3);
 		
-		return (inputFactor == shouldFactor);
+		return inputFactor == shouldFactor;
 	}
 
 	@Override

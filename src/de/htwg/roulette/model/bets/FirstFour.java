@@ -13,7 +13,7 @@ public class FirstFour extends AbstractBet {
 
 	@Override
 	boolean checkBet(int number) {
-		return (number>0 && number < 5);
+		return number>0 && number < 5;
 	}
 
 }

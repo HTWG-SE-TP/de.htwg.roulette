@@ -16,7 +16,7 @@ public class Corner extends AbstractBet{
 
 	@Override
 	boolean checkBet(int number) {
-		return (cornerNums.contains(number));
+		return cornerNums.contains(number);
 	}
 
 	@Override

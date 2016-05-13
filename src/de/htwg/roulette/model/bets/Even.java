@@ -10,7 +10,7 @@ public class Even extends AbstractBet {
 	boolean checkBet(int number) {	
 		if (!numInRange(number)) 
 			return false;
-		return (number%2 == 0);
+		return number%2 == 0;
 	}
 
 	@Override
