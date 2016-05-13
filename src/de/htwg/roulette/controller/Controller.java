@@ -1,9 +1,13 @@
 package de.htwg.roulette.controller;
 
-import java.util.*;
+
+
+import java.util.LinkedList;
+import java.util.List;
 
 import de.htwg.roulette.model.*;
 import de.htwg.roulette.model.bets.*;
+import de.htwg.util.observer.Observable;
 
 public class Controller  {
 
@@ -30,8 +34,8 @@ public class Controller  {
 			int ball = u.getBalance();
 			for (AbstractBet bet : u.getBets()) {
 				int result = bet.betResult(number);
-				String resultInfo = generateBetString(u, bet, result);				
-				observer.notifyObservers(resultInfo);
+				BetResultEvent event = new BetResultEvent(u, bet, result);				
+				observer.notifyObservers(event);
 				
 				ball += result;
 				bank.setBalance(bank.getBalance() - result); // update bank's
@@ -90,17 +94,6 @@ public class Controller  {
 		if (!table.checkBet(bet))
 			return false;
 		return true;
-	}
-	
-	private String generateBetString(User p, AbstractBet bet, int result){
-		String tmp;
-		if (result >= 0){
-			tmp = "won";
-		} else {
-			tmp = "lost";
-		}
-		
-		return String.format("%s %s %d$ with his bet on %s", p.getName(), tmp, result, bet.toString());
 	}
 
 	public List<User> getPlayers() {

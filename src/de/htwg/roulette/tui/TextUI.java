@@ -5,11 +5,14 @@ import java.util.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import de.htwg.roulette.controller.BetResultEvent;
 import de.htwg.roulette.controller.Controller;
 import de.htwg.roulette.model.*;
 import de.htwg.roulette.model.bets.*;
+import de.htwg.util.observer.Event;
+import de.htwg.util.observer.IObserver;
 
-public class TextUI implements Observer {
+public class TextUI implements IObserver {
 	private Controller rController;
 	private Scanner scanner;
 	private static final Logger LOGGER = LogManager.getLogger(TextUI.class.getName());
@@ -174,8 +177,9 @@ public class TextUI implements Observer {
 	}
 
 	@Override
-	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-		
+	public void update(Event e) {
+		if (e instanceof BetResultEvent){
+			LOGGER.info(e);
+		}
 	}
 }
