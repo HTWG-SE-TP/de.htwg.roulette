@@ -56,56 +56,58 @@ public class TextUI implements IObserver {
 	public boolean process() {
 		printRound();
 
-		boolean exit = inputMenu();
-		if (exit)
-			return true;
-
-		LOGGER.info("Round ended. Rollllllllling the thinggggggggggggggggg");
-		int num = rController.nextRound();
-		LOGGER.info(String.format("Picked number %d", num));
-
-		return false;
-	}
-
-	private boolean inputMenu() {
 		while (true) {
 			String command = scanner.nextLine();
-			String[] splitCmd = command.split(" ");
-			
-			// Validation
-			if (command.isEmpty() || splitCmd.length == 0)
-				continue;
-
-			// React
-			switch (splitCmd[0]) {
-
-			case "nr":
-				return false;
-			case "quit":
-				LOGGER.info("Thanks for playing");
+			boolean exit = inputMenu(command);
+			if (exit) {
 				return true;
-
-			// ============================
-			case "help":
-				printHelp();
-				break;
-			case "add":
-				parseAddPlayer(splitCmd);
-				break;
-
-			case "remove":
-				parseRemovePlayer(splitCmd);
-				break;
-
-			case "bet":
-				parseBet(splitCmd);
-				break;
-			default:
-				LOGGER.debug(command);
-				LOGGER.info("Option not recognized. Use help to see all commands..");
 			}
 		}
 	}
+
+	private boolean inputMenu(String command) {
+		String[] splitCmd = command.split(" ");
+
+		// Validation
+		if (command.isEmpty() || splitCmd.length == 0)
+			return false;
+
+		// React
+		switch (splitCmd[0]) {
+		case "nr":
+			LOGGER.info("Round ended. Rollllllllling the thinggggggggggggggggg");
+			int num = rController.nextRound();
+			LOGGER.info(String.format("Picked number %d", num));
+			break;
+			
+		case "quit":
+			LOGGER.info("Thanks for playing");
+			return true;
+
+		// ============================
+		case "help":
+			printHelp();
+			break;
+
+		case "add":
+			parseAddPlayer(splitCmd);
+			break;
+
+		case "remove":
+			parseRemovePlayer(splitCmd);
+			break;
+
+		case "bet":
+			parseBet(splitCmd);
+			break;
+		default:
+			LOGGER.debug(command);
+			LOGGER.info("Option not recognized. Use help to see all commands..");
+		}
+		
+		return false;
+	}
+
 
 	private void parseAddPlayer(String[] splitCmd) {
 		if (splitCmd.length == 3) {
@@ -180,7 +182,7 @@ public class TextUI implements IObserver {
 
 	@Override
 	public void update(Event e) {
-		if (e instanceof BetResultEvent){
+		if (e instanceof BetResultEvent) {
 			LOGGER.info(e);
 		}
 	}
