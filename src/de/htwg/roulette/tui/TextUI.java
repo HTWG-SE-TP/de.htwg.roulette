@@ -12,7 +12,7 @@ import de.htwg.roulette.model.bets.*;
 public class TextUI {
 	private Controller rController;
 	private Scanner scanner;
-	private static final Logger log = LogManager.getLogger(TextUI.class.getName());
+	private static final Logger LOGGER = LogManager.getLogger(TextUI.class.getName());
 
 	public TextUI(Controller cont) {
 		rController = cont;
@@ -20,24 +20,24 @@ public class TextUI {
 	}
 
 	public void printUI() {
-		log.info("Welcome to Htwg Roulette, the best roulette game ever made");
+		LOGGER.info("Welcome to Htwg Roulette, the best roulette game ever made");
 		printHelp();
 	}
 
 	private void printHelp() {
-		log.info("Options during the game:");
-		log.info(String.format("%-20s - this menu", "help"));
-		log.info(String.format("%-20s - add a player", "add [name] [$]"));
-		log.info(String.format("%-20s - remove a player", "remove [name]"));
-		log.info(String.format("%-20s - place a bet menu", "bet [name] [$]"));
-		log.info(String.format("%-20s - next round", "nr"));
-		log.info(String.format("%-20s - ....", "quit"));
+		LOGGER.info("Options during the game:");
+		LOGGER.info(String.format("%-20s - this menu", "help"));
+		LOGGER.info(String.format("%-20s - add a player", "add [name] [$]"));
+		LOGGER.info(String.format("%-20s - remove a player", "remove [name]"));
+		LOGGER.info(String.format("%-20s - place a bet menu", "bet [name] [$]"));
+		LOGGER.info(String.format("%-20s - next round", "nr"));
+		LOGGER.info(String.format("%-20s - ....", "quit"));
 	}
 
 	private void printRound() {
-		log.info(String.format("======= Round %d =======\n", rController.getRound()));
+		LOGGER.info(String.format("======= Round %d =======", rController.getRound()));
 		for (User p : rController.getPlayers()) {
-			log.info(String.format("Player %s: %d$\n", p.getName(), p.getBalance()));
+			LOGGER.info(String.format("Player %s: %d$", p.getName(), p.getBalance()));
 		}
 	}
 
@@ -45,6 +45,7 @@ public class TextUI {
 		try {
 			return Integer.parseInt(input);
 		} catch (Exception ex) {
+			LOGGER.debug(ex);
 			return -1;
 		}
 	}
@@ -56,15 +57,15 @@ public class TextUI {
 		if (exit)
 			return true;
 
-		log.info("Round ended. Rollllllllling the thinggggggggggggggggg");
+		LOGGER.info("Round ended. Rollllllllling the thinggggggggggggggggg");
 		int num = rController.nextRound();
-		log.info(String.format("Picked number %d", num));
+		LOGGER.info(String.format("Picked number %d", num));
 
 		return false;
 	}
 
 	private boolean inputMenu() {
-		inputLoop: while (true) {
+		while (true) {
 			String command = scanner.nextLine();
 			String[] splitCmd = command.split(" ");
 
@@ -76,9 +77,9 @@ public class TextUI {
 			switch (splitCmd[0]) {
 
 			case "nr":
-				break inputLoop;
+				return false;
 			case "quit":
-				log.info("Thanks for playing\n");
+				LOGGER.info("Thanks for playing");
 				return true;
 
 			// ============================
@@ -97,11 +98,9 @@ public class TextUI {
 				parseBet(splitCmd);
 				break;
 			default:
-				log.info("Option not recognized. Use help to see all commands..");
+				LOGGER.info("Option not recognized. Use help to see all commands..");
 			}
 		}
-
-		return false;
 	}
 
 	private void parseAddPlayer(String[] splitCmd) {
@@ -110,24 +109,24 @@ public class TextUI {
 			int dollar = parseInt(splitCmd[2]);
 			if (dollar > 0) {
 				if (rController.addPlayer(name, dollar)) {
-					log.info(String.format("Player %s added!%n", name));
+					LOGGER.info(String.format("Player %s added!%n", name));
 					return;
 				}
 			}
 		}
-		log.info("Add syntax invalid");
+		LOGGER.info("Add syntax invalid");
 	}
 
 	private void parseRemovePlayer(String[] splitCmd) {
 		if (splitCmd.length == 2) {
 			String name = splitCmd[1];
 			if (rController.removePlayer(name)) {
-				log.info(String.format("Player %s removed!\n", name));
+				LOGGER.info(String.format("Player %s removed!", name));
 				return;
 			}
 
 		}
-		log.info("Remove syntax invalid");
+		LOGGER.info("Remove syntax invalid");
 	}
 
 	private void parseBet(String[] splitCmd) {
@@ -135,10 +134,40 @@ public class TextUI {
 			String name = splitCmd[1];
 			int dollar = parseInt(splitCmd[2]);
 			if (dollar > 0) {
-				AbstractBet bet = new Black(dollar);
-
+				printBetMenu();
+				AbstractBet bet = parseBetOptions(name, dollar);
+				
+				if (bet != null) {
+					rController.placeBet(name, bet);
+					return;
+				}
+					
 			}
 		}
-		log.info("Bet syntax invalid");
+		LOGGER.info("Bet syntax invalid/Bet not recognized");
+	}
+	
+	private void printBetMenu(){
+		LOGGER.info("Select your bet!");
+		LOGGER.info("Bets: num - Single Number, red - Red Numbers, black - Black Numbers");
+	}
+	
+	private AbstractBet parseBetOptions(String name, int dollar){
+		AbstractBet bet = null;
+		String betName = scanner.nextLine();
+		
+		switch (betName){
+		case "num":
+			LOGGER.info("Wich number?");
+			int num = scanner.nextInt();
+			bet = new SingleNumber(dollar, num);
+			break;
+		case "red":
+			bet = new Red(dollar);
+		case "black":
+			bet = new Black(dollar);
+		}
+				
+		return bet;
 	}
 }

@@ -1,11 +1,11 @@
-package de.htwg.roulette.misc;
+package de.htwg.roulette;
 
 import de.htwg.roulette.controller.Controller;
 import de.htwg.roulette.tui.TextUI;
 
-public class TestMain {
+public class Sudoku {
 	
-	private TestMain() {	
+	private Sudoku() {	
 	}
 
 	public static void main(String[] args) {

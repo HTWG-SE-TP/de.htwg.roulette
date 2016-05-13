@@ -64,6 +64,9 @@ public class Controller {
 	}
 
 	public boolean placeBet(String name, AbstractBet bet) {
+		if (name == null || bet == null)
+			return false;
+		
 		for (User p : players) {
 			if (p.getName().equals(name)){
 				if (checkBetConditions(bet, p))
