@@ -157,12 +157,12 @@ public class TextUI implements IObserver {
 
 	private void printBetMenu() {
 		LOGGER.info("Select your bet!");
-		LOGGER.info("Bets: num - Single Number, red - Red Numbers, black - Black Numbers");
+		LOGGER.info("Bets: num - Single Number, red, black, even, odd, lower - Lower half, upper - Upper Half");
 	}
 
 	private AbstractBet parseBetOptions(int dollar) {
 		AbstractBet bet = null;
-		String betName = scanner.nextLine();
+		String betName = scanner.nextLine().toLowerCase();
 
 		switch (betName) {
 		case "num":
@@ -175,6 +175,18 @@ public class TextUI implements IObserver {
 			break;
 		case "black":
 			bet = new Black(dollar);
+			break;
+		case "even":
+			bet = new Even(dollar);
+			break;
+		case "odd":
+			bet = new Odd(dollar);
+			break;
+		case "lower":
+			bet = new LowerHalf(dollar);
+			break;
+		case "upper":
+			bet = new UpperHalf(dollar);
 			break;
 		default:
 			LOGGER.info("Unknown bet option " + betName);

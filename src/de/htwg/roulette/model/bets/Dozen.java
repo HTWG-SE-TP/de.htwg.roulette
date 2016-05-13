@@ -1,7 +1,7 @@
 package de.htwg.roulette.model.bets;
 
 public class Dozen extends AbstractBet {
-	public enum Flag {
+	private enum Flag {
 		Premier, Milieu, Dernier
 	}
 
