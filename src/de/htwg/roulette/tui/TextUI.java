@@ -9,7 +9,7 @@ import de.htwg.roulette.controller.Controller;
 import de.htwg.roulette.model.*;
 import de.htwg.roulette.model.bets.*;
 
-public class TextUI {
+public class TextUI implements Observer {
 	private Controller rController;
 	private Scanner scanner;
 	private static final Logger LOGGER = LogManager.getLogger(TextUI.class.getName());
@@ -107,11 +107,10 @@ public class TextUI {
 		if (splitCmd.length == 3) {
 			String name = splitCmd[1];
 			int dollar = parseInt(splitCmd[2]);
-			if (dollar > 0) {
-				if (rController.addPlayer(name, dollar)) {
-					LOGGER.info(String.format("Player %s added!%n", name));
-					return;
-				}
+			if (dollar > 0 && rController.addPlayer(name, dollar)) {
+				LOGGER.info(String.format("Player %s added!%n", name));
+				return;
+
 			}
 		}
 		LOGGER.info("Add syntax invalid");
@@ -135,28 +134,27 @@ public class TextUI {
 			int dollar = parseInt(splitCmd[2]);
 			if (dollar > 0) {
 				printBetMenu();
-				AbstractBet bet = parseBetOptions(name, dollar);
-				
-				if (bet != null) {
-					rController.placeBet(name, bet);
+				AbstractBet bet = parseBetOptions(dollar);
+
+				if (rController.placeBet(name, bet)) {
 					return;
 				}
-					
+
 			}
 		}
 		LOGGER.info("Bet syntax invalid/Bet not recognized");
 	}
-	
-	private void printBetMenu(){
+
+	private void printBetMenu() {
 		LOGGER.info("Select your bet!");
 		LOGGER.info("Bets: num - Single Number, red - Red Numbers, black - Black Numbers");
 	}
-	
-	private AbstractBet parseBetOptions(String name, int dollar){
+
+	private AbstractBet parseBetOptions(int dollar) {
 		AbstractBet bet = null;
 		String betName = scanner.nextLine();
-		
-		switch (betName){
+
+		switch (betName) {
 		case "num":
 			LOGGER.info("Wich number?");
 			int num = scanner.nextInt();
@@ -164,10 +162,20 @@ public class TextUI {
 			break;
 		case "red":
 			bet = new Red(dollar);
+			break;
 		case "black":
 			bet = new Black(dollar);
+			break;
+		default:
+			LOGGER.info("Unknown bet option " + betName);
 		}
-				
+
 		return bet;
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
 	}
 }

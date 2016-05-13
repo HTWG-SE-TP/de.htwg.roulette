@@ -5,17 +5,19 @@ import java.util.*;
 import de.htwg.roulette.model.*;
 import de.htwg.roulette.model.bets.*;
 
-public class Controller {
+public class Controller  {
 
 	private Table table;
 	private Account bank;
 	private List<User> players;
 	private int roundCount = 1;
-
-	public Controller() {
+	private Observable observer;
+	
+	public Controller(Observable observ) {
 		bank = new Account("Bank", 0);
 		table = new Table(10, 1000);
 		players = new LinkedList<User>();
+		observer = observ;
 	}
 
 	public int nextRound() {
@@ -28,7 +30,9 @@ public class Controller {
 			int ball = u.getBalance();
 			for (AbstractBet bet : u.getBets()) {
 				int result = bet.betResult(number);
-
+				String resultInfo = generateBetString(u, bet, result);				
+				observer.notifyObservers(resultInfo);
+				
 				ball += result;
 				bank.setBalance(bank.getBalance() - result); // update bank's
 																// balance
@@ -69,7 +73,7 @@ public class Controller {
 		
 		for (User p : players) {
 			if (p.getName().equals(name)){
-				if (checkBetConditions(bet, p))
+				if (!checkBetConditions(bet, p))
 					return false;
 				p.addBet(bet);
 				return true;
@@ -86,6 +90,17 @@ public class Controller {
 		if (!table.checkBet(bet))
 			return false;
 		return true;
+	}
+	
+	private String generateBetString(User p, AbstractBet bet, int result){
+		String tmp;
+		if (result >= 0){
+			tmp = "won";
+		} else {
+			tmp = "lost";
+		}
+		
+		return String.format("%s %s %d$ with his bet on %s", p.getName(), tmp, result, bet.toString());
 	}
 
 	public List<User> getPlayers() {
