@@ -71,9 +71,9 @@ public class TextUI implements IObserver {
 		while (true) {
 			String command = scanner.nextLine();
 			String[] splitCmd = command.split(" ");
-
+			
 			// Validation
-			if (splitCmd.length == 0)
+			if (command.isEmpty() || splitCmd.length == 0)
 				continue;
 
 			// React
@@ -101,6 +101,7 @@ public class TextUI implements IObserver {
 				parseBet(splitCmd);
 				break;
 			default:
+				LOGGER.debug(command);
 				LOGGER.info("Option not recognized. Use help to see all commands..");
 			}
 		}

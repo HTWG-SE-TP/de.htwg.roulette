@@ -18,6 +18,7 @@ public class BetResultEvent implements Event {
 		resultInfo = String.format("%s %s %d$ with his bet on %s.", p.getName(), tmp, result, bet.getName());
 	}
 	
+	@Override
 	public String toString(){
 		return  resultInfo;
 	}
