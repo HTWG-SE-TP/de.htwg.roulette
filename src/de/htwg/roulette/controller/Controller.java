@@ -7,15 +7,17 @@ import java.util.List;
 
 import de.htwg.roulette.model.*;
 import de.htwg.roulette.model.bets.*;
+import de.htwg.util.Visitor.Visitor;
 import de.htwg.util.observer.Observable;
 
-public class Controller  {
+public class Controller implements de.htwg.util.Visitor.Visitable {
 
 	private Table table;
 	private Account bank;
 	private List<User> players;
 	private int roundCount = 1;
 	private Observable observer;
+	private Visitor visitor;
 	
 	public Controller(Observable observ) {
 		bank = new Account("Bank", 0);
@@ -32,18 +34,8 @@ public class Controller  {
 		observer.notifyObservers(new NextRoundEvent(number));
 		
 		for (User u : players) {
-			int ball = u.getBalance();
-			for (AbstractBet bet : u.getBets()) {
-				int result = bet.betResult(number);
-				BetResultEvent event = new BetResultEvent(u, bet, result);				
-				observer.notifyObservers(event);
-				
-				ball += result;
-				bank.setBalance(bank.getBalance() - result); // update bank's
-																// balance
-			}
-			u.clearBets();
-			u.setBalance(ball);
+			
+			calculateResult(u, bank, observer, number );
 		}
 
 		roundCount++;
@@ -102,5 +94,11 @@ public class Controller  {
 
 	public int getRound() {
 		return roundCount;
+	}
+
+	@Override
+	public void calculateResult(User player, Account bank, Observable observer, int number) {
+		visitor.visit(player, bank, observer, number);
+		
 	}
 }
