@@ -34,8 +34,7 @@ public class Controller implements de.htwg.util.Visitor.Visitable {
 		observer.notifyObservers(new NextRoundEvent(number));
 		
 		for (User u : players) {
-			
-			calculateResult(u, bank, observer, number );
+			calculateResult(u, bank, observer, number ); //Visitor Pattern
 		}
 
 		roundCount++;
