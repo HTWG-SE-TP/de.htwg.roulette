@@ -3,6 +3,7 @@ package de.htwg.roulette.model;
 import java.util.*;
 
 import de.htwg.roulette.model.bets.AbstractBet;
+import de.htwg.roulette.model.bets.IBet;
 
 public class Table {
 	public final static int FIELD_SIZE = 37;
@@ -14,7 +15,7 @@ public class Table {
 		maximum = max;
 	}
 	
-	public boolean checkBet(AbstractBet bet){
+	public boolean checkBet(IBet bet){
 		return bet.getStake() >= minimum && bet.getStake() <= maximum;
 	}
 }

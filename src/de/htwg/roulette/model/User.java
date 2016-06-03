@@ -9,7 +9,7 @@ import de.htwg.util.observer.Observable;
 
 
 public class User extends Account implements Visitor {	
-	private List<AbstractBet> currentBets;
+	private List<IBet> currentBets;
 	
 
 	public User(String newName, int newBalance) {
@@ -17,11 +17,11 @@ public class User extends Account implements Visitor {
 		currentBets = new LinkedList<>(); 
 	}	
 	
-	public List<AbstractBet> getBets() {
+	public List<IBet> getBets() {
 		return new LinkedList<>(currentBets);
 	}
 	
-	public void addBet(AbstractBet bet) {
+	public void addBet(IBet bet) {
 		currentBets.add(bet);
 	}
 	
@@ -31,7 +31,7 @@ public class User extends Account implements Visitor {
 	@Override
 	public void visit(Account bank, Observable observer, int number) {
 		int ball = this.getBalance();
-		for (AbstractBet bet : this.getBets()) {
+		for (IBet bet : this.getBets()) {
 			int result = bet.betResult(number);
 			BetResultEvent event = new BetResultEvent(this, bet, result);				
 			observer.notifyObservers(event);

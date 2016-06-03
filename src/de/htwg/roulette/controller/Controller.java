@@ -65,7 +65,7 @@ public class Controller implements de.htwg.util.Visitor.Visitable {
 		return false;
 	}
 
-	public boolean placeBet(String name, AbstractBet bet) {
+	public boolean placeBet(String name, IBet bet) {
 		if (name == null || bet == null)
 			return false;
 		
@@ -80,7 +80,7 @@ public class Controller implements de.htwg.util.Visitor.Visitable {
 		return false;
 	}
 
-	private boolean checkBetConditions(AbstractBet bet, User p) {
+	private boolean checkBetConditions(IBet bet, User p) {
 		if (bet.getStake() < 1)
 			return false;
 		if (p.getBalance() - bet.getStake() < 0)

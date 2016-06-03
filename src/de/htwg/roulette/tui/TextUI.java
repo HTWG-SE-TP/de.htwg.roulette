@@ -143,7 +143,7 @@ public class TextUI implements IObserver {
 			int dollar = parseInt(splitCmd[2]);
 			if (dollar > 0) {
 				printBetMenu();
-				AbstractBet bet = parseBetOptions(dollar);
+				IBet bet = parseBetOptions(dollar);
 
 				if (rController.placeBet(name, bet)) {
 					LOGGER.info("Bet added!");
@@ -158,12 +158,12 @@ public class TextUI implements IObserver {
 	private void printBetMenu() {
 		LOGGER.info("Select your bet!");
 		LOGGER.info("Bets: num - Single Number, red, black, even, odd, lower - Lower half,\n"
-				+ " upper - Upper Half" + "column - Column" + "corner - Corner" + "dozen - Dozen\n"
-				+ "first - First Four" + "single - Single Number" + "split - Split" + "street - Street");
+				+ " upper - Upper Half, column, corner, dozen, \n"
+				+ "first - First Four, split, street\n");
 	}
 
-	private AbstractBet parseBetOptions(int dollar) {
-		AbstractBet bet = null;
+	private IBet parseBetOptions(int dollar) {
+		IBet bet = null;
 		String betName = scanner.nextLine().toLowerCase();
 		int num;
 
@@ -211,11 +211,6 @@ public class TextUI implements IObserver {
 			break;
 		case "first":
 			bet = new FirstFour(dollar);
-			break;
-		case "single":
-			LOGGER.info("Which number?");
-			num = scanner.nextInt();
-			bet = new SingleNumber(dollar, num);
 			break;
 		case "split":
 			LOGGER.info("Enter two numbers");

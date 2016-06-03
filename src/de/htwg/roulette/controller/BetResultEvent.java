@@ -2,12 +2,13 @@ package de.htwg.roulette.controller;
 
 import de.htwg.roulette.model.User;
 import de.htwg.roulette.model.bets.AbstractBet;
+import de.htwg.roulette.model.bets.IBet;
 import de.htwg.util.observer.Event;
 
 public class BetResultEvent implements Event {
 	String resultInfo;
 
-	public BetResultEvent(User p, AbstractBet bet, int result) {
+	public BetResultEvent(User p, IBet bet, int result) {
 		String tmp;
 		if (result >= 0) {
 			tmp = "won";

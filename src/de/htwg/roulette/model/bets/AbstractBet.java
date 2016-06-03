@@ -1,6 +1,6 @@
 package de.htwg.roulette.model.bets;
 
-public abstract class AbstractBet {	
+public abstract class AbstractBet implements IBet {	
 	public AbstractBet(int money) {
 		setStake(money);
 	}
@@ -28,8 +28,6 @@ public abstract class AbstractBet {
 			return -stake;
 		}
 	}
-	
-	
 	
 	public int getQuote(){
 		return 36/getPossibleFields() - 1;
