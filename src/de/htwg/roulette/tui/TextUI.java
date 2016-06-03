@@ -157,17 +157,20 @@ public class TextUI implements IObserver {
 
 	private void printBetMenu() {
 		LOGGER.info("Select your bet!");
-		LOGGER.info("Bets: num - Single Number, red, black, even, odd, lower - Lower half, upper - Upper Half");
+		LOGGER.info("Bets: num - Single Number, red, black, even, odd, lower - Lower half,\n"
+				+ " upper - Upper Half" + "column - Column" + "corner - Corner" + "dozen - Dozen\n"
+				+ "first - First Four" + "single - Single Number" + "split - Split" + "street - Street");
 	}
 
 	private AbstractBet parseBetOptions(int dollar) {
 		AbstractBet bet = null;
 		String betName = scanner.nextLine().toLowerCase();
+		int num;
 
 		switch (betName) {
 		case "num":
 			LOGGER.info("Wich number?");
-			int num = scanner.nextInt();
+			num = scanner.nextInt();
 			bet = new SingleNumber(dollar, num);
 			break;
 		case "red":
@@ -187,6 +190,43 @@ public class TextUI implements IObserver {
 			break;
 		case "upper":
 			bet = new UpperHalf(dollar);
+			break;
+		case "column":
+			LOGGER.info("Which column?");
+			num = scanner.nextInt();
+			bet = new Column(dollar, num);
+			break;
+		case "corner":
+			LOGGER.info("Enter four adjacent numbers");
+			List<Integer> l = new LinkedList<>();
+			for(int i = 0; i < 4; i++){
+				l.add(scanner.nextInt());
+			}
+			bet = new Corner(dollar, l);
+			break;
+		case "dozen":
+			LOGGER.info("Enter Premier, Milieu or Dernier");
+			Dozen.Flag option = Dozen.Flag.valueOf(scanner.nextLine());
+			bet = new Dozen(dollar, option);
+			break;
+		case "first":
+			bet = new FirstFour(dollar);
+			break;
+		case "single":
+			LOGGER.info("Which number?");
+			num = scanner.nextInt();
+			bet = new SingleNumber(dollar, num);
+			break;
+		case "split":
+			LOGGER.info("Enter two numbers");
+			int firstnum = scanner.nextInt();
+			int secondnum = scanner.nextInt();
+			bet = new Split(dollar, firstnum, secondnum);
+			break;
+		case "street":
+			LOGGER.info("Enter beginning number of a street.");
+			num = scanner.nextInt();
+			bet = new Street(dollar, num);
 			break;
 		default:
 			LOGGER.info("Unknown bet option " + betName);

@@ -34,7 +34,11 @@ public class Controller implements de.htwg.util.Visitor.Visitable {
 		observer.notifyObservers(new NextRoundEvent(number));
 		
 		for (User u : players) {
-			calculateResult(u, bank, observer, number ); //Visitor Pattern
+			try{
+				calculateResult(u, bank, observer, number ); //Visitor Pattern
+			}catch(Exception e){
+				e.printStackTrace();
+			}
 		}
 
 		roundCount++;
@@ -97,7 +101,7 @@ public class Controller implements de.htwg.util.Visitor.Visitable {
 
 	@Override
 	public void calculateResult(User player, Account bank, Observable observer, int number) {
-		visitor.visit(player, bank, observer, number);
+		player.visit(bank, observer, number);
 		
 	}
 }
