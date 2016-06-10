@@ -133,18 +133,20 @@ public class TextUI implements IObserver {
 		if (splitCmd.length == 3) {
 			String name = splitCmd[1];
 			int dollar = parseInt(splitCmd[2]);
-			if (dollar > 0) 
+			if (dollar > 0)
 				rController.addPlayer(name, dollar);
+		} else {
+			LOGGER.info("Add syntax invalid");
 		}
-		LOGGER.info("Add syntax invalid");
 	}
 
 	private void parseRemovePlayer(String[] splitCmd) {
 		if (splitCmd.length == 2) {
 			String name = splitCmd[1];
 			rController.removePlayer(name);
+		} else {
+			LOGGER.info("Remove syntax invalid");
 		}
-		LOGGER.info("Remove syntax invalid");
 	}
 
 	private void parseBet(String[] splitCmd) {
@@ -256,13 +258,13 @@ public class TextUI implements IObserver {
 				LOGGER.info("Bet added");
 			else
 				LOGGER.info("Fail: Add bet");
-		} else if (e instanceof  PlayerEvent) {
+		} else if (e instanceof PlayerEvent) {
 			PlayerEvent pe = (PlayerEvent) e;
 			tmp = pe.added ? "added" : "removed";
 			if (pe.result)
-				LOGGER.info("Player %s %s!", pe.user, tmp);
+				LOGGER.info(String.format("Player %s %s!", pe.user, tmp));
 			else
-				LOGGER.info("Fail: Player %s %s", pe.user, tmp);
+				LOGGER.info("Player operation failed");
 		} else if (e instanceof NextRoundEvent) {
 			LOGGER.info(String.format("Picked number %d", ((NextRoundEvent) e).getResult()));
 		}
