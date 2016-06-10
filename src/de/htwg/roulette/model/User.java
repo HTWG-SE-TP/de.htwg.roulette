@@ -1,8 +1,9 @@
 package de.htwg.roulette.model;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
 
-import de.htwg.roulette.model.bets.*;
+import de.htwg.roulette.model.bets.IBet;
 import de.htwg.roulette.model.events.BetResultEvent;
 import de.htwg.util.Visitor.Visitor;
 import de.htwg.util.observer.Observable;

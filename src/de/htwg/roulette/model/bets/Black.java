@@ -1,7 +1,7 @@
 package de.htwg.roulette.model.bets;
 
-import java.util.List;
 import java.util.Arrays;
+import java.util.List;
 
 public class Black extends AbstractBet{
 private static List<Integer> blacknumbers = Arrays.asList

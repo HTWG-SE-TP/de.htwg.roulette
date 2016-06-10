@@ -1,8 +1,5 @@
 package de.htwg.roulette.model;
 
-import java.util.*;
-
-import de.htwg.roulette.model.bets.AbstractBet;
 import de.htwg.roulette.model.bets.IBet;
 
 public class Table {

@@ -1,13 +1,28 @@
 package de.htwg.roulette.tui;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Scanner;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import de.htwg.roulette.controller.Controller;
-import de.htwg.roulette.model.*;
-import de.htwg.roulette.model.bets.*;
+import de.htwg.roulette.model.User;
+import de.htwg.roulette.model.bets.Black;
+import de.htwg.roulette.model.bets.Column;
+import de.htwg.roulette.model.bets.Corner;
+import de.htwg.roulette.model.bets.Dozen;
+import de.htwg.roulette.model.bets.Even;
+import de.htwg.roulette.model.bets.FirstFour;
+import de.htwg.roulette.model.bets.IBet;
+import de.htwg.roulette.model.bets.LowerHalf;
+import de.htwg.roulette.model.bets.Odd;
+import de.htwg.roulette.model.bets.Red;
+import de.htwg.roulette.model.bets.SingleNumber;
+import de.htwg.roulette.model.bets.Split;
+import de.htwg.roulette.model.bets.Street;
+import de.htwg.roulette.model.bets.UpperHalf;
 import de.htwg.roulette.model.events.BetAddedEvent;
 import de.htwg.roulette.model.events.BetResultEvent;
 import de.htwg.roulette.model.events.NextRoundEvent;

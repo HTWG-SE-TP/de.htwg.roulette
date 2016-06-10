@@ -1,6 +1,8 @@
 package de.htwg.roulette.model.bets;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Corner extends AbstractBet{
 	private List<Integer> cornerNums;

@@ -4,9 +4,11 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import de.htwg.roulette.model.User;
 import de.htwg.roulette.model.bets.Black;
-import de.htwg.roulette.model.events.*;
+import de.htwg.roulette.model.events.BetAddedEvent;
+import de.htwg.roulette.model.events.BetResultEvent;
+import de.htwg.roulette.model.events.NextRoundEvent;
+import de.htwg.roulette.model.events.PlayerEvent;
 import de.htwg.util.observer.Event;
 
 public class EventTest {

@@ -6,12 +6,13 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import de.htwg.roulette.model.*;
-import de.htwg.roulette.model.bets.*;
+import de.htwg.roulette.model.Account;
+import de.htwg.roulette.model.Table;
+import de.htwg.roulette.model.User;
+import de.htwg.roulette.model.bets.IBet;
 import de.htwg.roulette.model.events.BetAddedEvent;
 import de.htwg.roulette.model.events.NextRoundEvent;
 import de.htwg.roulette.model.events.PlayerEvent;
-import de.htwg.roulette.tui.TextUI;
 import de.htwg.util.Visitor.Visitor;
 import de.htwg.util.observer.Observable;
 
@@ -83,13 +84,9 @@ public class Controller implements de.htwg.util.Visitor.Visitable {
 
 		} else {
 			for (User p : players) {
-				if (p.getName().equals(name)) {
-					if (!checkBetConditions(bet, p)) {
-						result = false;
-					} else {
-						p.addBet(bet);
-						result = true;
-					}
+				if (p.getName().equals(name) && checkBetConditions(bet, p)) {
+					p.addBet(bet);
+					result = true;
 					break;
 				}
 			}

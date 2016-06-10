@@ -1,7 +1,6 @@
 package de.htwg.roulette.model.events;
 
 import de.htwg.roulette.model.User;
-import de.htwg.roulette.model.bets.AbstractBet;
 import de.htwg.roulette.model.bets.IBet;
 import de.htwg.util.observer.Event;
 

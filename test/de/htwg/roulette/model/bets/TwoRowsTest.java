@@ -1,10 +1,8 @@
 package de.htwg.roulette.model.bets;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-
-import de.htwg.roulette.model.bets.Dozen.Flag;
 
 public class TwoRowsTest {
 
