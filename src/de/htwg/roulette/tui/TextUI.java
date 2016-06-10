@@ -8,8 +8,10 @@ import org.apache.logging.log4j.Logger;
 import de.htwg.roulette.controller.Controller;
 import de.htwg.roulette.model.*;
 import de.htwg.roulette.model.bets.*;
+import de.htwg.roulette.model.events.BetAddedEvent;
 import de.htwg.roulette.model.events.BetResultEvent;
 import de.htwg.roulette.model.events.NextRoundEvent;
+import de.htwg.roulette.model.events.PlayerEvent;
 import de.htwg.util.observer.Event;
 import de.htwg.util.observer.IObserver;
 
@@ -72,7 +74,7 @@ public class TextUI implements IObserver {
 		case "nr":
 			parseNextRount();
 			break;
-			
+
 		case "quit":
 			LOGGER.info("Thanks for playing");
 			return true;
@@ -92,23 +94,23 @@ public class TextUI implements IObserver {
 		case "bet":
 			parseBet(splitCmd);
 			break;
-			
+
 		default:
 			LOGGER.debug(command);
 			LOGGER.info("Option not recognized. Use help to see all commands..");
 		}
-		
+
 		return false;
 	}
-	
-	private boolean isLineInvalid(String command, String[] splitCmd){
+
+	private boolean isLineInvalid(String command, String[] splitCmd) {
 		return command.isEmpty() || splitCmd.length == 0;
 	}
 
-	private void parseNextRount(){
+	private void parseNextRount() {
 		LOGGER.info("Round ended. Rollllllllling the thinggggggggggggggggg");
 		rController.nextRound();
-		//Print new Round
+		// Print new Round
 		printRound();
 	}
 
@@ -145,11 +147,8 @@ public class TextUI implements IObserver {
 				printBetMenu();
 				IBet bet = parseBetOptions(dollar);
 
-				if (rController.placeBet(name, bet)) {
-					LOGGER.info("Bet added!");
-					return;
-				}
-
+				// Response over Observer
+				rController.placeBet(name, bet);
 			}
 		}
 		LOGGER.info("Bet syntax invalid/Bet not recognized");
@@ -158,8 +157,7 @@ public class TextUI implements IObserver {
 	private void printBetMenu() {
 		LOGGER.info("Select your bet!");
 		LOGGER.info("Bets: num - Single Number, red, black, even, odd, lower - Lower half,\n"
-				+ " upper - Upper Half, column, corner, dozen, \n"
-				+ "first - First Four, split, street\n");
+				+ " upper - Upper Half, column, corner, dozen, \n" + "first - First Four, split, street\n");
 	}
 
 	private IBet parseBetOptions(int dollar) {
@@ -199,7 +197,7 @@ public class TextUI implements IObserver {
 		case "corner":
 			LOGGER.info("Enter four adjacent numbers");
 			List<Integer> l = new LinkedList<>();
-			for(int i = 0; i < 4; i++){
+			for (int i = 0; i < 4; i++) {
 				l.add(scanner.nextInt());
 			}
 			bet = new Corner(dollar, l);
@@ -232,9 +230,32 @@ public class TextUI implements IObserver {
 
 	@Override
 	public void update(Event e) {
+		String tmp;
 		if (e instanceof BetResultEvent) {
-			LOGGER.info(e);
-		} else if (e instanceof NextRoundEvent){
+			BetResultEvent bre = (BetResultEvent) e;
+			if (bre.result >= 0) {
+				tmp = "won";
+			} else {
+				tmp = "lost";
+			}
+
+			String resultInfo = String.format("%s %s %d$ with his bet on %s.", bre.user, tmp, bre.result,
+					bre.bet.getName());
+			LOGGER.info(resultInfo);
+		} else if (e instanceof BetAddedEvent) {
+			BetAddedEvent bae = (BetAddedEvent) e;
+			if (bae.result)
+				LOGGER.info("Bet added");
+			else
+				LOGGER.info("Fail: Add bet");
+		} else if (e instanceof  PlayerEvent) {
+			PlayerEvent pe = (PlayerEvent) e;
+			tmp = pe.added ? "added" : "removed";
+			if (pe.result)
+				LOGGER.info("Player %s %s!", pe.user, tmp);
+			else
+				LOGGER.info("Fail: Player %s %s", pe.user, tmp);
+		} else if (e instanceof NextRoundEvent) {
 			LOGGER.info(String.format("Picked number %d", ((NextRoundEvent) e).getResult()));
 		}
 	}
