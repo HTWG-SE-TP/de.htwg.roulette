@@ -5,11 +5,11 @@ import java.util.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import de.htwg.roulette.controller.BetResultEvent;
 import de.htwg.roulette.controller.Controller;
-import de.htwg.roulette.controller.NextRoundEvent;
 import de.htwg.roulette.model.*;
 import de.htwg.roulette.model.bets.*;
+import de.htwg.roulette.model.events.BetResultEvent;
+import de.htwg.roulette.model.events.NextRoundEvent;
 import de.htwg.util.observer.Event;
 import de.htwg.util.observer.IObserver;
 

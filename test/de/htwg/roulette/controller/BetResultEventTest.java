@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import de.htwg.roulette.model.User;
 import de.htwg.roulette.model.bets.Black;
+import de.htwg.roulette.model.events.BetResultEvent;
 
 public class BetResultEventTest {
 

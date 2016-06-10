@@ -1,4 +1,4 @@
-package de.htwg.roulette.controller;
+package de.htwg.roulette.model.events;
 
 import de.htwg.roulette.model.User;
 import de.htwg.roulette.model.bets.AbstractBet;

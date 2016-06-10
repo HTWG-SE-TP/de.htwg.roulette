@@ -7,6 +7,7 @@ import java.util.List;
 
 import de.htwg.roulette.model.*;
 import de.htwg.roulette.model.bets.*;
+import de.htwg.roulette.model.events.NextRoundEvent;
 import de.htwg.util.Visitor.Visitor;
 import de.htwg.util.observer.Observable;
 
