@@ -17,6 +17,7 @@ public class FirstFourTest {
 		assertEquals(true, bet.checkBet(3));
 		assertEquals(false, bet.checkBet(36));
 		assertEquals(false, bet.checkBet(50));
+		assertEquals(false, bet.checkBet(-7));
 	}
 
 }
