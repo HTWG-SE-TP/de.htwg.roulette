@@ -14,7 +14,7 @@ public class Corner extends AbstractBet{
 		cornerNums = new LinkedList<>(nums);
 	}
 	
-	private boolean validate(List<Integer> nums){
+	public static boolean validate(List<Integer> nums){
 		Collections.sort(nums);
 		int min = nums.get(0);
 		if(nums.get(1) != min+1 || nums.get(2) != min + 3 || nums.get(3) != min+4)
