@@ -118,11 +118,8 @@ public class TextUI implements IObserver {
 		if (splitCmd.length == 3) {
 			String name = splitCmd[1];
 			int dollar = parseInt(splitCmd[2]);
-			if (dollar > 0 && rController.addPlayer(name, dollar)) {
-				LOGGER.info(String.format("Player %s added!%n", name));
-				return;
-
-			}
+			if (dollar > 0) 
+				rController.addPlayer(name, dollar);
 		}
 		LOGGER.info("Add syntax invalid");
 	}
@@ -130,11 +127,7 @@ public class TextUI implements IObserver {
 	private void parseRemovePlayer(String[] splitCmd) {
 		if (splitCmd.length == 2) {
 			String name = splitCmd[1];
-			if (rController.removePlayer(name)) {
-				LOGGER.info(String.format("Player %s removed!", name));
-				return;
-			}
-
+			rController.removePlayer(name);
 		}
 		LOGGER.info("Remove syntax invalid");
 	}

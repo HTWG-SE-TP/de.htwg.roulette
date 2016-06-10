@@ -1,13 +1,13 @@
 package de.htwg.roulette.controller;
 
-
-
 import java.util.LinkedList;
 import java.util.List;
 
 import de.htwg.roulette.model.*;
 import de.htwg.roulette.model.bets.*;
+import de.htwg.roulette.model.events.BetAddedEvent;
 import de.htwg.roulette.model.events.NextRoundEvent;
+import de.htwg.roulette.model.events.PlayerEvent;
 import de.htwg.util.Visitor.Visitor;
 import de.htwg.util.observer.Observable;
 
@@ -19,7 +19,7 @@ public class Controller implements de.htwg.util.Visitor.Visitable {
 	private int roundCount = 1;
 	private Observable observer;
 	private Visitor visitor;
-	
+
 	public Controller(Observable observ) {
 		bank = new Account("Bank", 0);
 		table = new Table(10, 1000);
@@ -33,11 +33,11 @@ public class Controller implements de.htwg.util.Visitor.Visitable {
 		// Wetten prüfen, Konto korrigieren
 		int number = (int) Math.round(Math.random() * Table.FIELD_SIZE);
 		observer.notifyObservers(new NextRoundEvent(number));
-		
+
 		for (User u : players) {
-			try{
-				calculateResult(u, bank, observer, number ); //Visitor Pattern
-			}catch(Exception e){
+			try {
+				calculateResult(u, bank, observer, number); // Visitor Pattern
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
@@ -45,40 +45,53 @@ public class Controller implements de.htwg.util.Visitor.Visitable {
 		roundCount++;
 	}
 
-	public boolean addPlayer(String name, int balance) {
+	public void addPlayer(String name, int balance) {
+		boolean alreadyAdded = false;
 		for (User p : players) {
 			if (p.getName().equals(name))
-				return false;
+				alreadyAdded = true;
+			break;
 		}
 
-		User newUser = new User(name, balance);
-		players.add(newUser);
-		return true;
+		if (!alreadyAdded) {
+			User newUser = new User(name, balance);
+			players.add(newUser);
+		}
+		observer.notifyObservers(new PlayerEvent(name, true, !alreadyAdded));
 	}
 
-	public boolean removePlayer(String name) {
+	public void removePlayer(String name) {
+		boolean result = false;
 		for (User p : players) {
 			if (p.getName().equals(name)) {
 				players.remove(p);
-				return true;
+				result = true;
+				break;
 			}
 		}
-		return false;
+		observer.notifyObservers(new PlayerEvent(name, false, result));
 	}
 
-	public boolean placeBet(String name, IBet bet) {
-		if (name == null || bet == null)
-			return false;
-		
-		for (User p : players) {
-			if (p.getName().equals(name)){
-				if (!checkBetConditions(bet, p))
-					return false;
-				p.addBet(bet);
-				return true;
-			}		
+	public void placeBet(String name, IBet bet) {
+		boolean result = false;
+		if (name == null || bet == null) {
+			result = false;
+
+		} else {
+			for (User p : players) {
+				if (p.getName().equals(name)) {
+					if (!checkBetConditions(bet, p)) {
+						result = false;
+					} else {
+						p.addBet(bet);
+						result = true;
+					}
+					break;
+				}
+			}
 		}
-		return false;
+
+		observer.notifyObservers(new BetAddedEvent(name, bet, result));
 	}
 
 	private boolean checkBetConditions(IBet bet, User p) {
@@ -103,6 +116,6 @@ public class Controller implements de.htwg.util.Visitor.Visitable {
 	@Override
 	public void calculateResult(User player, Account bank, Observable observer, int number) {
 		player.visit(bank, observer, number);
-		
+
 	}
 }

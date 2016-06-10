@@ -21,12 +21,13 @@ public class ControllerTest {
 	public void test() {
 		assertEquals(1, cont.getRound());
 
-		assertEquals(true, cont.addPlayer("Test", 100));
-		assertEquals(false, cont.addPlayer("Test", 100));
-		assertEquals(true, cont.addPlayer("Test2", 100));
+		cont.addPlayer("Test", 100);
+		cont.addPlayer("Test", 100);
+		cont.addPlayer("Test2", 100);
 		
 		assertEquals(2, cont.getPlayers().size());
 		
+
 		Black bet = new Black(10);
 		assertEquals(false, cont.placeBet(null, bet));
 		assertEquals(false, cont.placeBet("Test", null));
@@ -39,12 +40,13 @@ public class ControllerTest {
 		
 		assertEquals(true, cont.placeBet("Test", bet));
 		
+		
 		cont.nextRound();		
 		assertEquals(2, cont.getRound());
 		
 		
-		assertEquals(false, cont.removePlayer("WrongName"));
-		assertEquals(true, cont.removePlayer("Test"));
+		cont.removePlayer("WrongName");
+		cont.removePlayer("Test");
 		assertEquals(1, cont.getPlayers().size());
 	
 	}
