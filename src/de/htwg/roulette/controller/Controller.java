@@ -3,16 +3,20 @@ package de.htwg.roulette.controller;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import de.htwg.roulette.model.*;
 import de.htwg.roulette.model.bets.*;
 import de.htwg.roulette.model.events.BetAddedEvent;
 import de.htwg.roulette.model.events.NextRoundEvent;
 import de.htwg.roulette.model.events.PlayerEvent;
+import de.htwg.roulette.tui.TextUI;
 import de.htwg.util.Visitor.Visitor;
 import de.htwg.util.observer.Observable;
 
 public class Controller implements de.htwg.util.Visitor.Visitable {
-
+	private static final Logger LOGGER = LogManager.getLogger(Controller.class.getName());
 	private Table table;
 	private Account bank;
 	private List<User> players;
@@ -38,7 +42,7 @@ public class Controller implements de.htwg.util.Visitor.Visitable {
 			try {
 				calculateResult(u, bank, observer, number); // Visitor Pattern
 			} catch (Exception e) {
-				e.printStackTrace();
+				LOGGER.error(e);
 			}
 		}
 
@@ -111,6 +115,12 @@ public class Controller implements de.htwg.util.Visitor.Visitable {
 
 	public int getRound() {
 		return roundCount;
+	}
+	public int getBetCount() {
+		int sum = 0; 
+		for (User p : players)
+			sum += p.getBets().size();
+		return sum;
 	}
 
 	@Override

@@ -19,7 +19,8 @@ public class EventTest {
 		event = new BetResultEvent(new User("", 50), new Black(50), 10);
 		event = new BetAddedEvent("", new Black(50), true);
 		event = new PlayerEvent("", true, true);
-		event = new NextRoundEvent(1);
+		NextRoundEvent nr = new NextRoundEvent(1);
+		assertEquals(1, nr.getResult());
 	}
 
 }
