@@ -8,7 +8,7 @@ public class Corner extends AbstractBet{
 	public Corner(int money, List<Integer> nums) {
 		super(money);
 				
-		if (nums == null || nums.size() != 4){
+		if (nums == null || nums.size() != 4 || !validate(nums)){
 			throw new IllegalArgumentException("Corner list not valid");
 		}
 		cornerNums = new LinkedList<>(nums);
