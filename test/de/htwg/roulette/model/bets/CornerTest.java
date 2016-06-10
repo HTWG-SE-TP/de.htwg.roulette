@@ -33,6 +33,15 @@ public class CornerTest {
 			 catched = true;
 		 }
 		 assertEquals(catched, true);
+		 
+		 catched = false;
+		 try {
+			 bet = new Corner(50, Arrays.asList(1258)); 
+		 } catch (Exception ex){
+			 catched = true;
+		 }
+		 assertEquals(catched, true);
+		 
 	}
 	
 	@Test
