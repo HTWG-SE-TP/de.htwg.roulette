@@ -1,10 +1,8 @@
 package de.htwg.roulette.model.bets;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-
-import de.htwg.roulette.model.bets.Dozen.Flag;
 
 public class SingeNumberTest {
 
@@ -13,6 +11,7 @@ public class SingeNumberTest {
 		SingleNumber bet = new SingleNumber(50, 0);
 
 		assertEquals(1, bet.getPossibleFields());
+		assertEquals(bet.getName().isEmpty(), false);
 
 		assertEquals(true, bet.checkBet(0));
 		assertEquals(false, bet.checkBet(17));

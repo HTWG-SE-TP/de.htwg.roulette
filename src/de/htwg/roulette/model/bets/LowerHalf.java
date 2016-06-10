@@ -13,7 +13,12 @@ public class LowerHalf extends AbstractBet {
 
 	@Override
 	boolean checkBet(int number) {
-		return (number >= 1 && number <= 18);
+		return number >= 1 && number <= 18;
 	}
 
+	@Override
+	public
+	String getName() {
+		return "Lower Half";
+	}
 }

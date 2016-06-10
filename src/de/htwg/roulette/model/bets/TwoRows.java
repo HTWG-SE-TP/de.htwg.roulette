@@ -27,4 +27,9 @@ public class TwoRows extends AbstractBet {
 		return 6;
 	}
 
+	@Override
+	public String getName() {
+		return "Two rows";
+	}
+
 }

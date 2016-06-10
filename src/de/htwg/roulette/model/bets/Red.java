@@ -14,13 +14,19 @@ public class Red extends AbstractBet {
 
 	@Override
 	boolean checkBet(int number) {
-		return (redNumbers.contains(number));
+		return redNumbers.contains(number);
 	}
 
 	@Override
 	int getPossibleFields() {
 		return redNumbers.size();
 
+	}
+	
+	@Override
+	public
+	String getName() {
+		return "red Numbers";
 	}
 
 }

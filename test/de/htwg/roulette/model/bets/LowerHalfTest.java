@@ -1,6 +1,6 @@
 package de.htwg.roulette.model.bets;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,6 +17,8 @@ public class LowerHalfTest {
 	@Test
 	public void test() {
 		assertEquals(bet.getPossibleFields(), 18);
+		assertEquals(bet.getName().isEmpty(), false);
+		
 		assertEquals(false, bet.checkBet(-5));
 		assertEquals(false, bet.checkBet(0));
 		

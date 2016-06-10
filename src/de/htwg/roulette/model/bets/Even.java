@@ -10,7 +10,7 @@ public class Even extends AbstractBet {
 	boolean checkBet(int number) {	
 		if (!numInRange(number)) 
 			return false;
-		return (number%2 == 0);
+		return number%2 == 0;
 	}
 
 	@Override
@@ -18,4 +18,9 @@ public class Even extends AbstractBet {
 		return 18; //number of even fields
 	}
 
+	@Override
+	public
+	String getName() {
+		return "even Numbers";
+	}
 }

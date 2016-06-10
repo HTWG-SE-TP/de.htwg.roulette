@@ -1,10 +1,8 @@
 package de.htwg.roulette.model.bets;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-
-import de.htwg.roulette.model.bets.Dozen.Flag;
 
 public class StreetTest {
 
@@ -13,6 +11,7 @@ public class StreetTest {
 		Street bet = new Street(50, 2);
 
 		assertEquals(3, bet.getPossibleFields());
+		assertEquals(bet.getName().isEmpty(), false);
 
 		assertEquals(false, bet.checkBet(0));
 		

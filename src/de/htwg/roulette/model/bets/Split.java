@@ -18,5 +18,11 @@ public class Split extends AbstractBet {
 	int getPossibleFields() {
 		return 18; //number of even fields
 	}
+	
+	@Override
+	public
+	String getName() {
+		return String.format("two Numbers (%d-%d)", num[0], num[1]);
+	}
 
 }

@@ -14,12 +14,20 @@ private static List<Integer> blacknumbers = Arrays.asList
 
 	@Override
 	boolean checkBet(int number) {
-		return (blacknumbers.contains(number));
+		return blacknumbers.contains(number);
 	}
 
 	@Override
 	int getPossibleFields() {
 		return blacknumbers.size();
 	}
+
+	@Override
+	public
+	String getName() {
+		return "black Numbers";
+	}
+	
+	
 
 }

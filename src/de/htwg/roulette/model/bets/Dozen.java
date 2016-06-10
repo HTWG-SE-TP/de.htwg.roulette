@@ -27,5 +27,11 @@ public class Dozen extends AbstractBet {
 	int getPossibleFields() {
 		return 12;
 	}
+	
+	@Override
+	public
+	String getName() {
+		return "a Dozen";
+	}
 
 }

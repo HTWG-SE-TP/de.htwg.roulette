@@ -13,10 +13,19 @@ public class Corner extends AbstractBet{
 		}
 		cornerNums = new LinkedList<>(nums);
 	}
+	
+	private boolean validate(List<Integer> nums){
+		Collections.sort(nums);
+		int min = nums.get(0);
+		if(nums.get(1) != min+1 || nums.get(2) != min + 3 || nums.get(3) != min+4)
+			return false;
+		return true;
+		
+	}
 
 	@Override
 	boolean checkBet(int number) {
-		return (cornerNums.contains(number));
+		return cornerNums.contains(number);
 	}
 
 	@Override
@@ -24,4 +33,9 @@ public class Corner extends AbstractBet{
 		return 4;
 	}
 
+	@Override
+	public
+	String getName() {
+		return "a Corner";
+	}
 }
