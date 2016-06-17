@@ -18,7 +18,8 @@ public class EventTest {
 
 	@Test
 	public void test() {
-		event = new BetResultEvent(new User("", 50), new Black(50), 10);
+		Account bank = new Account("LOL", 5000);
+		event = new BetResultEvent(new User(bank, "", 50), new Black(50), 10);
 		event = new BetAddedEvent("", new Black(50), true);
 		event = new PlayerEvent("", true, true);
 		NextRoundEvent nr = new NextRoundEvent(1);

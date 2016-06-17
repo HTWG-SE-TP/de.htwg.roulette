@@ -40,7 +40,7 @@ public class Controller implements de.htwg.util.Visitor.Visitable {
 
 		for (User u : players) {
 			try {
-				calculateResult(u, bank, observer, number); // Visitor Pattern
+				calculateResult(u, observer, number); // Visitor Pattern
 			} catch (Exception e) {
 				LOGGER.error(e);
 			}
@@ -58,7 +58,7 @@ public class Controller implements de.htwg.util.Visitor.Visitable {
 		}
 
 		if (!alreadyAdded) {
-			User newUser = new User(name, balance);
+			User newUser = new User(bank, name, balance);
 			players.add(newUser);
 		}
 		observer.notifyObservers(new PlayerEvent(name, true, !alreadyAdded));
@@ -120,8 +120,8 @@ public class Controller implements de.htwg.util.Visitor.Visitable {
 	}
 
 	@Override
-	public void calculateResult(User player, Account bank, Observable observer, int number) {
-		player.visit(bank, observer, number);
+	public void calculateResult(Visitor player, Observable observer, int number) {
+		player.visit(observer, number);
 
 	}
 }
