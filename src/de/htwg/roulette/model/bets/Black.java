@@ -13,7 +13,7 @@ private static List<Integer> blacknumbers = Arrays.asList
 	}
 
 	@Override
-	boolean checkBet(int number) {
+	public boolean checkBet(int number) {
 		return blacknumbers.contains(number);
 	}
 
