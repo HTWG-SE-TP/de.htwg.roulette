@@ -1,11 +1,14 @@
 package de.htwg.roulette.gui;
 
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 
 public class gui extends JFrame implements ActionListener {
 	JPanel mainPanel;
@@ -20,10 +23,13 @@ public class gui extends JFrame implements ActionListener {
 		mainPanel = new JPanel();
 		tablePanel = new JPanel();
 		tablePanel.setLayout(new GridLayout(15, 1));
+		tablePanel.setBackground(Color.GREEN);
 		
 		for(int i = 0; i < fields.length; i++){
-			fields[i] = new JLabel();
-			fields[i].setText(String.format("%d", i));
+			fields[i] = new JLabel(String.format("%d", i), SwingConstants.CENTER);
+			fields[i].setBackground(Color.GREEN);
+			fields[i].setOpaque(true);
+			fields[i].setPreferredSize(new Dimension(50, 50));
 		}
 		
 		for(int i = 0; i < lines.length; i++){
@@ -41,8 +47,8 @@ public class gui extends JFrame implements ActionListener {
 		mainPanel.add(tablePanel);
 		
 		this.add(mainPanel);
-		setResizable(true);
 		pack();
+		setResizable(true);
 		setVisible(true);
 	}
 
