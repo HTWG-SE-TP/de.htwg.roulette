@@ -16,10 +16,10 @@ public class TwoRows extends AbstractBet {
 			return false;
 		
 		//Trick: 1-6 is now 0-5. Then we can make a division to compare it.
-		int inputFactor = Math.floorDiv((number - 1), 6);
-		int shouldFactor = Math.floorDiv((rowNum - 1), 6);
+		int inputFactor = Math.floorDiv(number - 1, 6);
+		int shouldFactor = Math.floorDiv(rowNum - 1, 6);
 		
-		return (inputFactor == shouldFactor);
+		return inputFactor == shouldFactor;
 	}
 
 	@Override

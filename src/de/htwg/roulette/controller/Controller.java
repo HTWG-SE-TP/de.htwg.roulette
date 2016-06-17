@@ -23,7 +23,6 @@ public class Controller implements de.htwg.util.Visitor.Visitable {
 	private List<User> players;
 	private int roundCount = 1;
 	private Observable observer;
-	private Visitor visitor;
 
 	public Controller(Observable observ) {
 		bank = new Account("Bank", 0);

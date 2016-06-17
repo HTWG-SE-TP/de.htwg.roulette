@@ -2,9 +2,9 @@ package de.htwg.roulette.model.bets;
 
 public class Column extends AbstractBet {
 	enum Rows {
-		one,
-		two,
-		three
+		ONE,
+		TWO,
+		THREE
 	}
 	
 	private Rows row;
@@ -18,11 +18,11 @@ public class Column extends AbstractBet {
 		super(money);
 		
 		if (r == 34){
-			row = Rows.one;
+			row = Rows.ONE;
 		} else if (r == 35)  {
-			row = Rows.two;
+			row = Rows.TWO;
 		} else if (r == 36)  {
-			row = Rows.three;
+			row = Rows.THREE;
 		} else {
 			throw new IllegalArgumentException("Row number invalid");
 		}
@@ -34,10 +34,10 @@ public class Column extends AbstractBet {
 		if (!numInRange(number)) 
 			return false;
 		
-		if (row == Rows.one) {
+		if (row == Rows.ONE) {
 			return number % 3 == 1; 
 			
-		} else if (row == Rows.two) {
+		} else if (row == Rows.TWO) {
 			return number % 3 == 2; 
 			
 		} else {
