@@ -23,6 +23,7 @@ public class gui extends JFrame implements ActionListener {
 		setTitle("SS16-02-Roulette");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainPanel = new JPanel();
+		mainPanel.setLayout(new GridLayout(1, 3));
 		tablePanel = new JPanel();
 		tablePanel.setLayout(new GridLayout(15, 1));
 		
