@@ -36,7 +36,7 @@ public class User extends Account implements Visitor {
 		int ball = this.getBalance();
 		for (IBet bet : this.getBets()) {
 			int result = bet.betResult(number);
-			BetResultEvent event = new BetResultEvent(this, bet, result);				
+			BetResultEvent event = new BetResultEvent(this.getName(), bet, result);				
 			observer.notifyObservers(event);
 			
 			updateBank(bank, result);
