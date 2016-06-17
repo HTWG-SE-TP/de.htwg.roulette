@@ -13,7 +13,8 @@ public class AccountTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		user = new User("Test", 10);
+		Account bank = new Account("LOL", 5000);
+		user = new User(bank, "Test", 10);
 	}
 
 	@Test

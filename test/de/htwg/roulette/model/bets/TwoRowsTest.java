@@ -4,35 +4,34 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-public class StreetTest {
+public class TwoRowsTest {
 
 	@Test
 	public void test() {
-		Street bet = new Street(50, 2);
+		TwoRows bet = new TwoRows(50, 2);
 
-		assertEquals(3, bet.getPossibleFields());
-		assertEquals(bet.getName().isEmpty(), false);
+		assertEquals(6, bet.getPossibleFields());
 
 		assertEquals(false, bet.checkBet(0));
 		
 		assertEquals(true, bet.checkBet(1));
 		assertEquals(true, bet.checkBet(2));
-		assertEquals(true, bet.checkBet(3));
+		assertEquals(true, bet.checkBet(6));
 		
-		assertEquals(false, bet.checkBet(4));
+		assertEquals(false, bet.checkBet(7));
 		assertEquals(false, bet.checkBet(20));
 		assertEquals(false, bet.checkBet(99));
 		
 		
-		bet = new Street(50, 20);
+		bet = new TwoRows(50, 20);
 		assertEquals(false, bet.checkBet(0));
 		
 		assertEquals(false, bet.checkBet(18));
 		assertEquals(true, bet.checkBet(19));
 		assertEquals(true, bet.checkBet(20));
-		assertEquals(true, bet.checkBet(21));
+		assertEquals(true, bet.checkBet(24));
 		
-		assertEquals(false, bet.checkBet(22));
+		assertEquals(false, bet.checkBet(25));
 		assertEquals(false, bet.checkBet(99));
 	}
 

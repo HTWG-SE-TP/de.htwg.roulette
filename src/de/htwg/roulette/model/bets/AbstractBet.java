@@ -7,10 +7,12 @@ public abstract class AbstractBet implements IBet {
 	
 	abstract boolean checkBet(int number);
 	abstract int getPossibleFields();
+	@Override
 	public abstract String getName();
 	
 	private int stake;
  	
+	@Override
 	public int getStake() {
 		return stake;
 	}
@@ -19,6 +21,7 @@ public abstract class AbstractBet implements IBet {
 		this.stake = stake;
 	}
 	
+	@Override
 	public int betResult(int number){
 		boolean result = checkBet(number);
 		

@@ -27,7 +27,5 @@ private static List<Integer> blacknumbers = Arrays.asList
 	String getName() {
 		return "black Numbers";
 	}
-	
-	
-
 }
+	

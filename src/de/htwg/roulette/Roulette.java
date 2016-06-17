@@ -1,7 +1,5 @@
 package de.htwg.roulette;
 
-import java.util.Observer;
-
 import de.htwg.roulette.controller.Controller;
 import de.htwg.roulette.tui.TextUI;
 import de.htwg.util.observer.Observable;
