@@ -73,8 +73,16 @@ public class TextUI implements IObserver {
 	}
 
 	public boolean process() {
-		String command = scanner.nextLine();
-		return inputMenu(command);
+		boolean result = false;
+
+		try {
+			String command = scanner.nextLine();
+			result = inputMenu(command);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		return result;
 	}
 
 	private boolean inputMenu(String command) {
@@ -159,6 +167,7 @@ public class TextUI implements IObserver {
 
 				// Response over Observer
 				rController.placeBet(name, bet);
+				return;
 			}
 		}
 		LOGGER.info("Bet syntax invalid/Bet not recognized");
