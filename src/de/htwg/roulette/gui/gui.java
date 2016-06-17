@@ -15,6 +15,8 @@ import de.htwg.roulette.model.bets.*;
 public class gui extends JFrame implements ActionListener {
 	JPanel mainPanel;
 	JPanel tablePanel;
+	JPanel choosePanel;
+	JPanel statisticPanel;
 	JLabel[] fields = new JLabel[37];
 	JPanel[] lines = new JPanel[13];
 	
@@ -24,6 +26,25 @@ public class gui extends JFrame implements ActionListener {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainPanel = new JPanel();
 		mainPanel.setLayout(new GridLayout(1, 3));
+		
+		initializeTable();
+		initializeChoosePanel();
+		initializeStatisticPanel();
+		
+		this.add(mainPanel);
+		pack();
+		setResizable(true);
+		setVisible(true);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+
+	
+	}
+	
+	private void initializeTable(){
 		tablePanel = new JPanel();
 		tablePanel.setLayout(new GridLayout(15, 1));
 		
@@ -57,18 +78,16 @@ public class gui extends JFrame implements ActionListener {
 		}
 		
 		mainPanel.add(tablePanel);
-		
-		this.add(mainPanel);
-		pack();
-		setResizable(true);
-		setVisible(true);
 	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-
 	
+	private void initializeChoosePanel(){
+		choosePanel = new JPanel();
+		
+	}
+	
+	private void initializeStatisticPanel(){
+		
+		
 	}
 	
 	public static void main(final String[] args){
