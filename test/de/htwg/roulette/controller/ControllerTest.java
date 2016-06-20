@@ -10,7 +10,7 @@ import de.htwg.util.observer.Observable;
 
 public class ControllerTest {
 
-	private Controller cont;
+	private IController cont;
 
 	@Before
 	public void setUp() throws Exception {

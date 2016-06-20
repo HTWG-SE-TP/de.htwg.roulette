@@ -16,7 +16,7 @@ import de.htwg.roulette.model.events.PlayerEvent;
 import de.htwg.util.Visitor.Visitor;
 import de.htwg.util.observer.Observable;
 
-public class Controller implements de.htwg.util.Visitor.Visitable {
+public class Controller implements IController {
 	private static final Logger LOGGER = LogManager.getLogger(Controller.class.getName());
 	private Table table;
 	private Account bank;
@@ -31,6 +31,7 @@ public class Controller implements de.htwg.util.Visitor.Visitable {
 		observer = observ;
 	}
 
+	@Override
 	public void nextRound() {
 		// Rand
 		// Gehen durch alle Spieler
@@ -49,6 +50,7 @@ public class Controller implements de.htwg.util.Visitor.Visitable {
 		roundCount++;
 	}
 
+	@Override
 	public void addPlayer(String name, int balance) {
 		boolean alreadyAdded = false;
 		for (User p : players) {
@@ -64,6 +66,7 @@ public class Controller implements de.htwg.util.Visitor.Visitable {
 		observer.notifyObservers(new PlayerEvent(name, true, !alreadyAdded));
 	}
 
+	@Override
 	public void removePlayer(String name) {
 		boolean result = false;
 		for (User p : players) {
@@ -76,6 +79,7 @@ public class Controller implements de.htwg.util.Visitor.Visitable {
 		observer.notifyObservers(new PlayerEvent(name, false, result));
 	}
 
+	@Override
 	public void placeBet(String name, IBet bet) {
 		boolean result = false;
 		if (name == null || bet == null) {
@@ -104,14 +108,17 @@ public class Controller implements de.htwg.util.Visitor.Visitable {
 		return true;
 	}
 
+	@Override
 	public List<User> getPlayers() {
 		// Deep copy
 		return new LinkedList<>(players);
 	}
 
+	@Override
 	public int getRound() {
 		return roundCount;
 	}
+	@Override
 	public int getBetCount() {
 		int sum = 0; 
 		for (User p : players)

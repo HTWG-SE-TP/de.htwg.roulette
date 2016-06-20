@@ -7,7 +7,7 @@ import java.util.Scanner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import de.htwg.roulette.controller.Controller;
+import de.htwg.roulette.controller.IController;
 import de.htwg.roulette.model.User;
 import de.htwg.roulette.model.bets.Black;
 import de.htwg.roulette.model.bets.Column;
@@ -31,11 +31,11 @@ import de.htwg.util.observer.Event;
 import de.htwg.util.observer.IObserver;
 
 public class TextUI implements IObserver {
-	private Controller rController;
+	private IController rController;
 	private Scanner scanner;
 	private static final Logger LOGGER = LogManager.getLogger(TextUI.class.getName());
 
-	public TextUI(Controller cont) {
+	public TextUI(IController cont) {
 		rController = cont;
 		scanner = new Scanner(System.in);
 	}
