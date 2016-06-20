@@ -8,7 +8,8 @@ import de.htwg.util.Visitor.Visitor;
 import de.htwg.util.observer.Observable;
 
 public interface IController extends de.htwg.util.Visitor.Visitable {
-
+	void create(Observable observ);
+	
 	void nextRound();
 	void addPlayer(String name, int balance);
 	void removePlayer(String name);

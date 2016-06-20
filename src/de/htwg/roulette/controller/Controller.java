@@ -23,8 +23,9 @@ public class Controller implements IController {
 	private List<User> players;
 	private int roundCount = 1;
 	private Observable observer;
-
-	public Controller(Observable observ) {
+	
+	@Override
+	public void create(Observable observ) {
 		bank = new Account("Bank", 0);
 		table = new Table(10, 1000);
 		players = new LinkedList<User>();
@@ -131,4 +132,6 @@ public class Controller implements IController {
 		player.visit(observer, number);
 
 	}
+
+
 }
