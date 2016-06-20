@@ -19,7 +19,7 @@ public class Roulette {
 		//Injection
 		Injector injector = Guice.createInjector(new RouletteModule());
 		IController controller = injector.getInstance(IController.class);
-		controller.create(mainObserver);
+		controller.create(mainObserver, injector);
 
 		TextUI tui = new TextUI(controller);
 		mainObserver.addObserver(tui);

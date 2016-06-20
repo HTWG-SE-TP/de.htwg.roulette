@@ -6,7 +6,11 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.google.inject.Injector;
+import com.google.inject.Singleton;
+
 import de.htwg.roulette.model.Account;
+import de.htwg.roulette.model.IUser;
 import de.htwg.roulette.model.Table;
 import de.htwg.roulette.model.User;
 import de.htwg.roulette.model.bets.IBet;
@@ -16,20 +20,24 @@ import de.htwg.roulette.model.events.PlayerEvent;
 import de.htwg.util.Visitor.Visitor;
 import de.htwg.util.observer.Observable;
 
+@Singleton
 public class Controller implements IController {
 	private static final Logger LOGGER = LogManager.getLogger(Controller.class.getName());
 	private Table table;
 	private Account bank;
-	private List<User> players;
+	private List<IUser> players;
 	private int roundCount = 1;
+	
 	private Observable observer;
+	private Injector injector;
 	
 	@Override
-	public void create(Observable observ) {
+	public void create(Observable observ, Injector inj) {
 		bank = new Account("Bank", 0);
 		table = new Table(10, 1000);
-		players = new LinkedList<User>();
+		players = new LinkedList<IUser>();
 		observer = observ;
+		injector = inj;
 	}
 
 	@Override
@@ -40,7 +48,7 @@ public class Controller implements IController {
 		int number = (int) Math.round(Math.random() * Table.FIELD_SIZE);
 		observer.notifyObservers(new NextRoundEvent(number));
 
-		for (User u : players) {
+		for (IUser u : players) {
 			try {
 				calculateResult(u, observer, number); // Visitor Pattern
 			} catch (Exception e) {
@@ -54,14 +62,15 @@ public class Controller implements IController {
 	@Override
 	public void addPlayer(String name, int balance) {
 		boolean alreadyAdded = false;
-		for (User p : players) {
+		for (IUser p : players) {
 			if (p.getName().equals(name))
 				alreadyAdded = true;
 			break;
 		}
 
 		if (!alreadyAdded) {
-			User newUser = new User(bank, name, balance);
+			IUser newUser = injector.getInstance(IUser.class);
+			newUser.create(bank, name, balance);
 			players.add(newUser);
 		}
 		observer.notifyObservers(new PlayerEvent(name, true, !alreadyAdded));
@@ -70,7 +79,7 @@ public class Controller implements IController {
 	@Override
 	public void removePlayer(String name) {
 		boolean result = false;
-		for (User p : players) {
+		for (IUser p : players) {
 			if (p.getName().equals(name)) {
 				players.remove(p);
 				result = true;
@@ -87,7 +96,7 @@ public class Controller implements IController {
 			result = false;
 
 		} else {
-			for (User p : players) {
+			for (IUser p : players) {
 				if (p.getName().equals(name) && checkBetConditions(bet, p)) {
 					p.addBet(bet);
 					result = true;
@@ -99,7 +108,7 @@ public class Controller implements IController {
 		observer.notifyObservers(new BetAddedEvent(name, bet, result));
 	}
 
-	private boolean checkBetConditions(IBet bet, User p) {
+	private boolean checkBetConditions(IBet bet, IUser p) {
 		if (bet.getStake() < 1)
 			return false;
 		if (p.getBalance() - bet.getStake() < 0)
@@ -110,7 +119,7 @@ public class Controller implements IController {
 	}
 
 	@Override
-	public List<User> getPlayers() {
+	public List<IUser> getPlayers() {
 		// Deep copy
 		return new LinkedList<>(players);
 	}
@@ -122,7 +131,7 @@ public class Controller implements IController {
 	@Override
 	public int getBetCount() {
 		int sum = 0; 
-		for (User p : players)
+		for (IUser p : players)
 			sum += p.getBets().size();
 		return sum;
 	}

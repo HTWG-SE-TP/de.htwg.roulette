@@ -8,6 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import de.htwg.roulette.controller.IController;
+import de.htwg.roulette.model.IUser;
 import de.htwg.roulette.model.User;
 import de.htwg.roulette.model.bets.Black;
 import de.htwg.roulette.model.bets.Column;
@@ -58,7 +59,7 @@ public class TextUI implements IObserver {
 
 	private void printRound() {
 		LOGGER.info(String.format("======= Round %d =======", rController.getRound()));
-		for (User p : rController.getPlayers()) {
+		for (IUser p : rController.getPlayers()) {
 			LOGGER.info(String.format("Player %s: %d$", p.getName(), p.getBalance()));
 		}
 	}

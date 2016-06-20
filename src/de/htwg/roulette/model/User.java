@@ -9,28 +9,39 @@ import de.htwg.util.Visitor.Visitor;
 import de.htwg.util.observer.Observable;
 
 
-public class User extends Account implements Visitor {	
+public class User extends Account implements IUser {	
 	private List<IBet> currentBets;
 	private Account bank;
 	
 
 	public User(Account bank, String newName, int newBalance) {
-		super(newName, newBalance);
-		currentBets = new LinkedList<>();
-		this.bank = bank;
+		super("", 0);
+		//Pseduo
 	}	
 	
+	public void create(Account bank, String newName, int newBalance){
+		setName(newName);
+		setBalance(newBalance);
+		
+		currentBets = new LinkedList<>();
+		this.bank = bank;
+	}
+	
+	@Override
 	public List<IBet> getBets() {
 		return new LinkedList<>(currentBets);
 	}
 	
+	@Override
 	public void addBet(IBet bet) {
 		currentBets.add(bet);
 	}
 	
+	@Override
 	public void clearBets(){
 		currentBets.clear();
 	}
+
 	@Override
 	public void visit(Observable observer, int number) {
 		int ball = this.getBalance();
@@ -47,6 +58,7 @@ public class User extends Account implements Visitor {
 
 	}
 
+	@Override
 	public void updateBank(Account bank, int result) {
 		bank.setBalance(bank.getBalance() - result); // update bank's balance
 		
