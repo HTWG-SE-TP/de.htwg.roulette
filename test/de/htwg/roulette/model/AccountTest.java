@@ -14,7 +14,9 @@ public class AccountTest {
 	@Before
 	public void setUp() throws Exception {
 		Account bank = new Account("LOL", 5000);
-		user = new User(bank, "Test", 10);
+		user = new User();
+		user.create(bank, "Test", 10);
+		
 	}
 
 	@Test

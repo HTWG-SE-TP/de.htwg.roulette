@@ -5,16 +5,20 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.google.inject.Guice;
+
+import de.htwg.roulette.RouletteModule;
 import de.htwg.roulette.model.bets.Black;
 import de.htwg.util.observer.Observable;
 
 public class ControllerTest {
 
-	private Controller cont;
+	private IController cont;
 
 	@Before
 	public void setUp() throws Exception {
-		cont = new Controller(new Observable());
+		cont = new Controller();
+		cont.create(new Observable(), Guice.createInjector(new RouletteModule()));
 	}
 
 	@Test
