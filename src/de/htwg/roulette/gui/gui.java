@@ -109,7 +109,7 @@ public class gui extends JFrame {
 	}
 	
 	public static void main(final String[] args){
-		JFrame myApp = new gui();
+		new gui();
 	}
 
 }
