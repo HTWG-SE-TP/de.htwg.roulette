@@ -14,7 +14,7 @@ public class User extends Account implements IUser {
 	private Account bank;
 	
 
-	public User(Account bank, String newName, int newBalance) {
+	public User() {
 		super("", 0);
 		//Pseduo
 	}	
