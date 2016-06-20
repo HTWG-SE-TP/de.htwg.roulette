@@ -12,6 +12,7 @@ public class Roulette {
 	public static void main(String[] args) {
 		//Init
 		Observable mainObserver = new Observable();
+		
 		TextUI tui = new TextUI(new Controller(mainObserver));
 		mainObserver.addObserver(tui);
 		tui.printInitalUI();
