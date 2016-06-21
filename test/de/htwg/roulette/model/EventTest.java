@@ -23,7 +23,7 @@ public class EventTest {
 		event = new BetAddedEvent("", new Black(50), true);
 		event = new PlayerEvent("", true, true);
 		NextRoundEvent nr = new NextRoundEvent(1);
-		assertEquals(1, nr.getResult());
+		assertEquals(1, nr.getRoundNo());
 	}
 
 }

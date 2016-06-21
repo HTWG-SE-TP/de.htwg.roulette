@@ -276,7 +276,7 @@ public class TextUI implements IObserver {
 			else
 				LOGGER.info("Player operation failed");
 		} else if (e instanceof NextRoundEvent) {
-			LOGGER.info(String.format("Picked number %d", ((NextRoundEvent) e).getResult()));
+			LOGGER.info(String.format("Picked number %d", ((NextRoundEvent) e).getRoundNo()));
 		}
 	}
 }

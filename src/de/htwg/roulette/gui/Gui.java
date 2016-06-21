@@ -13,18 +13,28 @@ import javax.swing.*;
 import javax.swing.border.Border;
 
 import de.htwg.roulette.model.bets.*;
+import de.htwg.roulette.model.events.BetAddedEvent;
+import de.htwg.roulette.model.events.BetResultEvent;
+import de.htwg.roulette.model.events.NextRoundEvent;
+import de.htwg.roulette.model.events.PlayerEvent;
+import de.htwg.util.observer.Event;
+import de.htwg.util.observer.IObserver;
 
-public class gui extends JFrame {
+public class Gui extends JFrame implements IObserver {
 	JPanel mainPanel;
 	JPanel tablePanel;
 	JPanel choosePanel;
 	JPanel statisticPanel;
 	JLabel[] fields = new JLabel[37];
 	JPanel[] lines = new JPanel[13];
+	JList<String> playerList = new JList<>();
+	JList<String> betList = new JList<>();
+	JLabel roundNo = new JLabel("Round: 0");
 	Color starbucks = new Color(0x006633);
 	
 	
-	public gui(){
+	
+	public Gui(){
 		setTitle("SS16-02-Roulette");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainPanel = new JPanel();
@@ -103,13 +113,67 @@ public class gui extends JFrame {
 	
 	private void initializeStatisticPanel(){
 		statisticPanel = new JPanel();
+		statisticPanel.setLayout(new GridLayout(3,1));
 		
+		JPanel playerPanel = new JPanel();
+		playerPanel.add(new JLabel("Players:"));
+		playerPanel.add(playerList);
+		statisticPanel.add(playerPanel);
+		
+		JPanel betPanel = new JPanel();
+		betPanel.add(new JLabel("Bets:"));
+		betPanel.add(betList);
+		statisticPanel.add(betPanel);
+		
+		JPanel roundPanel = new JPanel();
+		roundPanel.add(roundNo);
+		statisticPanel.add(roundPanel);
 		
 		mainPanel.add(statisticPanel);
 	}
 	
-	public static void main(final String[] args){
-		new gui();
+	@Override
+	public void update(Event e) {
+		String tmp;
+		if (e instanceof BetResultEvent) {
+			BetResultEvent bre = (BetResultEvent) e;
+			if (bre.result >= 0) {
+				tmp = "won";
+			} else {
+				tmp = "lost";
+			}
+
+			String resultInfo = String.format("%s %s %d$ with his bet on %s.", bre.user, tmp, bre.result,
+					bre.bet.getName());
+			
+		} else if (e instanceof BetAddedEvent) {
+			BetAddedEvent bae = (BetAddedEvent) e;
+			if (bae.result){
+				
+			} else {
+				
+			}
+		} else if (e instanceof PlayerEvent) {
+			PlayerEvent pe = (PlayerEvent) e;
+			tmp = pe.added ? "added" : "removed";
+			if (pe.result){
+				
+			} else {
+				
+			}
+				
+		} else if (e instanceof NextRoundEvent) {
+			NextRoundEvent ne = (NextRoundEvent) e;
+			roundNo.setText("Round: " + ne.getRoundNo());
+		}
+		
 	}
+	
+	public static void main(final String[] args){
+		new Gui();
+	}
+
+
+	
 
 }
