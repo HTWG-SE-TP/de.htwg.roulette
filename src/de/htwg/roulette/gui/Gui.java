@@ -27,8 +27,8 @@ public class Gui extends JFrame implements IObserver {
 	JPanel statisticPanel;
 	JLabel[] fields = new JLabel[37];
 	JPanel[] lines = new JPanel[13];
-	JList<String> playerList = new JList<>();
-	JList<String> betList = new JList<>();
+	DefaultListModel<String> playerList = new DefaultListModel<>();
+	DefaultListModel<String>betList = new DefaultListModel<>();
 	JLabel roundNo = new JLabel("Round: 0");
 	Color starbucks = new Color(0x006633);
 	
@@ -111,25 +111,34 @@ public class Gui extends JFrame implements IObserver {
 		mainPanel.add(choosePanel);
 	}
 	
+	private JPanel createPanelList(String name, DefaultListModel model){
+		JPanel panel = new JPanel();
+		panel.setLayout(new BorderLayout());
+		panel.setBorder(BorderFactory.createLineBorder(Color.black));
+		panel.add(new JLabel(name), BorderLayout.NORTH);	
+		panel.add(new JList<>(model), BorderLayout.CENTER);
+		return panel;
+	}
 	private void initializeStatisticPanel(){
 		statisticPanel = new JPanel();
 		statisticPanel.setLayout(new GridLayout(3,1));
 		
-		JPanel playerPanel = new JPanel();
-		playerPanel.add(new JLabel("Players:"));
-		playerPanel.add(playerList);
-		statisticPanel.add(playerPanel);
+		//Players
+		statisticPanel.add(createPanelList("Players:", playerList));
 		
-		JPanel betPanel = new JPanel();
-		betPanel.add(new JLabel("Bets:"));
-		betPanel.add(betList);
-		statisticPanel.add(betPanel);
+		//Bets
+		statisticPanel.add(createPanelList("Bets:", betList));
 		
 		JPanel roundPanel = new JPanel();
-		roundPanel.add(roundNo);
+		roundPanel.setLayout(new BorderLayout());
+		roundPanel.add(roundNo, BorderLayout.NORTH);
 		statisticPanel.add(roundPanel);
 		
 		mainPanel.add(statisticPanel);
+		
+		
+		playerList.addElement("John Doe");
+		betList.addElement("Deutschland vor noch ein Tor");
 	}
 	
 	@Override
