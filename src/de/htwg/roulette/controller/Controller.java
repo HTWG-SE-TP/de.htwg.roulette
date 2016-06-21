@@ -46,7 +46,6 @@ public class Controller implements IController {
 		// Gehen durch alle Spieler
 		// Wetten prüfen, Konto korrigieren
 		int number = (int) Math.round(Math.random() * Table.FIELD_SIZE);
-		observer.notifyObservers(new NextRoundEvent(number));
 
 		for (IUser u : players) {
 			try {
@@ -57,6 +56,7 @@ public class Controller implements IController {
 		}
 
 		roundCount++;
+		observer.notifyObservers(new NextRoundEvent(number));
 	}
 
 	@Override

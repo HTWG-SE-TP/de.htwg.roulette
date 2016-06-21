@@ -4,6 +4,7 @@ import com.google.inject.*;
 
 import de.htwg.roulette.controller.Controller;
 import de.htwg.roulette.controller.IController;
+import de.htwg.roulette.gui.Gui;
 import de.htwg.roulette.tui.TextUI;
 import de.htwg.util.observer.Observable;
 
@@ -21,6 +22,10 @@ public class Roulette {
 		IController controller = injector.getInstance(IController.class);
 		controller.create(mainObserver, injector);
 
+		//Starting gui
+		Gui gui = new Gui(controller, mainObserver);
+		
+		//Starting tui
 		TextUI tui = new TextUI(controller);
 		mainObserver.addObserver(tui);
 		tui.printInitalUI();

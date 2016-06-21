@@ -68,8 +68,4 @@ public class Gui extends JFrame implements IObserver {
 	public static void main(final String[] args){
 		new Gui(null, new Observable());
 	}
-
-
-	
-
 }

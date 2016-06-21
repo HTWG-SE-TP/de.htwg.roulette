@@ -17,9 +17,13 @@ public class PanelStatistics extends JPanel implements IObserver {
 
 	DefaultListModel<String> playerList = new DefaultListModel<>();
 	DefaultListModel<String> betList = new DefaultListModel<>();
-	JLabel roundNo = new JLabel("Round: 0");
+	JLabel roundNo = new JLabel();
+	JLabel lastRoll = new JLabel();
+	IController rController;
 	
-	public PanelStatistics(IController rController){
+	public PanelStatistics(IController cont){
+		rController = cont;
+		
 		this.setLayout(new GridLayout(3,1));
 		
 		//Players
@@ -31,9 +35,11 @@ public class PanelStatistics extends JPanel implements IObserver {
 		JPanel roundPanel = new JPanel();
 		roundPanel.setLayout(new BorderLayout());
 		roundPanel.add(roundNo, BorderLayout.NORTH);
+		roundPanel.add(lastRoll, BorderLayout.SOUTH);
 		this.add(roundPanel);
 			
-		
+		//Init and dummy data
+		updateInfos(0);
 		playerList.addElement("John Doe");
 		betList.addElement("Deutschland vor noch ein Tor");
 	}
@@ -80,8 +86,12 @@ public class PanelStatistics extends JPanel implements IObserver {
 				
 		} else if (e instanceof NextRoundEvent) {
 			NextRoundEvent ne = (NextRoundEvent) e;
-			roundNo.setText("Round: " + ne.getRoundNo());
+			updateInfos(ne.getRolledNo());
 		}
-		
+	}
+	
+	private void updateInfos(int rolled){
+		roundNo.setText("Round: " + rController.getRound());
+		lastRoll.setText("Rolled: " + rolled);
 	}
 }

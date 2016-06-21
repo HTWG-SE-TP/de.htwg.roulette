@@ -8,7 +8,7 @@ public class NextRoundEvent implements Event {
 		this.num = num;
 	}
 	
-	public int getRoundNo(){
+	public int getRolledNo(){
 		return num;
 	}
 }
