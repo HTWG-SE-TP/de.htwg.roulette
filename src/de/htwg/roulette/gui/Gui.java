@@ -111,7 +111,7 @@ public class Gui extends JFrame implements IObserver {
 		mainPanel.add(choosePanel);
 	}
 	
-	private JPanel createPanelList(String name, DefaultListModel model){
+	private JPanel createPanelList(String name, DefaultListModel<String> model){
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
 		panel.setBorder(BorderFactory.createLineBorder(Color.black));
