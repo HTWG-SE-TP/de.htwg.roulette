@@ -7,6 +7,7 @@ import java.awt.GridLayout;
 import javax.swing.*;
 
 import de.htwg.roulette.controller.IController;
+import de.htwg.roulette.model.IUser;
 import de.htwg.roulette.model.events.BetAddedEvent;
 import de.htwg.roulette.model.events.BetResultEvent;
 import de.htwg.roulette.model.events.NextRoundEvent;
@@ -41,7 +42,7 @@ public class PanelStatistics extends JPanel implements IObserver {
 		//Init and dummy data
 		updateInfos(0);
 		playerList.addElement("John Doe");
-		betList.addElement("Deutschland vor noch ein Tor");
+		betList.addElement("Dummy");
 	}
 	
 	
@@ -77,16 +78,18 @@ public class PanelStatistics extends JPanel implements IObserver {
 			}
 		} else if (e instanceof PlayerEvent) {
 			PlayerEvent pe = (PlayerEvent) e;
-			tmp = pe.added ? "added" : "removed";
-			if (pe.result){
-				
-			} else {
-				
-			}
+			updatePlayers();
 				
 		} else if (e instanceof NextRoundEvent) {
 			NextRoundEvent ne = (NextRoundEvent) e;
 			updateInfos(ne.getRolledNo());
+		}
+	}
+	
+	private void updatePlayers(){
+		playerList.clear();
+		for (IUser p : rController.getPlayers()) {
+			playerList.addElement(String.format("Player %s: %d$", p.getName(), p.getBalance()));
 		}
 	}
 	
