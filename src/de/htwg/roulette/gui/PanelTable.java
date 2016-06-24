@@ -11,14 +11,17 @@ import de.htwg.roulette.model.bets.Black;
 import de.htwg.util.observer.Event;
 import de.htwg.util.observer.IObserver;
 
+@SuppressWarnings("serial")
 public class PanelTable extends JPanel implements IObserver {
 	JLabel[] fields = new JLabel[37];
 	JPanel[] lines = new JPanel[13];
 	Color starbucks = new Color(0x006633);
+	Color red4 = new Color(0x8b0000);
 	
 	
 	public PanelTable(IController rController){
 		this.setLayout(new GridLayout(13, 1));
+		this.setBackground(starbucks);
 		
 		for(int i = 0; i < fields.length; i++){
 			Black bet = new Black(i);
@@ -27,7 +30,7 @@ public class PanelTable extends JPanel implements IObserver {
 			if(bet.checkBet(i)){
 				fields[i].setBackground(Color.BLACK);
 			}else{
-				fields[i].setBackground(Color.RED);
+				fields[i].setBackground(red4);
 			}
 			fields[i].setForeground(Color.WHITE);
 			fields[i].setOpaque(true);

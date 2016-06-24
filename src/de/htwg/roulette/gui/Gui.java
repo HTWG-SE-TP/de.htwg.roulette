@@ -38,6 +38,7 @@ public class Gui extends JFrame implements IObserver {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainPanel = new JPanel();
 		mainPanel.setLayout(new GridLayout(1, 3));
+		mainPanel.setBackground(new Color(0x006633));
 		
 		choosePanel = new PanelChoose(rController);
 		mainPanel.add(choosePanel);
@@ -63,9 +64,5 @@ public class Gui extends JFrame implements IObserver {
 	@Override
 	public void update(Event e) {
 		//Needed here?
-	}
-	
-	public static void main(final String[] args){
-		new Gui(null, new Observable());
 	}
 }

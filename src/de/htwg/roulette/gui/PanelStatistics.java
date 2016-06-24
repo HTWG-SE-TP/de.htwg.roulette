@@ -2,6 +2,8 @@ package de.htwg.roulette.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 
 import javax.swing.*;
@@ -14,6 +16,7 @@ import de.htwg.roulette.model.events.NextRoundEvent;
 import de.htwg.roulette.model.events.PlayerEvent;
 import de.htwg.util.observer.*;
 
+@SuppressWarnings("serial")
 public class PanelStatistics extends JPanel implements IObserver {
 
 	DefaultListModel<String> playerList = new DefaultListModel<>();
@@ -21,6 +24,9 @@ public class PanelStatistics extends JPanel implements IObserver {
 	JLabel roundNo = new JLabel();
 	JLabel lastRoll = new JLabel();
 	IController rController;
+	static Color grey4 = new Color(0x5E5E5E);
+	Color red4 = new Color(0x8b0000);
+	private int defaultPara = 1000;
 	
 	public PanelStatistics(IController cont){
 		rController = cont;
@@ -30,15 +36,52 @@ public class PanelStatistics extends JPanel implements IObserver {
 		//Players
 		this.add(createPanelList("Players:", playerList));
 		
-		//Bets
-		this.add(createPanelList("Bets:", betList));
+
+		
+		//Lower Panerl
+		JPanel cmdPanel = new JPanel();
+		cmdPanel.setLayout(new GridLayout(2, 2));
+		cmdPanel.setBackground(Color.BLACK);
+		JButton btn = createButt("Next Round");
+		cmdPanel.add(btn);
+		btn.addActionListener(e -> cont.nextRound());
+		
+		btn = createButt("Please Help Me");
+		btn.addActionListener(e -> callHelpBox());
+		cmdPanel.add(btn);
+		
+				
+		btn = createButt("Add Player");
+		btn.addActionListener(e -> {
+			String in = JOptionPane.showInputDialog("Enter Name:");
+			if(in != null)
+				cont.addPlayer(in, defaultPara);
+		});
+		
+		cmdPanel.add(btn);
+		
+		btn = createButt("Remove Player");
+		btn.addActionListener(e -> {
+			
+		});
+		cmdPanel.add(btn);
+		
+
 		
 		JPanel roundPanel = new JPanel();
 		roundPanel.setLayout(new BorderLayout());
+		roundPanel.setBackground(Color.BLACK);
+		
+		roundNo.setForeground(Color.red);
+		lastRoll.setForeground(Color.red);
+		
 		roundPanel.add(roundNo, BorderLayout.NORTH);
 		roundPanel.add(lastRoll, BorderLayout.SOUTH);
+		roundPanel.add(cmdPanel, BorderLayout.CENTER);
 		this.add(roundPanel);
-			
+		
+		//Bets
+		this.add(createPanelList("Bets:", betList));
 		//Init and dummy data
 		updateInfos(0);
 		playerList.addElement("John Doe");
@@ -46,13 +89,38 @@ public class PanelStatistics extends JPanel implements IObserver {
 	}
 	
 	
+	private void callHelpBox() {
+		String text = "What the fuck is going on here?\n"
+				+ "add a player, place bets and finally:\n"
+				+ "KEEP ROLLIN' ROLLIN'";
+		JOptionPane.showMessageDialog(null, text);
+	}
+
+
 	private JPanel createPanelList(String name, DefaultListModel<String> model){
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
 		panel.setBorder(BorderFactory.createLineBorder(Color.black));
-		panel.add(new JLabel(name), BorderLayout.NORTH);	
-		panel.add(new JList<>(model), BorderLayout.CENTER);
+		panel.setBackground(Color.BLACK);
+		
+		JLabel lbl = new JLabel(name);
+		lbl.setForeground(Color.red);
+		panel.add(lbl, BorderLayout.NORTH);	
+		
+		JList<String> list = new JList<>(model);
+		list.setBackground(Color.BLACK);
+		list.setForeground(red4);
+		panel.add(list, BorderLayout.CENTER);
 		return panel;
+	}
+	
+	private JButton createButt(String text){
+		JButton btn = new JButton(text);
+		btn.setForeground(Color.WHITE);
+		btn.setContentAreaFilled(false);
+		btn.setBorder(BorderFactory.createLineBorder(Color.white));
+		btn.setFocusPainted(false);
+		return btn;
 	}
 	
 	@Override
@@ -85,6 +153,8 @@ public class PanelStatistics extends JPanel implements IObserver {
 			updateInfos(ne.getRolledNo());
 		}
 	}
+	
+	
 	
 	private void updatePlayers(){
 		playerList.clear();
