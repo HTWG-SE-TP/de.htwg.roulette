@@ -80,7 +80,7 @@ public class TextUI implements IObserver {
 			String command = scanner.nextLine();
 			result = inputMenu(command);
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			LOGGER.fatal(ex);
 		}
 
 		return result;

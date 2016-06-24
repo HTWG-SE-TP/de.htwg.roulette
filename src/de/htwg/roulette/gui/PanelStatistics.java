@@ -10,6 +10,7 @@ import javax.swing.*;
 
 import de.htwg.roulette.controller.IController;
 import de.htwg.roulette.model.IUser;
+import de.htwg.roulette.model.bets.IBet;
 import de.htwg.roulette.model.events.BetAddedEvent;
 import de.htwg.roulette.model.events.BetResultEvent;
 import de.htwg.roulette.model.events.NextRoundEvent;
@@ -84,8 +85,9 @@ public class PanelStatistics extends JPanel implements IObserver {
 		this.add(createPanelList("Bets:", betList));
 		//Init and dummy data
 		updateInfos(0);
-		playerList.addElement("John Doe");
-		betList.addElement("Dummy");
+		updatePlayers();
+		updateBets();
+		
 	}
 	
 	
@@ -137,15 +139,12 @@ public class PanelStatistics extends JPanel implements IObserver {
 			String resultInfo = String.format("%s %s %d$ with his bet on %s.", bre.user, tmp, bre.result,
 					bre.bet.getName());
 			
+			updateBets();
+			updatePlayers();
 		} else if (e instanceof BetAddedEvent) {
-			BetAddedEvent bae = (BetAddedEvent) e;
-			if (bae.result){
-				
-			} else {
-				
-			}
+			updateBets();
+			
 		} else if (e instanceof PlayerEvent) {
-			PlayerEvent pe = (PlayerEvent) e;
 			updatePlayers();
 				
 		} else if (e instanceof NextRoundEvent) {
@@ -158,8 +157,18 @@ public class PanelStatistics extends JPanel implements IObserver {
 	
 	private void updatePlayers(){
 		playerList.clear();
+		playerList.addElement(String.format("Bank: %d$", rController.getBank().getBalance()));
 		for (IUser p : rController.getPlayers()) {
 			playerList.addElement(String.format("Player %s: %d$", p.getName(), p.getBalance()));
+		}
+	}
+	
+	private void updateBets(){
+		betList.clear();
+		for (IUser p : rController.getPlayers()) {
+			for(IBet bet : p.getBets()){
+				betList.addElement(String.format("Player %s: %d$ on %s", p.getName(), bet.getStake(), bet.getName()));
+			}
 		}
 	}
 	

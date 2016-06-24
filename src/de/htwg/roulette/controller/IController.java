@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.google.inject.Injector;
 
+import de.htwg.roulette.model.Account;
 import de.htwg.roulette.model.IUser;
 import de.htwg.roulette.model.bets.IBet;
 import de.htwg.util.Visitor.Visitor;
@@ -18,6 +19,7 @@ public interface IController extends de.htwg.util.Visitor.Visitable {
 	void placeBet(String name, IBet bet);
 
 	List<IUser> getPlayers();
+	Account getBank();
 	int getRound();
 	int getBetCount();
 	

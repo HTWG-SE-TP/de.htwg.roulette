@@ -142,5 +142,10 @@ public class Controller implements IController {
 
 	}
 
+	@Override
+	public Account getBank() {
+		return bank;
+	}
+
 
 }
