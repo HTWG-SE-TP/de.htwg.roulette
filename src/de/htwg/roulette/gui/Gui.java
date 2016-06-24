@@ -8,11 +8,13 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 
 import de.htwg.roulette.controller.IController;
+import de.htwg.roulette.model.User;
 import de.htwg.roulette.model.bets.*;
 import de.htwg.roulette.model.events.BetAddedEvent;
 import de.htwg.roulette.model.events.BetResultEvent;
@@ -20,6 +22,7 @@ import de.htwg.roulette.model.events.NextRoundEvent;
 import de.htwg.roulette.model.events.PlayerEvent;
 import de.htwg.util.observer.*;
 
+@SuppressWarnings("serial")
 public class Gui extends JFrame implements IObserver {
 	JPanel mainPanel;
 	
@@ -30,6 +33,7 @@ public class Gui extends JFrame implements IObserver {
 	JLabel[] fields = new JLabel[37];
 	JPanel[] lines = new JPanel[13];
 	Color starbucks = new Color(0x006633);
+	User actualPlayer = null;
 	
 	
 	
@@ -40,7 +44,7 @@ public class Gui extends JFrame implements IObserver {
 		mainPanel.setLayout(new GridLayout(1, 3));
 		mainPanel.setBackground(new Color(0x006633));
 		
-		choosePanel = new PanelChoose(rController);
+		choosePanel = new PanelChoose(rController, this);
 		mainPanel.add(choosePanel);
 	
 		tablePanel = new PanelTable(rController);
@@ -64,5 +68,17 @@ public class Gui extends JFrame implements IObserver {
 	@Override
 	public void update(Event e) {
 		//Needed here?
+	}
+
+
+
+	public String getActualPlayer() {
+		return actualPlayer.getName();
+	}
+
+
+
+	public void setActualPlayer(String playerName) {
+		this.actualPlayer.setName(playerName);
 	}
 }
