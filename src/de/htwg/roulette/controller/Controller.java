@@ -98,6 +98,7 @@ public class Controller implements IController {
 		} else {
 			for (IUser p : players) {
 				if (p.getName().equals(name) && checkBetConditions(bet, p)) {
+					p.setBalance(p.getBalance() - bet.getStake());
 					p.addBet(bet);
 					result = true;
 					break;

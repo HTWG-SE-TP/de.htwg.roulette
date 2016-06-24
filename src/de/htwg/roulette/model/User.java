@@ -51,7 +51,7 @@ public class User extends Account implements IUser {
 			observer.notifyObservers(event);
 			
 			updateBank(bank, result);
-			ball += result;
+			ball += (result + bet.getStake());
 		}
 		this.clearBets();
 		this.setBalance(ball);

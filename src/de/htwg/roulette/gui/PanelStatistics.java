@@ -112,7 +112,7 @@ public class PanelStatistics extends JPanel implements IObserver {
 		JList<String> list = new JList<>(model);
 		list.setBackground(Color.BLACK);
 		list.setForeground(red4);
-		panel.add(list, BorderLayout.CENTER);
+		panel.add(new JScrollPane(list), BorderLayout.CENTER);
 
 		if (name.startsWith("Player")) {
 			playerJList = list;
@@ -125,7 +125,8 @@ public class PanelStatistics extends JPanel implements IObserver {
 			list = new JList<>(logList);
 			list.setBackground(Color.BLACK);
 			list.setForeground(red4);
-			panel.add(list, BorderLayout.SOUTH);
+			list.setVisibleRowCount(5);
+			panel.add(new JScrollPane(list), BorderLayout.SOUTH);
 		}
 		return panel;
 	}
@@ -150,6 +151,7 @@ public class PanelStatistics extends JPanel implements IObserver {
 			updatePlayers();
 		} else if (e instanceof BetAddedEvent) {
 			updateBets();
+			updatePlayers();
 
 		} else if (e instanceof PlayerEvent) {
 			updatePlayers();
