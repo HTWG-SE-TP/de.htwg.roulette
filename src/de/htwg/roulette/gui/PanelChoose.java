@@ -10,12 +10,18 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import de.htwg.roulette.controller.IController;
+import de.htwg.roulette.model.bets.Black;
 import de.htwg.util.observer.Event;
 import de.htwg.util.observer.IObserver;
  
 @SuppressWarnings("serial")
 public class PanelChoose extends JPanel implements IObserver {
-	public PanelChoose(IController rController){
+	
+	IController rController;
+	
+	public PanelChoose(IController rController, Gui g){
+		this.rController = rController;
+		
 		this.setLayout(new BorderLayout());
 	
 		JPanel fake_top = new JPanel();
@@ -45,6 +51,7 @@ public class PanelChoose extends JPanel implements IObserver {
 		setPanelColor(colors);
 		btn = new JButton("Black");
 		fillButt(btn);
+		btn.addActionListener(e-> rController.placeBet(g.getActualPlayer(), new Black(1)));
 		colors.add(btn);
 		btn = new JButton("Red");
 		fillButt(btn);
