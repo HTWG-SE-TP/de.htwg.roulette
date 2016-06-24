@@ -33,7 +33,6 @@ public class Gui extends JFrame implements IObserver {
 	JLabel[] fields = new JLabel[37];
 	JPanel[] lines = new JPanel[13];
 	Color starbucks = new Color(0x006633);
-
 	
 	
 	public Gui(IController rController, IObservable observ){

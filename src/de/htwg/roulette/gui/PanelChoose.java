@@ -4,26 +4,37 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
 
 import de.htwg.roulette.controller.IController;
-import de.htwg.roulette.model.bets.Black;
+import de.htwg.roulette.model.bets.*;
 import de.htwg.util.observer.Event;
 import de.htwg.util.observer.IObserver;
  
 @SuppressWarnings("serial")
 public class PanelChoose extends JPanel implements IObserver {
 	
+	final int minMoney = 0;
+	final int maxMoney = 750;
+	final int step = 10;
+	
 	IController rController;
 	String actualPlayer;
+	JSlider setMoney;
+	boolean isEnabled = false;
+	int toSelect = 0;
+	List<Integer> selectedNums;
+	
 	
 	public PanelChoose(IController rController, Gui g){
 		this.rController = rController;
-		
+		selectedNums = new LinkedList();
 		this.setLayout(new BorderLayout());
 	
 		JPanel fake_top = new JPanel();
@@ -38,13 +49,19 @@ public class PanelChoose extends JPanel implements IObserver {
 		JPanel thirds = new JPanel();
 		setPanelColor(thirds);
 		JButton btn = new JButton("1 - 12");
+		btn.addActionListener(e->
+			rController.placeBet(actualPlayer, new Dozen(setMoney.getValue(), Dozen.Flag.Premier)));
 		fillButt(btn);
 		btn.addActionListener(l -> {});
 		thirds.add(btn);
 		btn = new JButton("13 - 24");
+		btn.addActionListener(e->
+			rController.placeBet(actualPlayer, new Dozen(setMoney.getValue(), Dozen.Flag.Milieu)));
 		fillButt(btn);
 		thirds.add(btn);
 		btn = new JButton("25 - 36");
+		btn.addActionListener(e->
+			rController.placeBet(actualPlayer, new Dozen(setMoney.getValue(), Dozen.Flag.Dernier)));
 		fillButt(btn);
 		thirds.add(btn);
 		buttons.add(thirds);
@@ -53,9 +70,10 @@ public class PanelChoose extends JPanel implements IObserver {
 		setPanelColor(colors);
 		btn = new JButton("Black");
 		fillButt(btn);
-		btn.addActionListener(e-> rController.placeBet(actualPlayer, new Black(1)));
+		btn.addActionListener(e->rController.placeBet(actualPlayer, new Black(setMoney.getValue())));
 		colors.add(btn);
 		btn = new JButton("Red");
+		btn.addActionListener(e->rController.placeBet(actualPlayer, new Black(setMoney.getValue())));
 		fillButt(btn);
 		colors.add(btn);
 		buttons.add(colors);
@@ -63,16 +81,10 @@ public class PanelChoose extends JPanel implements IObserver {
 		JPanel corner = new JPanel();
 		setPanelColor(corner);
 		btn = new JButton("Corner");
+		btn.addActionListener(e->enableTable(4));
 		fillButt(btn);
 		corner.add(btn);
 		buttons.add(corner);
-		
-		JPanel dozen = new JPanel();
-		setPanelColor(dozen);
-		btn = new JButton("Dozen");
-		fillButt(btn);
-		dozen.add(btn);
-		buttons.add(dozen);
 		
 		JPanel modulo = new JPanel();
 		setPanelColor(modulo);
@@ -130,6 +142,14 @@ public class PanelChoose extends JPanel implements IObserver {
 		tw.add(btn);
 		buttons.add(tw);
 
+		JPanel slider = new JPanel();
+		setMoney = new JSlider(JSlider.HORIZONTAL, minMoney, maxMoney, step);
+		setMoney.setPaintTicks(true);
+		setMoney.setPaintLabels(true);
+		setMoney.setMinorTickSpacing(0);
+		setMoney.setMajorTickSpacing(100);
+		slider.add(setMoney);
+		buttons.add(setMoney);
 		
 		this.add(buttons, BorderLayout.EAST);
 	}
@@ -154,15 +174,19 @@ public class PanelChoose extends JPanel implements IObserver {
 	
 
 	public void enableTable(int toSelect){
-		
+		isEnabled = true;
+		this.toSelect = toSelect;
 	}
 	
 	public boolean isTableEnabled(){
-		return false;
+		return isEnabled;
 	}
 	
 	public boolean selectNum(int num){
-		return false;
+		selectedNums.add(num);
+		if(selectedNums.size() == toSelect)
+			return false;
+		return true;
 	}
 	
 	public void resetSelect(){
