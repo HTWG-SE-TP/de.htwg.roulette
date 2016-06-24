@@ -24,6 +24,7 @@ public class PanelStatistics extends JPanel implements IObserver {
 
 	private DefaultListModel<String> playerList = new DefaultListModel<>();
 	private DefaultListModel<String> betList = new DefaultListModel<>();
+	private DefaultListModel<String> logList = new DefaultListModel<>();
 	private JList<String> playerJList;
 
 	private JLabel roundNo = new JLabel();
@@ -120,6 +121,11 @@ public class PanelStatistics extends JPanel implements IObserver {
 				if (pname != null)
 					chooseP.setActualPlayer(pname);
 			});
+		} else {
+			list = new JList<>(logList);
+			list.setBackground(Color.BLACK);
+			list.setForeground(red4);
+			panel.add(list, BorderLayout.SOUTH);
 		}
 		return panel;
 	}
@@ -138,14 +144,7 @@ public class PanelStatistics extends JPanel implements IObserver {
 		String tmp;
 		if (e instanceof BetResultEvent) {
 			BetResultEvent bre = (BetResultEvent) e;
-			if (bre.result >= 0) {
-				tmp = "won";
-			} else {
-				tmp = "lost";
-			}
-
-			String resultInfo = String.format("%s %s %d$ with his bet on %s.", bre.user, tmp, bre.result,
-					bre.bet.getName());
+			logList.addElement(bre.toString());
 
 			updateBets();
 			updatePlayers();
@@ -157,7 +156,10 @@ public class PanelStatistics extends JPanel implements IObserver {
 
 		} else if (e instanceof NextRoundEvent) {
 			NextRoundEvent ne = (NextRoundEvent) e;
+			
 			updateInfos(ne.getRolledNo());
+			updatePlayers();
+			updateBets();
 		}
 	}
 

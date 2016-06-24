@@ -13,4 +13,17 @@ public class BetResultEvent implements Event {
 		bet = newBet;
 		this.result = result;
 	}
+	
+	public String toString(){
+		String tmp;
+		if (result >= 0) {
+			tmp = "won";
+		} else {
+			tmp = "lost";
+		}
+
+		String resultInfo = String.format("%s %s %d$ with his bet on %s.", user, tmp, result,
+				bet.getName());
+		return resultInfo;
+	}
 }
