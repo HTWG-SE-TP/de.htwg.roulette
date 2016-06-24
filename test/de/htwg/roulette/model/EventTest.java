@@ -19,7 +19,12 @@ public class EventTest {
 	@Test
 	public void test() {
 		Account bank = new Account("LOL", 5000);
+		
 		event = new BetResultEvent("", new Black(50), 10);
+		event.toString();
+		event = new BetResultEvent("", new Black(50), -10);
+		event.toString();
+		
 		event = new BetAddedEvent("", new Black(50), true);
 		event = new PlayerEvent("", true, true);
 		NextRoundEvent nr = new NextRoundEvent(1);

@@ -19,104 +19,118 @@ import de.htwg.util.observer.*;
 
 @SuppressWarnings("serial")
 public class PanelStatistics extends JPanel implements IObserver {
+	private IController rController;
+	private PanelChoose chooseP;
 
-	DefaultListModel<String> playerList = new DefaultListModel<>();
-	DefaultListModel<String> betList = new DefaultListModel<>();
-	JLabel roundNo = new JLabel();
-	JLabel lastRoll = new JLabel();
-	IController rController;
-	static Color grey4 = new Color(0x5E5E5E);
-	Color red4 = new Color(0x8b0000);
+	private DefaultListModel<String> playerList = new DefaultListModel<>();
+	private DefaultListModel<String> betList = new DefaultListModel<>();
+	private DefaultListModel<String> logList = new DefaultListModel<>();
+	private JList<String> playerJList;
+
+	private JLabel roundNo = new JLabel();
+	private JLabel lastRoll = new JLabel();
+
+	private static Color grey4 = new Color(0x5E5E5E);
+	private Color red4 = new Color(0x8b0000);
 	private int defaultPara = 1000;
-	
-	public PanelStatistics(IController cont, PanelChoose choose){
-		rController = cont;
-		
-		this.setLayout(new GridLayout(3,1));
-		
-		//Players
-		this.add(createPanelList("Players:", playerList));
-		
 
-		
-		//Lower Panerl
+	public PanelStatistics(IController cont, PanelChoose choose) {
+		rController = cont;
+		chooseP = choose;
+
+		this.setLayout(new GridLayout(3, 1));
+
+		// Players
+		this.add(createPanelList("Players:", playerList));
+
+		// Lower Panerl
 		JPanel cmdPanel = new JPanel();
 		cmdPanel.setLayout(new GridLayout(2, 2));
 		cmdPanel.setBackground(Color.BLACK);
 		JButton btn = createButt("Next Round");
 		cmdPanel.add(btn);
-		btn.addActionListener(e -> cont.nextRound());
-		
+		btn.addActionListener(e -> rController.nextRound());
+
 		btn = createButt("Please Help Me");
 		btn.addActionListener(e -> callHelpBox());
 		cmdPanel.add(btn);
-		
-				
+
 		btn = createButt("Add Player");
 		btn.addActionListener(e -> {
 			String in = JOptionPane.showInputDialog("Enter Name:");
-			if(in != null)
-				cont.addPlayer(in, defaultPara);
+			if (!in.isEmpty())
+				rController.addPlayer(in, defaultPara);
 		});
-		
+
 		cmdPanel.add(btn);
-		
+
 		btn = createButt("Remove Player");
 		btn.addActionListener(e -> {
-			
+			String name = getName(playerJList.getSelectedValue());
+			if (name != null)
+				rController.removePlayer(name);
 		});
 		cmdPanel.add(btn);
-		
 
-		
 		JPanel roundPanel = new JPanel();
 		roundPanel.setLayout(new BorderLayout());
 		roundPanel.setBackground(Color.BLACK);
-		
+
 		roundNo.setForeground(Color.red);
 		lastRoll.setForeground(Color.red);
-		
+
 		roundPanel.add(roundNo, BorderLayout.NORTH);
 		roundPanel.add(lastRoll, BorderLayout.SOUTH);
 		roundPanel.add(cmdPanel, BorderLayout.CENTER);
 		this.add(roundPanel);
-		
-		//Bets
+
+		// Bets
 		this.add(createPanelList("Bets:", betList));
-		//Init and dummy data
+		// Init and dummy data
 		updateInfos(0);
 		updatePlayers();
 		updateBets();
-		
+
 	}
-	
-	
+
 	private void callHelpBox() {
-		String text = "What the fuck is going on here?\n"
-				+ "add a player, place bets and finally:\n"
+		String text = "What the fuck is going on here?\n" + "add a player, place bets and finally:\n"
 				+ "KEEP ROLLIN' ROLLIN'";
 		JOptionPane.showMessageDialog(null, text);
 	}
 
-
-	private JPanel createPanelList(String name, DefaultListModel<String> model){
+	private JPanel createPanelList(String name, DefaultListModel<String> model) {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
 		panel.setBorder(BorderFactory.createLineBorder(Color.black));
 		panel.setBackground(Color.BLACK);
-		
+
 		JLabel lbl = new JLabel(name);
 		lbl.setForeground(Color.red);
-		panel.add(lbl, BorderLayout.NORTH);	
-		
+		panel.add(lbl, BorderLayout.NORTH);
+
 		JList<String> list = new JList<>(model);
 		list.setBackground(Color.BLACK);
 		list.setForeground(red4);
 		panel.add(list, BorderLayout.CENTER);
+
+		if (name.startsWith("Player")) {
+			playerJList = list;
+			playerJList.addListSelectionListener(l -> {
+				String pname = getName(playerJList.getSelectedValue());
+				if (pname != null)
+					chooseP.setActualPlayer(pname);
+			});
+		} else {
+			list = new JList<>(logList);
+			list.setBackground(Color.BLACK);
+			list.setForeground(red4);
+			panel.add(list, BorderLayout.SOUTH);
+		}
 		return panel;
 	}
-	
-	private JButton createButt(String text){
+
+	private JButton createButt(String text) {
 		JButton btn = new JButton(text);
 		btn.setForeground(Color.WHITE);
 		btn.setContentAreaFilled(false);
@@ -124,55 +138,60 @@ public class PanelStatistics extends JPanel implements IObserver {
 		btn.setFocusPainted(false);
 		return btn;
 	}
-	
+
 	@Override
 	public void update(Event e) {
 		String tmp;
 		if (e instanceof BetResultEvent) {
 			BetResultEvent bre = (BetResultEvent) e;
-			if (bre.result >= 0) {
-				tmp = "won";
-			} else {
-				tmp = "lost";
-			}
+			logList.addElement(bre.toString());
 
-			String resultInfo = String.format("%s %s %d$ with his bet on %s.", bre.user, tmp, bre.result,
-					bre.bet.getName());
-			
 			updateBets();
 			updatePlayers();
 		} else if (e instanceof BetAddedEvent) {
 			updateBets();
-			
+
 		} else if (e instanceof PlayerEvent) {
 			updatePlayers();
-				
+
 		} else if (e instanceof NextRoundEvent) {
 			NextRoundEvent ne = (NextRoundEvent) e;
+			
 			updateInfos(ne.getRolledNo());
+			updatePlayers();
+			updateBets();
 		}
 	}
-	
-	
-	
-	private void updatePlayers(){
+
+	private String getName(String cellValue) {
+		if (cellValue == null)
+			return null;
+		
+		String[] split = cellValue.split(" ");
+		if (split.length == 3)
+			return split[1];
+		return null;
+	}
+
+	private void updatePlayers() {
 		playerList.clear();
-		playerList.addElement(String.format("Bank: %d$", rController.getBank().getBalance()));
+		playerList.addElement(String.format("Bank %d$", rController.getBank().getBalance()));
 		for (IUser p : rController.getPlayers()) {
-			playerList.addElement(String.format("Player %s: %d$", p.getName(), p.getBalance()));
+			playerList.addElement(String.format("Player %s %d$", p.getName(), p.getBalance()));
 		}
+		chooseP.setActualPlayer("");
 	}
-	
-	private void updateBets(){
+
+	private void updateBets() {
 		betList.clear();
 		for (IUser p : rController.getPlayers()) {
-			for(IBet bet : p.getBets()){
+			for (IBet bet : p.getBets()) {
 				betList.addElement(String.format("Player %s: %d$ on %s", p.getName(), bet.getStake(), bet.getName()));
 			}
 		}
 	}
-	
-	private void updateInfos(int rolled){
+
+	private void updateInfos(int rolled) {
 		roundNo.setText("Round: " + rController.getRound());
 		lastRoll.setText("Rolled: " + rolled);
 	}
