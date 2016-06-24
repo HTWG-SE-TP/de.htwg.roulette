@@ -19,7 +19,7 @@ public class PanelTable extends JPanel implements IObserver {
 	Color red4 = new Color(0x8b0000);
 	
 	
-	public PanelTable(IController rController){
+	public PanelTable(IController rController, PanelChoose choose){
 		this.setLayout(new GridLayout(13, 1));
 		this.setBackground(starbucks);
 		

@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -18,6 +19,7 @@ import de.htwg.util.observer.IObserver;
 public class PanelChoose extends JPanel implements IObserver {
 	
 	IController rController;
+	String actualPlayer;
 	
 	public PanelChoose(IController rController, Gui g){
 		this.rController = rController;
@@ -51,7 +53,7 @@ public class PanelChoose extends JPanel implements IObserver {
 		setPanelColor(colors);
 		btn = new JButton("Black");
 		fillButt(btn);
-		btn.addActionListener(e-> rController.placeBet(g.getActualPlayer(), new Black(1)));
+		btn.addActionListener(e-> rController.placeBet(actualPlayer, new Black(1)));
 		colors.add(btn);
 		btn = new JButton("Red");
 		fillButt(btn);
@@ -148,5 +150,31 @@ public class PanelChoose extends JPanel implements IObserver {
 	}
 	private void setPanelColor(JPanel pan){
 		pan.setBackground(new Color(0x006633));
+	}
+	
+
+	public void enableTable(int toSelect){
+		
+	}
+	
+	public boolean isTableEnabled(){
+		return false;
+	}
+	
+	public boolean selectNum(int num){
+		return false;
+	}
+	
+	public void resetSelect(){
+		
+	}
+	
+
+	public String getActualPlayer() {
+		return actualPlayer;
+	}
+
+	public void setActualPlayer(String playerName) {
+		this.actualPlayer = playerName;
 	}
 }

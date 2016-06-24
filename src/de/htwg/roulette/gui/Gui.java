@@ -33,8 +33,7 @@ public class Gui extends JFrame implements IObserver {
 	JLabel[] fields = new JLabel[37];
 	JPanel[] lines = new JPanel[13];
 	Color starbucks = new Color(0x006633);
-	User actualPlayer = null;
-	
+
 	
 	
 	public Gui(IController rController, IObservable observ){
@@ -47,10 +46,10 @@ public class Gui extends JFrame implements IObserver {
 		choosePanel = new PanelChoose(rController, this);
 		mainPanel.add(choosePanel);
 	
-		tablePanel = new PanelTable(rController);
+		tablePanel = new PanelTable(rController, choosePanel);
 		mainPanel.add(tablePanel);
 	
-		statisticPanel = new PanelStatistics(rController);
+		statisticPanel = new PanelStatistics(rController, choosePanel);
 		mainPanel.add(statisticPanel);
 
 		observ.addObserver(choosePanel);
@@ -68,17 +67,5 @@ public class Gui extends JFrame implements IObserver {
 	@Override
 	public void update(Event e) {
 		//Needed here?
-	}
-
-
-
-	public String getActualPlayer() {
-		return actualPlayer.getName();
-	}
-
-
-
-	public void setActualPlayer(String playerName) {
-		this.actualPlayer.setName(playerName);
 	}
 }

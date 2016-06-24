@@ -29,7 +29,7 @@ public class PanelStatistics extends JPanel implements IObserver {
 	Color red4 = new Color(0x8b0000);
 	private int defaultPara = 1000;
 	
-	public PanelStatistics(IController cont){
+	public PanelStatistics(IController cont, PanelChoose choose){
 		rController = cont;
 		
 		this.setLayout(new GridLayout(3,1));
