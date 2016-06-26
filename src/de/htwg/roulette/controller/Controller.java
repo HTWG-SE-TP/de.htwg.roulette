@@ -34,7 +34,7 @@ public class Controller implements IController {
 	@Override
 	public void create(Observable observ, Injector inj) {
 		bank = new Account("Bank", 0);
-		table = new Table(10, 1000);
+		table = new Table(10, 100000);
 		players = new LinkedList<IUser>();
 		observer = observ;
 		injector = inj;
@@ -92,7 +92,7 @@ public class Controller implements IController {
 	@Override
 	public void placeBet(String name, IBet bet) {
 		boolean result = false;
-		if (name == null || bet == null) {
+		if (name == null || bet == null || name == "") {
 			result = false;
 
 		} else {

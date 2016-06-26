@@ -28,13 +28,14 @@ public class ControllerTest {
 		cont.addPlayer("Test", 100);
 		cont.addPlayer("Test", 100);
 		cont.addPlayer("Test2", 100);
-
+		
 		assertEquals(2, cont.getPlayers().size());
 
 		Black bet = new Black(10);
 		cont.placeBet(null, bet);
 		cont.placeBet("Test", null);
 		cont.placeBet("WrongName", bet);
+		cont.placeBet("", bet);
 		assertEquals(0, cont.getBetCount());
 
 		cont.placeBet("Test", new Black(-10));

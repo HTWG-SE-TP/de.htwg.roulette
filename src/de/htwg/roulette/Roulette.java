@@ -29,6 +29,11 @@ public class Roulette {
 		TextUI tui = new TextUI(controller);
 		mainObserver.addObserver(tui);
 		tui.printInitalUI();
+		
+		//Inital Players, just for the comfort
+		controller.addPlayer("Henry", 100000);
+		controller.addPlayer("Marc", 1000);
+		
 		boolean quit = false;
 		while (!quit) {
 		    quit = tui.process();	

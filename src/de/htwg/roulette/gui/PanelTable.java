@@ -87,9 +87,9 @@ public class PanelTable extends JPanel implements IObserver {
 			
 			if (chooseP.isTableEnabled()) {
 				if (chooseP.selectNum(num)) {
-					resetColors();
+					fields[num].setBackground(Color.BLUE);
 				} else {
-					 fields[num].setBackground(Color.BLUE);
+					 resetColors();
 				}
 			}
 		} catch (Exception ex){

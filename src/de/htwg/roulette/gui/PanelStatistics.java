@@ -125,7 +125,9 @@ public class PanelStatistics extends JPanel implements IObserver {
 			list.setBackground(Color.BLACK);
 			list.setForeground(Gui.RED4);
 			list.setVisibleRowCount(5);
-			panel.add(new JScrollPane(list), BorderLayout.SOUTH);
+			JScrollPane scroller = new JScrollPane(list);
+			new SmartScroller(scroller); //scroll to the bottom
+			panel.add(scroller, BorderLayout.SOUTH);
 		}
 		return panel;
 	}
@@ -149,6 +151,9 @@ public class PanelStatistics extends JPanel implements IObserver {
 			updateBets();
 			updatePlayers();
 		} else if (e instanceof BetAddedEvent) {
+			BetAddedEvent bae = (BetAddedEvent) e;
+			if (!bae.result)
+				logList.addElement("Failed to add bet. Did you select a player?");
 			updateBets();
 			updatePlayers();
 
