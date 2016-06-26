@@ -13,28 +13,34 @@ import javax.swing.JPanel;
 import javax.swing.JSlider;
 
 import de.htwg.roulette.controller.IController;
+import de.htwg.roulette.model.IUser;
 import de.htwg.roulette.model.bets.*;
+import de.htwg.roulette.model.events.GuiLogEvent;
+import de.htwg.roulette.model.events.NextRoundEvent;
 import de.htwg.util.observer.Event;
+import de.htwg.util.observer.IObservable;
 import de.htwg.util.observer.IObserver;
  
 @SuppressWarnings("serial")
 public class PanelChoose extends JPanel implements IObserver {
+	private int minMoney = 0;
+	private int maxMoney = 500;
 	
-	final int minMoney = 0;
-	final int maxMoney = 750;
-	final int step = 10;
+	private IController rController;
+	private IObservable observer;
 	
-	IController rController;
-	String actualPlayer;
-	JSlider setMoney;
-	boolean isEnabled = false;
-	int toSelect = 0;
-	List<Integer> selectedNums;
+	private IUser actualPlayer;
+	private JSlider setMoney;
+	private boolean isEnabled = false;
+	private int toSelect = 0;
+	private List<Integer> selectedNums;
 	
 	
-	public PanelChoose(IController rController, Gui g){
-		this.rController = rController;
-		selectedNums = new LinkedList();
+	public PanelChoose(IController cont, Gui g, IObservable observ){
+		rController = cont;
+		observer = observ;
+		
+		selectedNums = new LinkedList<>();
 		this.setLayout(new BorderLayout());
 	
 		JPanel fake_top = new JPanel();
@@ -50,18 +56,18 @@ public class PanelChoose extends JPanel implements IObserver {
 		setPanelColor(thirds);
 		JButton btn = new JButton("1 - 12");
 		btn.addActionListener(e->
-			rController.placeBet(actualPlayer, new Dozen(setMoney.getValue(), Dozen.Flag.Premier)));
+			rController.placeBet(getActualPlayer(), new Dozen(setMoney.getValue(), Dozen.Flag.Premier)));
 		fillButt(btn);
 		btn.addActionListener(l -> {});
 		thirds.add(btn);
 		btn = new JButton("13 - 24");
 		btn.addActionListener(e->
-			rController.placeBet(actualPlayer, new Dozen(setMoney.getValue(), Dozen.Flag.Milieu)));
+			rController.placeBet(getActualPlayer(), new Dozen(setMoney.getValue(), Dozen.Flag.Milieu)));
 		fillButt(btn);
 		thirds.add(btn);
 		btn = new JButton("25 - 36");
 		btn.addActionListener(e->
-			rController.placeBet(actualPlayer, new Dozen(setMoney.getValue(), Dozen.Flag.Dernier)));
+			rController.placeBet(getActualPlayer(), new Dozen(setMoney.getValue(), Dozen.Flag.Dernier)));
 		fillButt(btn);
 		thirds.add(btn);
 		buttons.add(thirds);
@@ -70,10 +76,12 @@ public class PanelChoose extends JPanel implements IObserver {
 		setPanelColor(colors);
 		btn = new JButton("Black");
 		fillButt(btn);
-		btn.addActionListener(e->rController.placeBet(actualPlayer, new Black(setMoney.getValue())));
+		btn.addActionListener(
+				e->rController.placeBet(getActualPlayer(), new Black(setMoney.getValue())));
 		colors.add(btn);
 		btn = new JButton("Red");
-		btn.addActionListener(e->rController.placeBet(actualPlayer, new Black(setMoney.getValue())));
+		btn.addActionListener(
+				e->rController.placeBet(getActualPlayer(), new Black(setMoney.getValue())));
 		fillButt(btn);
 		colors.add(btn);
 		buttons.add(colors);
@@ -90,9 +98,13 @@ public class PanelChoose extends JPanel implements IObserver {
 		setPanelColor(modulo);
 		btn = new JButton("Even");
 		fillButt(btn);
+		btn.addActionListener(
+				e->rController.placeBet(getActualPlayer(), new Even(setMoney.getValue())));
 		modulo.add(btn);
 		btn = new JButton("Odd");
 		fillButt(btn);
+		btn.addActionListener(
+				e->rController.placeBet(getActualPlayer(), new Odd(setMoney.getValue())));
 		modulo.add(btn);
 		buttons.add(modulo);
 		
@@ -106,16 +118,21 @@ public class PanelChoose extends JPanel implements IObserver {
 		JPanel halfs = new JPanel();
 		setPanelColor(halfs);
 		btn = new JButton("LowerHalf");
+		btn.addActionListener(
+				e->rController.placeBet(getActualPlayer(), new LowerHalf(setMoney.getValue())));
 		fillButt(btn);
 		halfs.add(btn);
 		btn = new JButton("UpperHalf");
 		fillButt(btn);
+		btn.addActionListener(
+				e->rController.placeBet(getActualPlayer(), new UpperHalf(setMoney.getValue())));
 		halfs.add(btn);
 		buttons.add(halfs);
 		
 		JPanel sn = new JPanel();
 		setPanelColor(sn);
 		btn = new JButton("SingleNum");
+		btn.addActionListener(e-> enableTable(1));
 		fillButt(btn);
 		sn.add(btn);
 		buttons.add(sn);
@@ -143,22 +160,19 @@ public class PanelChoose extends JPanel implements IObserver {
 		buttons.add(tw);
 
 		JPanel slider = new JPanel();
-		setMoney = new JSlider(JSlider.HORIZONTAL, minMoney, maxMoney, step);
-		setMoney.setPaintTicks(true);
+		setMoney = new JSlider(JSlider.HORIZONTAL, minMoney, maxMoney, minMoney);
+		setMoney.setBackground(Gui.STARBUCKS);
+		setMoney.setForeground(Color.WHITE);
 		setMoney.setPaintLabels(true);
 		setMoney.setMinorTickSpacing(0);
 		setMoney.setMajorTickSpacing(100);
+		updateSlider();
 		slider.add(setMoney);
 		buttons.add(setMoney);
 		
 		this.add(buttons, BorderLayout.EAST);
 	}
 
-	@Override
-	public void update(Event e) {
-		// TODO Auto-generated method stub
-		
-	}
 	
 	private void fillButt(JButton bt){
 		bt.setPreferredSize(new Dimension(110, 50));
@@ -169,13 +183,16 @@ public class PanelChoose extends JPanel implements IObserver {
 		
 	}
 	private void setPanelColor(JPanel pan){
-		pan.setBackground(new Color(0x006633));
+		pan.setBackground(Gui.STARBUCKS);
 	}
 	
 
 	public void enableTable(int toSelect){
+		resetSelect();
 		isEnabled = true;
 		this.toSelect = toSelect;
+		
+		observer.notifyObservers(new GuiLogEvent(String.format("Please select %d numbers for this bet", toSelect)));
 	}
 	
 	public boolean isTableEnabled(){
@@ -184,21 +201,44 @@ public class PanelChoose extends JPanel implements IObserver {
 	
 	public boolean selectNum(int num){
 		selectedNums.add(num);
-		if(selectedNums.size() == toSelect)
+		if(selectedNums.size() == toSelect) {
 			return false;
+		}
 		return true;
 	}
 	
 	public void resetSelect(){
-		
+		isEnabled = false;
+		selectedNums.clear();
 	}
 	
 
 	public String getActualPlayer() {
-		return actualPlayer;
+		return actualPlayer.getName();
 	}
 
 	public void setActualPlayer(String playerName) {
-		this.actualPlayer = playerName;
+		for (IUser u : rController.getPlayers()){
+			if (u.getName().equals(playerName)){
+					actualPlayer = u;
+					maxMoney = actualPlayer.getBalance();
+					updateSlider();
+			}
+		}
+	}
+	
+	private void updateSlider(){
+		setMoney.setMinimum(minMoney);
+		setMoney.setMaximum(maxMoney);
+		setMoney.createStandardLabels((maxMoney - minMoney) / 5);
+		setMoney.invalidate();
+	}
+
+
+	@Override
+	public void update(Event e) {
+		if (e instanceof NextRoundEvent){
+			resetSelect();
+		}
 	}
 }

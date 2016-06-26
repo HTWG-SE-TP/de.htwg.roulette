@@ -13,6 +13,7 @@ import de.htwg.roulette.model.IUser;
 import de.htwg.roulette.model.bets.IBet;
 import de.htwg.roulette.model.events.BetAddedEvent;
 import de.htwg.roulette.model.events.BetResultEvent;
+import de.htwg.roulette.model.events.GuiLogEvent;
 import de.htwg.roulette.model.events.NextRoundEvent;
 import de.htwg.roulette.model.events.PlayerEvent;
 import de.htwg.util.observer.*;
@@ -30,8 +31,6 @@ public class PanelStatistics extends JPanel implements IObserver {
 	private JLabel roundNo = new JLabel();
 	private JLabel lastRoll = new JLabel();
 
-	private static Color grey4 = new Color(0x5E5E5E);
-	private Color red4 = new Color(0x8b0000);
 	private int defaultPara = 1000;
 
 	public PanelStatistics(IController cont, PanelChoose choose) {
@@ -58,7 +57,7 @@ public class PanelStatistics extends JPanel implements IObserver {
 		btn = createButt("Add Player");
 		btn.addActionListener(e -> {
 			String in = JOptionPane.showInputDialog("Enter Name:");
-			if (!in.isEmpty())
+			if (in != null && !in.isEmpty())
 				rController.addPlayer(in, defaultPara);
 		});
 
@@ -111,7 +110,7 @@ public class PanelStatistics extends JPanel implements IObserver {
 
 		JList<String> list = new JList<>(model);
 		list.setBackground(Color.BLACK);
-		list.setForeground(red4);
+		list.setForeground(Gui.RED4);
 		panel.add(new JScrollPane(list), BorderLayout.CENTER);
 
 		if (name.startsWith("Player")) {
@@ -124,7 +123,7 @@ public class PanelStatistics extends JPanel implements IObserver {
 		} else {
 			list = new JList<>(logList);
 			list.setBackground(Color.BLACK);
-			list.setForeground(red4);
+			list.setForeground(Gui.RED4);
 			list.setVisibleRowCount(5);
 			panel.add(new JScrollPane(list), BorderLayout.SOUTH);
 		}
@@ -162,6 +161,8 @@ public class PanelStatistics extends JPanel implements IObserver {
 			updateInfos(ne.getRolledNo());
 			updatePlayers();
 			updateBets();
+		} else if (e instanceof GuiLogEvent) {
+			logList.addElement(e.toString());
 		}
 	}
 

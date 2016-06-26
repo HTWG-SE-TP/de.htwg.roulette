@@ -7,6 +7,7 @@ import org.junit.Test;
 import de.htwg.roulette.model.bets.Black;
 import de.htwg.roulette.model.events.BetAddedEvent;
 import de.htwg.roulette.model.events.BetResultEvent;
+import de.htwg.roulette.model.events.GuiLogEvent;
 import de.htwg.roulette.model.events.NextRoundEvent;
 import de.htwg.roulette.model.events.PlayerEvent;
 import de.htwg.util.observer.Event;
@@ -24,6 +25,9 @@ public class EventTest {
 		event.toString();
 		event = new BetResultEvent("", new Black(50), -10);
 		event.toString();
+		
+		event = new GuiLogEvent("");
+		assertEquals("", event.toString());
 		
 		event = new BetAddedEvent("", new Black(50), true);
 		event = new PlayerEvent("", true, true);

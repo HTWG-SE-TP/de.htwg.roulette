@@ -24,16 +24,18 @@ import de.htwg.util.observer.*;
 
 @SuppressWarnings("serial")
 public class Gui extends JFrame implements IObserver {
-	JPanel mainPanel;
+	private JPanel mainPanel;
 	
-	PanelChoose choosePanel;
-	PanelTable tablePanel;
-	PanelStatistics statisticPanel;
+	private PanelChoose choosePanel;
+	private PanelTable tablePanel;
+	private PanelStatistics statisticPanel;
 	
-	JLabel[] fields = new JLabel[37];
-	JPanel[] lines = new JPanel[13];
-	Color starbucks = new Color(0x006633);
+	private JLabel[] fields = new JLabel[37];
+	private JPanel[] lines = new JPanel[13];
 	
+	public static final Color STARBUCKS = new Color(0x006633);
+	public static final Color GREY4 = new Color(0x5E5E5E);
+	public static final Color RED4 = new Color(0x8b0000);
 	
 	public Gui(IController rController, IObservable observ){
 		setTitle("SS16-02-Roulette");
@@ -42,7 +44,7 @@ public class Gui extends JFrame implements IObserver {
 		mainPanel.setLayout(new GridLayout(1, 3));
 		mainPanel.setBackground(new Color(0x006633));
 		
-		choosePanel = new PanelChoose(rController, this);
+		choosePanel = new PanelChoose(rController, this, observ);
 		mainPanel.add(choosePanel);
 	
 		tablePanel = new PanelTable(rController, choosePanel);
