@@ -273,14 +273,15 @@ public class PanelChoose extends JPanel implements IObserver {
 	public void setActualPlayer(String playerName) {
 		for (IUser u : rController.getPlayers()) {
 			if (u.getName().equals(playerName)) {
-				actualPlayer = u;
-				maxMoney = actualPlayer.getBalance();
+				actualPlayer = u;		
 				updateSlider();
 			}
 		}
 	}
 
 	private void updateSlider() {
+		if (actualPlayer != null)
+			maxMoney = actualPlayer.getBalance();
 		setMoney.setMinimum(minMoney);
 		setMoney.setMaximum(maxMoney);
 		int steps = (maxMoney - minMoney) / 5;
@@ -297,6 +298,8 @@ public class PanelChoose extends JPanel implements IObserver {
 	public void update(Event e) {
 		if (e instanceof NextRoundEvent) {
 			resetSelect();
+		} else if (e instanceof BetAddedEvent){
+			updateSlider();
 		}
 	}
 }

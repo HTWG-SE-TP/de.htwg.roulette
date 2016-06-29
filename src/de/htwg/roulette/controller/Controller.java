@@ -21,7 +21,6 @@ import de.htwg.util.observer.Observable;
 
 @Singleton
 public class Controller implements IController {
-	private static final Logger LOGGER = LogManager.getLogger(Controller.class.getName());
 	private Table table;
 	private Account bank;
 	private List<IUser> players;
@@ -33,7 +32,7 @@ public class Controller implements IController {
 	@Override
 	public void create(Observable observ, Injector inj) {
 		bank = new Account("Bank", 0);
-		table = new Table(10, 2^32);
+		table = new Table(10, Integer.MAX_VALUE);
 		players = new LinkedList<IUser>();
 		observer = observ;
 		injector = inj;

@@ -84,7 +84,8 @@ public class TextUI implements IObserver {
 		return result;
 	}
 
-	private boolean inputMenu(String command) {
+	private boolean inputMenu(String command) {			
+		LOGGER.debug(command);
 		String[] splitCmd = command.split(" ");
 
 		// Validation
@@ -118,7 +119,6 @@ public class TextUI implements IObserver {
 			break;
 
 		default:
-			LOGGER.debug(command);
 			LOGGER.info("Option not recognized. Use help to see all commands..");
 		}
 
@@ -251,26 +251,19 @@ public class TextUI implements IObserver {
 		String tmp;
 		if (e instanceof BetResultEvent) {
 			BetResultEvent bre = (BetResultEvent) e;
-			if (bre.result >= 0) {
-				tmp = "won";
-			} else {
-				tmp = "lost";
-			}
 
-			String resultInfo = String.format("%s %s %d$ with his bet on %s.", bre.user, tmp, bre.result,
-					bre.bet.getName());
-			LOGGER.info(resultInfo);
+			LOGGER.info(bre.toString());
 		} else if (e instanceof BetAddedEvent) {
 			BetAddedEvent bae = (BetAddedEvent) e;
-			if (bae.result)
+			if (bae.getResult())
 				LOGGER.info("Bet added");
 			else
 				LOGGER.info("Fail: Add bet");
 		} else if (e instanceof PlayerEvent) {
 			PlayerEvent pe = (PlayerEvent) e;
-			tmp = pe.added ? "added" : "removed";
-			if (pe.result)
-				LOGGER.info(String.format("Player %s %s!", pe.user, tmp));
+			tmp = pe.isAdded() ? "added" : "removed";
+			if (pe.getResult())
+				LOGGER.info(String.format("Player %s %s!", pe.getUser(), tmp));
 			else
 				LOGGER.info("Player operation failed");
 		} else if (e instanceof NextRoundEvent) {

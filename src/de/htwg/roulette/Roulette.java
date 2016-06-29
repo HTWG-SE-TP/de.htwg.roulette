@@ -25,7 +25,7 @@ public class Roulette {
 		controller.create(mainObserver, injector);
 
 		//Starting gui
-		Gui gui = new Gui(controller, mainObserver);
+		new Gui(controller, mainObserver);
 		
 		//Starting tui
 		TextUI tui = new TextUI(controller);

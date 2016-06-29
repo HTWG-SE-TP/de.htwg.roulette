@@ -13,6 +13,7 @@ public interface IUser extends Visitor{
 	void addBet(IBet bet);
 	void clearBets();
 	
+	@Override
 	void visit(Observable observer, int number);
 	void updateBank(Account bank, int result);
 

@@ -157,7 +157,7 @@ public class PanelStatistics extends JPanel implements IObserver {
 			updatePlayers();
 		} else if (e instanceof BetAddedEvent) {
 			BetAddedEvent bae = (BetAddedEvent) e;
-			if (!bae.result)
+			if (!bae.getResult())
 				logList.addElement("Failed to add bet. Did you select a player?");
 			updateBets();
 			updatePlayers();

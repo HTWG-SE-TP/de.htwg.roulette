@@ -4,9 +4,9 @@ import de.htwg.roulette.model.bets.IBet;
 import de.htwg.util.observer.Event;
 
 public class BetResultEvent implements Event {
-	public String user;
-	public IBet bet;
-	public int result;
+	private String user;
+	private IBet bet;
+	private int result;
 
 	public BetResultEvent(String p, IBet newBet, int result) {
 		user = p;
@@ -14,6 +14,7 @@ public class BetResultEvent implements Event {
 		this.result = result;
 	}
 	
+	@Override
 	public String toString(){
 		String tmp;
 		if (result >= 0) {
