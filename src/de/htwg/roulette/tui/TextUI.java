@@ -72,11 +72,10 @@ public class TextUI implements IObserver {
 		}
 	}
 
-	public boolean process() {
+	public boolean process(String command) {
 		boolean result = false;
 
 		try {
-			String command = scanner.nextLine();
 			result = inputMenu(command);
 		} catch (Exception ex) {
 			LOGGER.fatal(ex);

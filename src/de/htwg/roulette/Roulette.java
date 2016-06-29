@@ -1,5 +1,7 @@
 package de.htwg.roulette;
 
+import java.util.Scanner;
+
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
@@ -34,10 +36,12 @@ public class Roulette {
 		controller.addPlayer("Henry", 100000);
 		controller.addPlayer("Marc", 1000);
 		
+		Scanner scanner = new Scanner(System.in);
 		boolean quit = false;
 		while (!quit) {
-		    quit = tui.process();	
+		    quit = tui.process(scanner.nextLine());	
 		}
+		scanner.close();
 	}
 
 }
