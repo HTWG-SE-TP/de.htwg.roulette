@@ -1,26 +1,17 @@
 package de.htwg.roulette.gui;
 
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.List;
 
-import javax.swing.*;
-import javax.swing.border.Border;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import de.htwg.roulette.controller.IController;
-import de.htwg.roulette.model.User;
-import de.htwg.roulette.model.bets.*;
-import de.htwg.roulette.model.events.BetAddedEvent;
-import de.htwg.roulette.model.events.BetResultEvent;
-import de.htwg.roulette.model.events.NextRoundEvent;
-import de.htwg.roulette.model.events.PlayerEvent;
-import de.htwg.util.observer.*;
+import de.htwg.util.observer.Event;
+import de.htwg.util.observer.IObservable;
+import de.htwg.util.observer.IObserver;
 
 @SuppressWarnings("serial")
 public class Gui extends JFrame implements IObserver {

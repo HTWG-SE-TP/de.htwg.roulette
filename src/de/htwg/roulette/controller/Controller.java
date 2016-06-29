@@ -12,7 +12,6 @@ import com.google.inject.Singleton;
 import de.htwg.roulette.model.Account;
 import de.htwg.roulette.model.IUser;
 import de.htwg.roulette.model.Table;
-import de.htwg.roulette.model.User;
 import de.htwg.roulette.model.bets.IBet;
 import de.htwg.roulette.model.events.BetAddedEvent;
 import de.htwg.roulette.model.events.NextRoundEvent;

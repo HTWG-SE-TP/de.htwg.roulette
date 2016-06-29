@@ -2,11 +2,16 @@ package de.htwg.roulette.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import de.htwg.roulette.controller.IController;
 import de.htwg.roulette.model.IUser;
@@ -16,7 +21,8 @@ import de.htwg.roulette.model.events.BetResultEvent;
 import de.htwg.roulette.model.events.GuiLogEvent;
 import de.htwg.roulette.model.events.NextRoundEvent;
 import de.htwg.roulette.model.events.PlayerEvent;
-import de.htwg.util.observer.*;
+import de.htwg.util.observer.Event;
+import de.htwg.util.observer.IObserver;
 
 @SuppressWarnings("serial")
 public class PanelStatistics extends JPanel implements IObserver {

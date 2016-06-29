@@ -1,8 +1,8 @@
 package de.htwg.roulette;
 
-import com.google.inject.*;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 
-import de.htwg.roulette.controller.Controller;
 import de.htwg.roulette.controller.IController;
 import de.htwg.roulette.gui.Gui;
 import de.htwg.roulette.tui.TextUI;

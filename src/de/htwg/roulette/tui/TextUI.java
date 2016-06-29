@@ -9,7 +9,6 @@ import org.apache.logging.log4j.Logger;
 
 import de.htwg.roulette.controller.IController;
 import de.htwg.roulette.model.IUser;
-import de.htwg.roulette.model.User;
 import de.htwg.roulette.model.bets.Black;
 import de.htwg.roulette.model.bets.Column;
 import de.htwg.roulette.model.bets.Corner;

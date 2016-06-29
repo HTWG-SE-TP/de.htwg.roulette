@@ -1,6 +1,6 @@
 package de.htwg.roulette;
 
-import com.google.inject.*;
+import com.google.inject.AbstractModule;
 
 import de.htwg.roulette.controller.Controller;
 import de.htwg.roulette.controller.IController;
