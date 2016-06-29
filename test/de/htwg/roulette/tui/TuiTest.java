@@ -30,6 +30,23 @@ public class TuiTest {
 		tui = new TextUI(controller);
 		
 		tui.printInitalUI();
+		
+		assertEquals(false, tui.process("help"));
+		assertEquals(false, tui.process("add test 100"));
+		assertEquals(false, tui.process("nr"));
+		
+		assertEquals(false, tui.process("lololol"));
+		assertEquals(false, tui.process(""));
+		
+	
+	
+		
+		assertEquals(false, tui.process("remove test"));
+	
+		
+		
+	
+		
 		assertEquals(true, tui.process("quit"));
 	}
 
