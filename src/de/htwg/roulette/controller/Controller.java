@@ -47,11 +47,7 @@ public class Controller implements IController {
 		int number = (int) Math.round(Math.random() * Table.FIELD_SIZE);
 
 		for (IUser u : players) {
-			try {
-				calculateResult(u, observer, number); // Visitor Pattern
-			} catch (Exception e) {
-				LOGGER.error(e);
-			}
+			calculateResult(u, observer, number); // Visitor Patter
 		}
 
 		roundCount++;

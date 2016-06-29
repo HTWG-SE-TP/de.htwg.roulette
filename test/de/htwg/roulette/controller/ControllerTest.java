@@ -25,6 +25,8 @@ public class ControllerTest {
 	public void test() {
 		assertEquals(1, cont.getRound());
 
+		assertEquals(0, cont.getBank().getBalance());
+		
 		cont.addPlayer("Test", 100);
 		cont.addPlayer("Test", 100);
 		cont.addPlayer("Test2", 100);
@@ -55,5 +57,7 @@ public class ControllerTest {
 		assertEquals(1, cont.getPlayers().size());
 
 	}
+	
+	
 
 }
