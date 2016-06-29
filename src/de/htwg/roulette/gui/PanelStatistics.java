@@ -132,7 +132,7 @@ public class PanelStatistics extends JPanel implements IObserver {
 			list.setForeground(Gui.RED4);
 			list.setVisibleRowCount(5);
 			JScrollPane scroller = new JScrollPane(list);
-			new SmartScroller(scroller); //scroll to the bottom
+			SmartScroller ss = new SmartScroller(scroller); //scroll to the bottom
 			panel.add(scroller, BorderLayout.SOUTH);
 		}
 		return panel;
@@ -149,7 +149,6 @@ public class PanelStatistics extends JPanel implements IObserver {
 
 	@Override
 	public void update(Event e) {
-		String tmp;
 		if (e instanceof BetResultEvent) {
 			BetResultEvent bre = (BetResultEvent) e;
 			logList.addElement(bre.toString());

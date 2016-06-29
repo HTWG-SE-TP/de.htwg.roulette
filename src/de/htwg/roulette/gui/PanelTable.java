@@ -26,11 +26,9 @@ public class PanelTable extends JPanel implements IObserver {
 	private JLabel[] fields = new JLabel[37];
 	private JPanel[] lines = new JPanel[13];
 	
-	private IController rController;
 	private PanelChoose chooseP;
 	
-	public PanelTable(IController cont, PanelChoose choose){
-		rController = cont;
+	public PanelTable(PanelChoose choose){
 		chooseP = choose;
 		
 		this.setLayout(new GridLayout(13, 1));

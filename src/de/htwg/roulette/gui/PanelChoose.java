@@ -55,17 +55,17 @@ public class PanelChoose extends JPanel implements IObserver {
 	private JButton selectButton;
 	private List<Integer> selectedNums;
 
-	public PanelChoose(IController cont, Gui g, IObservable observ) {
+	public PanelChoose(IController cont, IObservable observ) {
 		rController = cont;
 		observer = observ;
 
 		selectedNums = new LinkedList<>();
 		this.setLayout(new BorderLayout());
 
-		JPanel fake_top = new JPanel();
-		setPanelColor(fake_top);
-		fake_top.setPreferredSize(new Dimension(150, 65));
-		this.add(fake_top, BorderLayout.NORTH);
+		JPanel fakeTop = new JPanel();
+		setPanelColor(fakeTop);
+		fakeTop.setPreferredSize(new Dimension(150, 65));
+		this.add(fakeTop, BorderLayout.NORTH);
 
 		JPanel buttons = new JPanel();
 		buttons.setLayout(new GridLayout(12, 1));
@@ -77,8 +77,6 @@ public class PanelChoose extends JPanel implements IObserver {
 		btn.addActionListener(
 				e -> rController.placeBet(getActualPlayer(), new Dozen(setMoney.getValue(), Dozen.Flag.Premier)));
 		fillButt(btn);
-		btn.addActionListener(l -> {
-		});
 		thirds.add(btn);
 		btn = new JButton("13 - 24");
 		btn.addActionListener(
@@ -180,9 +178,7 @@ public class PanelChoose extends JPanel implements IObserver {
 		setMoney = new JSlider(JSlider.HORIZONTAL, minMoney, maxMoney, minMoney);
 		setMoney.setBackground(Gui.STARBUCKS);
 		setMoney.setForeground(Color.WHITE);
-		setMoney.setPaintLabels(true);
-		// setMoney.setMinorTickSpacing(0);
-		// setMoney.setMajorTickSpacing(100);
+		setMoney.setPaintTicks(false);
 		updateSlider();
 		slider.add(setMoney);
 		buttons.add(setMoney);
@@ -192,7 +188,7 @@ public class PanelChoose extends JPanel implements IObserver {
 
 	private void fillButt(JButton bt) {
 		bt.setPreferredSize(new Dimension(110, 50));
-		bt.setFocusPainted(false);
+		bt.setFocusPainted(true);
 		bt.setContentAreaFilled(false);
 		bt.setForeground(Color.WHITE);
 		bt.setBorder(BorderFactory.createLineBorder(Color.WHITE));
@@ -289,8 +285,10 @@ public class PanelChoose extends JPanel implements IObserver {
 		setMoney.setMaximum(maxMoney);
 		int steps = (maxMoney - minMoney) / 5;
 		if (steps > 0) {
+			setMoney.setLabelTable(null);
 			setMoney.setMajorTickSpacing(steps);
 			setMoney.createStandardLabels(steps);
+			setMoney.setPaintLabels(true);
 		}
 		setMoney.repaint();
 	}

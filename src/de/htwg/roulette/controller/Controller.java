@@ -33,7 +33,7 @@ public class Controller implements IController {
 	@Override
 	public void create(Observable observ, Injector inj) {
 		bank = new Account("Bank", 0);
-		table = new Table(10, 100000);
+		table = new Table(10, 2^32);
 		players = new LinkedList<IUser>();
 		observer = observ;
 		injector = inj;

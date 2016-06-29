@@ -21,9 +21,6 @@ public class Gui extends JFrame implements IObserver {
 	private PanelTable tablePanel;
 	private PanelStatistics statisticPanel;
 	
-	private JLabel[] fields = new JLabel[37];
-	private JPanel[] lines = new JPanel[13];
-	
 	public static final Color STARBUCKS = new Color(0x006633);
 	public static final Color GREY4 = new Color(0x5E5E5E);
 	public static final Color RED4 = new Color(0x8b0000);
@@ -35,10 +32,10 @@ public class Gui extends JFrame implements IObserver {
 		mainPanel.setLayout(new GridLayout(1, 3));
 		mainPanel.setBackground(new Color(0x006633));
 		
-		choosePanel = new PanelChoose(rController, this, observ);
+		choosePanel = new PanelChoose(rController, observ);
 		mainPanel.add(choosePanel);
 	
-		tablePanel = new PanelTable(rController, choosePanel);
+		tablePanel = new PanelTable(choosePanel);
 		mainPanel.add(tablePanel);
 	
 		statisticPanel = new PanelStatistics(rController, choosePanel);
