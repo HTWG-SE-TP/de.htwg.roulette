@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.GridLayout;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import de.htwg.roulette.controller.IController;
@@ -48,9 +47,11 @@ public class Gui extends JFrame implements IObserver {
 		this.add(mainPanel);
 		pack();
 		setResizable(true);
-		setVisible(true);
 	}
 
+	public void show(){
+		setVisible(true);
+	}
 		
 
 	@Override

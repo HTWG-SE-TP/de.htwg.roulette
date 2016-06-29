@@ -1,8 +1,5 @@
 package de.htwg.roulette.gui;
 
-import static org.junit.Assert.assertEquals;
-
-import org.junit.Before;
 import org.junit.Test;
 
 import com.google.inject.Guice;

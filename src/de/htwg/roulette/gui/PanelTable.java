@@ -13,7 +13,6 @@ import javax.swing.SwingConstants;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import de.htwg.roulette.controller.IController;
 import de.htwg.roulette.model.bets.Black;
 import de.htwg.roulette.model.events.BetAddedEvent;
 import de.htwg.roulette.model.events.NextRoundEvent;

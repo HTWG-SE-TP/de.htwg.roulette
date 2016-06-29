@@ -23,6 +23,7 @@ public interface IController extends de.htwg.util.Visitor.Visitable {
 	int getRound();
 	int getBetCount();
 	
+	@Override
 	void calculateResult(Visitor player, Observable observer, int number);
 
 }
