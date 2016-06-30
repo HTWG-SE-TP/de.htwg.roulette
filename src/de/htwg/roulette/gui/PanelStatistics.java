@@ -116,7 +116,7 @@ public class PanelStatistics extends JPanel implements IObserver {
 
 		JList<String> list = new JList<>(model);
 		list.setBackground(Color.BLACK);
-		list.setForeground(Gui.RED4);
+		list.setForeground(GuiColors.RED4);
 		panel.add(new JScrollPane(list), BorderLayout.CENTER);
 
 		if (name.startsWith("Player")) {
@@ -129,7 +129,7 @@ public class PanelStatistics extends JPanel implements IObserver {
 		} else {
 			list = new JList<>(logList);
 			list.setBackground(Color.BLACK);
-			list.setForeground(Gui.RED4);
+			list.setForeground(GuiColors.RED4);
 			list.setVisibleRowCount(5);
 			JScrollPane scroller = new JScrollPane(list);
 			SmartScroller ss = new SmartScroller(scroller); //scroll to the bottom

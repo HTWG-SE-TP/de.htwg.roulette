@@ -176,7 +176,7 @@ public class PanelChoose extends JPanel implements IObserver {
 
 		JPanel slider = new JPanel();
 		setMoney = new JSlider(JSlider.HORIZONTAL, minMoney, maxMoney, minMoney);
-		setMoney.setBackground(Gui.STARBUCKS);
+		setMoney.setBackground(GuiColors.STARBUCKS);
 		setMoney.setForeground(Color.WHITE);
 		setMoney.setPaintTicks(false);
 		updateSlider();
@@ -196,7 +196,7 @@ public class PanelChoose extends JPanel implements IObserver {
 	}
 
 	private void setPanelColor(JPanel pan) {
-		pan.setBackground(Gui.STARBUCKS);
+		pan.setBackground(GuiColors.STARBUCKS);
 	}
 
 	public void enableTable(int numSelect, Object source) {

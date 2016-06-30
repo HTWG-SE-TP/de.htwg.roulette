@@ -31,7 +31,7 @@ public class PanelTable extends JPanel implements IObserver {
 		chooseP = choose;
 		
 		this.setLayout(new GridLayout(13, 1));
-		this.setBackground(Gui.STARBUCKS);
+		this.setBackground(GuiColors.STARBUCKS);
 		
 		for(int i = 0; i < fields.length; i++){
 			fields[i] = new JLabel(String.format("%d", i), SwingConstants.CENTER);
@@ -50,11 +50,11 @@ public class PanelTable extends JPanel implements IObserver {
 		resetColors();
 		
 		lines[0] = new JPanel();
-		lines[0].setBackground(Gui.STARBUCKS); //starbucks-green
+		lines[0].setBackground(GuiColors.STARBUCKS); //starbucks-green
 		lines[0].add(fields[0]);
 		for(int i = 0; i < lines.length-1; i++){
 			lines[i+1] = new JPanel();
-			lines[i+1].setBackground(Gui.STARBUCKS); //starbucks-green
+			lines[i+1].setBackground(GuiColors.STARBUCKS); //starbucks-green
 			for(int k = 1; k <= 3; k++){
 				lines[i+1].add(fields[i*3+k]);
 			}
@@ -72,7 +72,7 @@ public class PanelTable extends JPanel implements IObserver {
 			if(bet.checkBet(i)){
 				fields[i].setBackground(Color.BLACK);
 			}else{
-				fields[i].setBackground(Gui.RED4);
+				fields[i].setBackground(GuiColors.RED4);
 			}
 			
 		}
