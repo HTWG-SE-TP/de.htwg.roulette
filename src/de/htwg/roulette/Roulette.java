@@ -34,7 +34,7 @@ public class Roulette {
 		tui.printInitalUI();
 		
 		//Inital Players, just for the comfort
-		controller.addPlayer("Henry", 100000);
+		controller.addPlayer("Henry", 1000);
 		controller.addPlayer("Marc", 1000);
 		
 		Scanner scanner = new Scanner(System.in);
