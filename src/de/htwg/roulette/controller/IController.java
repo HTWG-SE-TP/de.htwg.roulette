@@ -60,7 +60,7 @@ public interface IController extends de.htwg.util.Visitor.Visitable {
 	int getRound();
 	
 	
-	/** Total bet count
+	/** Total bet count.
 	 * @return bet count
 	 */
 	int getBetCount();
